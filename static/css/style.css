@@ -198,7 +198,7 @@ a:hover {
 	margin-bottom: 3rem;
 }
 
-.login-container input[type='text'].login-container input[type='password'] {
+.login-container input[type='text'], .login-container input[type='password'] {
 	font-size: 1.4rem;
 	border: 1px solid #ccc;
 	border-radius: .5rem;
