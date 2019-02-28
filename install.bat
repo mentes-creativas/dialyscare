@@ -1,1 +1,1 @@
-pip install flask, flask-peewee, flask-mysqldb
+pip install flask flask-peewee flask-mysqldb
