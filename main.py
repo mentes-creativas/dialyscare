@@ -36,4 +36,4 @@ def login():
 if __name__ == '__main__':
     # con debug=True no tenemos que reiniciar el servidor para ver los cambios
     # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
