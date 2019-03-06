@@ -17,14 +17,14 @@
 	<aside>
 		<nav>
 			<ul>
-				<li{% if request.url_rule.endpoint == "inicio" %} class="active"{% endif %}><a href="{{ url_for('inicio') }}"><span><i class="fas fa-table"></i></span>Inicio</a></li>
-				<li{% if request.url_rule.endpoint == "pacientes" %} class="active"{% endif %}><a href="{{ url_for('pacientes') }}"><span><i class="fas fa-users"></i></span>Pacientes</a></li>
-				<li><a href=""><span><i class="fas fa-notes-medical"></i></span>Sesiones</a></li>
-				<li><a href=""><span><i class="fas fa-calendar-alt"></i></span>Agenda semanal</a></li>
-				<li><a href=""><span><i class="fas fa-prescription-bottle"></i></span>Capilares</a></li>
-				<li><a href=""><span><i class="fas fa-user-lock"></i></span>Usuarios</a></li>
-				<li><a href=""><span><i class="fas fa-sitemap"></i></span>Salas y puestos</a></li>
-				<li><a href=""><span><i class="fas fa-cog"></i></span>Configuración general</a></li>
+				<li{% if request.url_rule.endpoint == "inicio" %} class="active"{% endif %}><a href="{{ url_for('inicio') }}"><span><i class="fas fa-table fa-lg"></i></span>Inicio</a></li>
+				<li{% if request.url_rule.endpoint == "pacientes" %} class="active"{% endif %}><a href="{{ url_for('pacientes') }}"><span><i class="fas fa-users fa-lg"></i></span>Pacientes</a></li>
+				<li><a href=""><span><i class="fas fa-notes-medical fa-lg"></i></span>Sesiones</a></li>
+				<li><a href=""><span><i class="fas fa-calendar-alt fa-lg"></i></span>Agenda semanal</a></li>
+				<li><a href=""><span><i class="fas fa-prescription-bottle fa-lg"></i></span>Capilares</a></li>
+				<li><a href=""><span><i class="fas fa-user-lock fa-lg"></i></span>Usuarios</a></li>
+				<li><a href=""><span><i class="fas fa-sitemap fa-lg"></i></span>Salas y puestos</a></li>
+				<li><a href=""><span><i class="fas fa-cog fa-lg"></i></span>Configuración</a></li>
 			</ul>
 		</nav>
 
