@@ -39,7 +39,7 @@ def pacientes():
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():
     response = redirect(url_for('index'))
-    response.set_cookie('session', '', expires=0)
+    response.delete_cookie('session')
     return response
 
 
