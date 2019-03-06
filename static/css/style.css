@@ -148,6 +148,7 @@ a:hover {
 	border-radius: 2rem;
 	padding: .7rem 2rem .8rem;
 	width: 17rem;
+	cursor: pointer;
 }
 
 /* #endregion Pagina de login */
@@ -174,8 +175,20 @@ header .logo img {
 header .user-data {
 	flex: 1 1 80%;
 	background: #3c8dbc;
+	font-size: 1.6rem;
 	text-align: right;
-	padding: 0 3rem;
+	padding: 1rem 3rem 0;
+}
+
+header .user-data button {
+	color: #333;
+	font-size: 1.4rem;
+	margin: 1rem 0 2rem;
+	border-radius: 2rem;
+	padding: .7rem 2rem .8rem;
+	margin-left: 3rem;
+	width: 17rem;
+	cursor: pointer;
 }
 
 .container {

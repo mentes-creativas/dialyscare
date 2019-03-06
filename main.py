@@ -12,13 +12,36 @@ def index():
 
 @app.route("/admin", methods = ['GET', 'POST'])
 def inicio():
-    context = {'titulo_de_la_pagina': 'Inicio'}
-    return render_template('inicio.html', **context) # doble asterisco desempaqueta las variables en el template
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Inicio', 'nombre_de_usuario': nombre}
+        return render_template('inicio.html', **context) # doble asterisco desempaqueta las variables en el template
+
+
+@app.route("/admin/pacientes/listado", methods = ['GET', 'POST'])
+def pacientes():
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Listado de pacientes', 'nombre_de_usuario': nombre}
+        return render_template('pacientes-listado.html', **context) # doble asterisco desempaqueta las variables en el template
+
 
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():
     response = redirect(url_for('index'))
+    response.set_cookie('session', '', expires=0)
     return response
+
 
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
@@ -29,13 +52,15 @@ def login():
         form = dict(request.form.items())
 
         if not form['usuario']:
-            message = 'Debes ingresar un usuario! <a href="javascript:history.go(-1)">Volver a intentar</a>'
+            response = 'Debes ingresar un usuario! <a href="javascript:history.go(-1)">Volver a intentar</a>'
         elif not form['contrasena']:
-            message = 'Hola ' + form['usuario'] + ', no olvides ingresar tu contraseña! <a href="javascript:history.go(-1)">Volver a intentar</a>'
+            response = 'Hola ' + form['usuario'] + ', no olvides ingresar tu contraseña! <a href="javascript:history.go(-1)">Volver a intentar</a>'
         else:
-            message = 'Usuario: {}<br>Contraseña: {}<br><br>^_^'.format(form['usuario'], form['contrasena'])
+            #response = 'Usuario: {}<br>Contraseña: {}<br><br>^_^'.format(form['usuario'], form['contrasena'])
+            response = redirect(url_for('inicio'))
+            response.set_cookie('session', json.dumps(dict(request.form.items())))
 
-        return message
+        return response
         
         #tambien podia ser asi
         #usuario = request.form["usuario"]
