@@ -45,7 +45,7 @@ html {
 
 body {
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 1.4rem;
+ 	font-size: 1.4rem;
 	line-height: 180%;
 	background: #FFF;
 	color: #6d6e70;
@@ -55,83 +55,6 @@ a,
 a:hover {
 	color: rgb(42, 98, 172);
 	text-decoration: none;
-}
-
-/* #region pagina de login */
-
-.login-link-balanza {
-	text-align: right;
-	padding: 2rem 3rem 0 0;
-}
-
-.login-link-balanza a {
-	color: rgb(66, 123, 197);
-	font-size: 1.6rem;
-	margin: 1rem 0 2rem;
-	border-radius: .5rem;
-	padding: .7rem 2rem .8rem;
-}
-
-.login-link-balanza a:hover {
-	background: rgb(66, 123, 197);
-	color: #fff;
-}
-
-.login-link-balanza i {
-	margin-right: 3rem;
-}
-
-.login-container {
-	border: 1px solid #999;
-	display: flex;
-	margin: 8% auto 0 auto;
-	width: 50%;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	border-radius: 1rem;
-}
-
-.login-container div {
-	flex: 1 1 50%;
-	padding: 8rem 2rem;
-	text-align: center;
-}
-
-.login-container .logo {
-	background: rgb(211, 232, 253);
-	background-size: cover;
-	border-right: 1px dotted #bbb;
-	vertical-align: center;
-	border-radius: 1rem 0 0 1rem;
-}
-
-.login-container .logo img {
-	margin-top: 1rem;
-	width: 100%;
-}
-
-.login-container h1 {
-	color: #4657b4;
-	font-size: 4rem;
-	letter-spacing: -.1rem;
-	margin-bottom: 3rem;
-}
-
-.login-container input[type='text'] {
-	font-size: 1.4rem;
-	border: 1px solid #ccc;
-	border-radius: .5rem;
-	padding: .7rem .8rem .9rem;
-	margin-bottom: .8rem;
-	width: 18rem;
-}
-
-.login-container input[type='submit'] {
-	color: #333;
-	font-size: 1.4rem;
-	margin: 1rem 0 2rem;
-	border-radius: 2rem;
-	padding: .7rem 2rem .8rem;
-	width: 17rem;
 }
 
 /* #region Pagina de login */
@@ -202,9 +125,19 @@ a:hover {
 	font-size: 1.4rem;
 	border: 1px solid #ccc;
 	border-radius: .5rem;
-	padding: .7rem .8rem .9rem;
+	padding: .7rem .8rem .9rem 2.8rem;
 	margin-bottom: .8rem;
 	width: 18rem;
+}
+
+.login-container input[type='text'] {
+	background: url('../svgs/solid/user.svg') .8rem center no-repeat;
+	background-size: 1.3rem 1.3rem;
+}
+
+.login-container input[type='password'] {
+	background: url('../svgs/solid/lock.svg') .8rem center no-repeat;
+	background-size: 1.3rem 1.3rem;
 }
 
 .login-container input[type='submit'] {

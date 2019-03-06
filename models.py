@@ -9,19 +9,23 @@ db = MySQLDatabase('bevc2jessjfwwvi2ekjy', # nombre de la base de datos
                    port=3306)
 
 
-class General(Model):
+class MyModel(Model):
+    class Meta:
+        database = db
+
+
+class General(MyModel):
     admin_nombre = CharField(max_length=60)
     admin_email = CharField(max_length=60)
     admin_telefono = CharField(max_length=20)
     balanza_clave = IntegerField()
 
     class Meta:
-        database = db
         table_name = 'general'
         primary_key = False
 
 
-class Personas(Model):
+class Personas(MyModel):
     id = PrimaryKeyField()
     nombres = CharField(max_length=45)
     apellidos = CharField(max_length=45)
@@ -42,11 +46,10 @@ class Personas(Model):
     estado = BooleanField
 
     class Meta:
-        database = db
         table_name = 'personas'
 
 
-class Usuarios(Model):
+class Usuarios(MyModel):
     id = PrimaryKeyField()
     persona = ForeignKeyField(Personas, backref='usuarios', related_name='usuarios', unique=True)
     rol = CharField(max_length=20)
@@ -54,7 +57,6 @@ class Usuarios(Model):
     clave = CharField(66)
 
     class Meta:
-        database = db
         table_name = 'usuarios'
 
 
