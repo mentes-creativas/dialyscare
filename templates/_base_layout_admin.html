@@ -1,6 +1,6 @@
 {% extends '_base_layout.html' %}
 
-{% block titulo %}{{ titulo_de_la_pagina }} | dialyscare{% endblock %}
+{% block titulo %}{{ titulo_de_la_pagina }}{% endblock %}
 
 {% block contenido %}
 
@@ -18,7 +18,7 @@
 		<nav>
 			<ul>
 				<li{% if request.url_rule.endpoint == "inicio" %} class="active"{% endif %}><a href="{{ url_for('inicio') }}"><span><i class="fas fa-table"></i></span>Inicio</a></li>
-				<li{% if request.url_rule.endpoint == "pacientes/listado" %} class="active"{% endif %}><a href="{{ url_for('pacientes') }}"><span><i class="fas fa-users"></i></span>Pacientes</a></li>
+				<li{% if request.url_rule.endpoint == "pacientes" %} class="active"{% endif %}><a href="{{ url_for('pacientes') }}"><span><i class="fas fa-users"></i></span>Pacientes</a></li>
 				<li><a href=""><span><i class="fas fa-notes-medical"></i></span>Sesiones</a></li>
 				<li><a href=""><span><i class="fas fa-calendar-alt"></i></span>Agenda semanal</a></li>
 				<li><a href=""><span><i class="fas fa-prescription-bottle"></i></span>Capilares</a></li>
