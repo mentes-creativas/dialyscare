@@ -156,8 +156,10 @@ a:hover {
 /* #region Admin comun */
 
 header {
+	position: fixed;
 	display: flex;
 	color: #FFF;
+	width: 100%;
 }
 
 header .logo {
@@ -168,8 +170,12 @@ header .logo {
 	padding: 1.8rem 0 1rem 0;
 }
 
-header .logo img {
+header .logo img.md-none {
 	max-width: 15rem;
+}
+
+header .logo img.mini {
+	display: none;
 }
 
 header .user-data {
@@ -198,13 +204,13 @@ aside {
 	background: #222d31;
 	color: rgba(255, 255, 255, .8);
 	font-size: 1.5rem;
-	height: 100vh;
+	min-height: 100vh;
 	min-width: 20rem;
 }
 
 aside nav {
-	padding: 2.6rem 0;
-	margin-bottom: 4rem;
+	padding: 2.6rem 0 2.6;
+	margin: 10rem 0 4rem;
 }
 
 aside li {
@@ -230,7 +236,7 @@ aside a:hover {
 	color: #fff;
 }
 
-aside a span {
+aside a .icon {
 	display: inline-block;
 	text-align: center;
 	width: 5rem;
@@ -238,13 +244,32 @@ aside a span {
 
 main {
 	flex: 1 1 80%;
-	padding: 3rem;
+	padding: 10.5rem 3rem 3rem;
 }
 
 /* #endregion Admin comin */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+	.md-none {
+		display: none;
+	}
 	.login-container {
 		flex-direction: row;
+	}
+	header .logo {
+		min-width: auto;
+		width: 6rem;
+	}
+	header .logo img.mini {
+		display: inline;
+		margin: 0 2.3rem;
+		width: 3rem;
+	}
+	header .user-data button {
+		margin-left: 1.5rem;
+	}
+	aside {
+		min-width: auto;
+		width: 2rem;
 	}
 }
