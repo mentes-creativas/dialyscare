@@ -10,6 +10,16 @@ def index():
     return render_template('login.html')
 
 
+@app.route("/admin", methods = ['GET', 'POST'])
+def inicio():
+    context = {'titulo_de_la_pagina': 'Inicio'}
+    return render_template('inicio.html', **context) # doble asterisco desempaqueta las variables en el template
+
+@app.route("/logout", methods = ['GET', 'POST'])
+def logout():
+    response = redirect(url_for('index'))
+    return response
+
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
     if request.method == "GET":

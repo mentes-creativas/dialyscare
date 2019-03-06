@@ -1,0 +1,38 @@
+{% extends '_base_layout.html' %}
+
+{% block titulo %}{{ titulo_de_la_pagina }} | dialyscare{% endblock %}
+
+{% block contenido %}
+
+<header>
+	<div class="logo">
+		<img src="{{ url_for('static', filename='images/logo-texto-blanco.png') }}" alt="dialyscare">
+	</div>
+	<div class="user-data">
+		<i class="fas fa-user"></i> Usuario: Pepe
+		<button onclick="window.location='{{ url_for('logout') }}'">Logout <i class="fas fa-sign-out-alt"></i></button>
+	</div>
+</header>
+<div class="container">
+	<aside>
+		<nav>
+			<ul>
+				<li{% if request.url_rule.endpoint == "inicio" %} class="active"{% endif %}><a href="{{ url_for('inicio') }}"><span><i class="fas fa-table"></i></span>Inicio</a></li>
+				<li><a href=""><span><i class="fas fa-users"></i></span>Pacientes</a></li>
+				<li><a href=""><span><i class="fas fa-notes-medical"></i></span>Sesiones</a></li>
+				<li><a href=""><span><i class="fas fa-calendar-alt"></i></span>Agenda semanal</a></li>
+				<li><a href=""><span><i class="fas fa-prescription-bottle"></i></span>Capilares</a></li>
+				<li><a href=""><span><i class="fas fa-user-lock"></i></span>Usuarios</a></li>
+				<li><a href=""><span><i class="fas fa-sitemap"></i></span>Salas y puestos</a></li>
+				<li><a href=""><span><i class="fas fa-cog"></i></span>Configuración general</a></li>
+			</ul>
+		</nav>
+
+		<a href=""><span><i class="far fa-calendar-check"></i></span>Agenda de pesaje</a>
+	</aside>
+	<main>
+		{% block contenido_de_la_seccion %}{% endblock %}
+	</main>
+</div>
+
+{% endblock %}

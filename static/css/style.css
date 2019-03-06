@@ -121,7 +121,8 @@ a:hover {
 	margin-bottom: 3rem;
 }
 
-.login-container input[type='text'], .login-container input[type='password'] {
+.login-container input[type='text'],
+.login-container input[type='password'] {
 	font-size: 1.4rem;
 	border: 1px solid #ccc;
 	border-radius: .5rem;
@@ -150,6 +151,85 @@ a:hover {
 }
 
 /* #endregion Pagina de login */
+
+/* #region Admin comun */
+
+header {
+	display: flex;
+	color: #FFF;
+}
+
+header .logo {
+	flex: 1 1 20%;
+	background: #347ca4;
+	text-align: center;
+	min-width: 20rem;
+	padding: 2rem 0 1.6rem 0;
+}
+
+header .logo img {
+	max-width: 15rem;
+}
+
+header .user-data {
+	flex: 1 1 80%;
+	background: #3c8dbc;
+	text-align: right;
+	padding: 0 3rem;
+}
+
+.container {
+	display: flex;
+}
+
+aside {
+	flex: 1 1 20%;
+	background: #222d31;
+	color: rgba(255, 255, 255, .8);
+	height: 100vh;
+	min-width: 20rem;
+}
+
+aside nav {
+	padding: 3rem 0;
+	margin-bottom: 4rem;
+}
+
+aside li {
+	list-style: none;
+}
+
+aside a {
+	color: rgba(255, 255, 255, .8);
+	display: block;
+	padding: .4rem 1.3rem .6rem 1.3rem;
+}
+
+aside .active a {
+	color: #fff;
+	font-weight: bold;
+	border-left: .4rem solid #3d8ebd;
+	padding-left: .9rem;
+	white-space: nowrap;
+}
+
+aside a:hover {
+	background: #2c3b42;
+	color: #fff;
+}
+
+aside a span {
+	display: inline-block;
+	text-align: center;
+	width: 3.4rem;
+}
+
+main {
+	flex: 1 1 80%;
+	padding: 3rem;
+}
+
+/* #endregion Admin comin */
 
 @media (max-width: 600px) {
 	.login-container {

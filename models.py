@@ -9,7 +9,7 @@ db = MySQLDatabase('bevc2jessjfwwvi2ekjy', # nombre de la base de datos
                    port=3306)
 
 
-class MyModel(Model):
+class MyModel(Model):  # Con esta clase ya establezco la base de datos que van a usar todos los modelos
     class Meta:
         database = db
 
