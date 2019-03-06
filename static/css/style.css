@@ -165,7 +165,7 @@ header .logo {
 	background: #347ca4;
 	text-align: center;
 	min-width: 20rem;
-	padding: 1.8rem 0 1.2rem 0;
+	padding: 1.8rem 0 1rem 0;
 }
 
 header .logo img {
@@ -177,13 +177,12 @@ header .user-data {
 	background: #3c8dbc;
 	font-size: 1.6rem;
 	text-align: right;
-	padding: 1rem 3rem 0;
+	padding: 1.8rem 3rem 0;
 }
 
 header .user-data button {
 	color: #333;
 	font-size: 1.4rem;
-	margin: 1rem 0 2rem;
 	border-radius: 2rem;
 	padding: .7rem 2rem .8rem;
 	margin-left: 3rem;
@@ -234,7 +233,7 @@ aside a:hover {
 aside a span {
 	display: inline-block;
 	text-align: center;
-	width: 4rem;
+	width: 5rem;
 }
 
 main {
