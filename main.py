@@ -36,6 +36,19 @@ def pacientes():
         return render_template('pacientes-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
+@app.route("/admin/pacientes/agregar", methods = ['GET', 'POST'])
+def pacientes_agregar():
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
+        return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
+
+
 @app.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
 def usuarios():
     try:
@@ -47,6 +60,19 @@ def usuarios():
         nombre = data.get('usuario')
         context = {'titulo_de_la_pagina': 'Listado de usuarios', 'nombre_de_usuario': nombre}
         return render_template('usuarios-listado.html', **context) # doble asterisco desempaqueta las variables en el template
+
+
+@app.route("/admin/usuarios/agregar", methods = ['GET', 'POST'])
+def usuarios_agregar():
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Agregar usuario', 'nombre_de_usuario': nombre}
+        return render_template('usuarios-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
 @app.route("/logout", methods = ['GET', 'POST'])
