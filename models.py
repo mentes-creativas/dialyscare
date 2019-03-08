@@ -51,13 +51,14 @@ class Personas(MyModel):
 
 class Usuarios(MyModel):
     id = PrimaryKeyField()
-    personas_id = ForeignKeyField(Personas, backref='usuarios', related_name='usuarios', unique=True)
+    personas_id = ForeignKeyField(Personas, backref='usuarios', unique=True)
     rol = CharField(max_length=20)
     usuario = CharField(max_length=20, unique=True)
     clave = CharField(66)
 
     class Meta:
         table_name = 'usuarios'
+
 
 class Mutualistas(MyModel):
     id = PrimaryKeyField()
@@ -66,18 +67,20 @@ class Mutualistas(MyModel):
     class Meta:
         table_name = 'mutualistas'
 
+
 class Doctores(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='doctores', related_name='doctores')
+    usuarios_id = ForeignKeyField(Usuarios, backref='doctores', unique=True)
     numero_profesional = IntegerField(unique=True)
     super_doctor = BooleanField(default=False)
 
     class Meta:
         table_name = 'doctores'
 
+
 class Enfermeros(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='enfermeros', related_name='enfermeros') 
+    usuarios_id = ForeignKeyField(Usuarios, backref='enfermeros', unique=True) 
 
     class Meta:
         table_name = 'enfermeros'
@@ -85,10 +88,10 @@ class Enfermeros(MyModel):
 
 class Pacientes(MyModel):
     id = PrimaryKeyField()
-    personas_id = ForeignKeyField(Personas, backref='pacientes', related_name='pacientes', unique=True)
-    mutualistas_id = ForeignKeyField(Mutualistas, backref='mutualista', related_name='mutualista', unique=True)
+    personas_id = ForeignKeyField(Personas, backref='pacientes', unique=True)
+    mutualistas_id = ForeignKeyField(Mutualistas, backref='mutualista', unique=True)
     doctores_id = ForeignKeyField(Doctores, backref='doctores', unique=True)
-    enfermeros_id = ForeignKeyField(Enfermeros, backref='enfermeros', related_name='enfermeros', unique=True)
+    enfermeros_id = ForeignKeyField(Enfermeros, backref='enfermeros',, unique=True)
     altura = IntegerField()
     tipo_de_paciente = CharField(max_length=20)
     tipo_de_acceso_vascular = CharField(max_length=20)
@@ -103,9 +106,6 @@ class Pacientes(MyModel):
     
     class Meta:
         table_name = 'pacientes'
-
-
-
 
 
 if __name__ == '__main__':
