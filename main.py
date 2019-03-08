@@ -36,6 +36,19 @@ def pacientes():
         return render_template('pacientes-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
+@app.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
+def usuarios():
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Listado de usuarios', 'nombre_de_usuario': nombre}
+        return render_template('usuarios-listado.html', **context) # doble asterisco desempaqueta las variables en el template
+
+
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():
     response = redirect(url_for('index'))

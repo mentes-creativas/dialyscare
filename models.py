@@ -43,7 +43,7 @@ class Personas(MyModel):
     ingreso = DateTimeField(default=datetime.datetime.now())
     #ingreso = TimestampField(default=int(datetime.datetime.now().timestamp()))   otra forma de hacerlo
     observaciones = TextField()
-    estado = BooleanField
+    estado = BooleanField()
 
     class Meta:
         table_name = 'personas'
@@ -51,7 +51,7 @@ class Personas(MyModel):
 
 class Usuarios(MyModel):
     id = PrimaryKeyField()
-    persona = ForeignKeyField(Personas, backref='usuarios', related_name='usuarios', unique=True)
+    personas_id = ForeignKeyField(Personas, backref='usuarios', related_name='usuarios', unique=True)
     rol = CharField(max_length=20)
     usuario = CharField(max_length=20, unique=True)
     clave = CharField(66)
