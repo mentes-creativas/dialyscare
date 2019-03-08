@@ -59,7 +59,55 @@ class Usuarios(MyModel):
     class Meta:
         table_name = 'usuarios'
 
+class Mutualistas(MyModel):
+    id = PrimaryKeyField()
+    nombre = CharField(max_length=45)
+
+    class Meta:
+        table_name = 'mutualistas'
+
+class Doctores(MyModel):
+    id = PrimaryKeyField()
+    usuarios_id = ForeignKeyField(Usuarios, backref='doctores', related_name='doctores')
+    numero_profesional = IntegerField(unique=True)
+    super_doctor = BooleanField(default=False)
+
+    class Meta:
+        table_name = 'doctores'
+
+class Enfermeros(MyModel):
+    id = PrimaryKeyField()
+    usuarios_id = ForeignKeyField(Usuarios, backref='enfermeros', related_name='enfermeros') 
+
+    class Meta:
+        table_name = 'enfermeros'
+
+
+class Pacientes(MyModel):
+    id = PrimaryKeyField()
+    personas_id = ForeignKeyField(Personas, backref='pacientes', related_name='pacientes', unique=True)
+    mutualistas_id = ForeignKeyField(Mutualistas, backref='mutualista', related_name='mutualista', unique=True)
+    doctores_id = ForeignKeyField(Doctores, backref='doctores', unique=True)
+    enfermeros_id = ForeignKeyField(Enfermeros, backref='enfermeros', related_name='enfermeros', unique=True)
+    altura = IntegerField()
+    tipo_de_paciente = CharField(max_length=20)
+    tipo_de_acceso_vascular = CharField(max_length=20)
+    grupo_sanguineo = CharField(max_length=2) # (A,B,AB,O)
+    rh = FixedCharField(max_length=1) # Positivo='+' Negativo = '-' o rh = FixedCharField(max_length=8)
+    primer_dialisis = DateField('%d,%m,%Y')
+    diabetico = BooleanField(default=False)
+    hta = BooleanField(default=False)
+    alergico = BooleanField(default=False)
+    numero_fnr = IntegerField()
+    habilitar_lavado_capilar = BooleanField()
+    
+    class Meta:
+        table_name = 'pacientes'
+
+
+
+
 
 if __name__ == '__main__':
     db.connect()
-    db.create_tables([General, Personas, Usuarios], safe=True)  # con safe=True no tira error si la tabla ya fue creada
+    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Enfermeros, Pacientes], safe=True)  # con safe=True no tira error si la tabla ya fue creada
