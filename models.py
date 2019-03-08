@@ -91,7 +91,7 @@ class Pacientes(MyModel):
     personas_id = ForeignKeyField(Personas, backref='pacientes', unique=True)
     mutualistas_id = ForeignKeyField(Mutualistas, backref='mutualista', unique=True)
     doctores_id = ForeignKeyField(Doctores, backref='doctores', unique=True)
-    enfermeros_id = ForeignKeyField(Enfermeros, backref='enfermeros',, unique=True)
+    enfermeros_id = ForeignKeyField(Enfermeros, backref='enfermeros', unique=True)
     altura = IntegerField()
     tipo_de_paciente = CharField(max_length=20)
     tipo_de_acceso_vascular = CharField(max_length=20)
