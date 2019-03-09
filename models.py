@@ -47,17 +47,22 @@ class Personas(MyModel):
 
     class Meta:
         table_name = 'personas'
+        
 
 
 class Usuarios(MyModel):
     id = PrimaryKeyField()
-    persona = ForeignKeyField(Personas, backref='usuarios', related_name='usuarios', unique=True)
+    persona_id = ForeignKeyField(Personas, backref='usuarios', unique=True)
     rol = CharField(max_length=20)
     usuario = CharField(max_length=20, unique=True)
     clave = CharField(66)
 
     class Meta:
         table_name = 'usuarios'
+        indexes = (
+        (('id', 'persona_id'), True)
+        )
+
 
 class Mutualistas(MyModel):
     id = PrimaryKeyField()
@@ -66,29 +71,60 @@ class Mutualistas(MyModel):
     class Meta:
         table_name = 'mutualistas'
 
+
 class Doctores(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='doctores', related_name='doctores')
+    usuarios_id = ForeignKeyField(Usuarios, backref='doctores')
     numero_profesional = IntegerField(unique=True)
     super_doctor = BooleanField(default=False)
 
     class Meta:
         table_name = 'doctores'
+        indexes = (
+        (('id', 'usuarios_id'), True)
+        )
+
+
+class Nurses(MyModel):
+    id = PrimaryKeyField()
+    usuarios_id = ForeignKeyField(Usuarios, backref='nurses')
+    super_nurse = BooleanField(default=False)
+
+    class Meta:
+        table_name = 'nurses'
+        indexes = (
+        (('id', 'usuarios_id'), True)
+        )
+
 
 class Enfermeros(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='enfermeros', related_name='enfermeros') 
+    usuarios_id = ForeignKeyField(Usuarios, backref='enfermeros') 
 
     class Meta:
         table_name = 'enfermeros'
+        indexes = (
+        (('id', 'usuarios_id'), True)
+        )
+
+
+class Administrativos(MyModel):
+    id = PrimaryKeyField()
+    usuarios_id = ForeignKeyField(Usuarios, backref='administrativos') 
+
+    class Meta:
+        table_name = 'administrativos'
+        indexes = (
+        (('id', 'usuarios_id'), True)
+        )
 
 
 class Pacientes(MyModel):
     id = PrimaryKeyField()
-    personas_id = ForeignKeyField(Personas, backref='pacientes', related_name='pacientes', unique=True)
-    mutualistas_id = ForeignKeyField(Mutualistas, backref='mutualista', related_name='mutualista', unique=True)
+    personas_id = ForeignKeyField(Personas, backref='pacientes', unique=True)
+    mutualistas_id = ForeignKeyField(Mutualistas, backref='mutualista', unique=True)
     doctores_id = ForeignKeyField(Doctores, backref='doctores', unique=True)
-    enfermeros_id = ForeignKeyField(Enfermeros, backref='enfermeros', related_name='enfermeros', unique=True)
+    enfermeros_id = ForeignKeyField(Enfermeros, backref='enfermeros', unique=True)
     altura = IntegerField()
     tipo_de_paciente = CharField(max_length=20)
     tipo_de_acceso_vascular = CharField(max_length=20)
@@ -103,11 +139,13 @@ class Pacientes(MyModel):
     
     class Meta:
         table_name = 'pacientes'
-
-
-
+        indexes = (
+        (('id', 'personas_id', 'mutualistas_id', 'doctores_id', 'enfermeros_id'), True)
+        )
 
 
 if __name__ == '__main__':
     db.connect()
-    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Enfermeros, Pacientes], safe=True)  # con safe=True no tira error si la tabla ya fue creada
+    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses, Enfermeros, Administrativos, Pacientes], safe=True)
+    # con safe=True no tira error si la tabla ya fue creada
+    db.close()
