@@ -11,7 +11,7 @@
 	</div>
 	<div class="user-data">
 		<i class="fas fa-user"></i>&nbsp;&nbsp;<span class="md-none">&nbsp;Usuario: </span><strong>{{ nombre_de_usuario }}</strong>
-		<button onclick="window.location='{{ url_for('logout') }}'">Salir<span class="md-none"> del sistema&nbsp;</span>&nbsp;&nbsp;<i class="fas fa-sign-out-alt fa-lg"></i></button>
+		<button onclick="window.location='{{ url_for('logout') }}'"><i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;&nbsp;Salir<span class="md-none"> del sistema</span></button>
 	</div>
 </header>
 <div class="container">
@@ -19,11 +19,11 @@
 		<nav>
 			<ul>
 				<li{% if request.url_rule.endpoint == "inicio" %} class="active"{% endif %}><a href="{{ url_for('inicio') }}" title="Inicio"><span class="icon"><i class="fas fa-table fa-lg"></i></span><span class="md-none">Inicio</span></a></li>
-				<li{% if request.url_rule.endpoint == "pacientes" %} class="active"{% endif %}><a href="{{ url_for('pacientes') }}" title="Pacientes"><span class="icon"><i class="fas fa-users fa-lg"></i></span><span class="md-none">Pacientes</span></a></li>
+				<li{% if "pacientes" in request.url_rule.endpoint %} class="active"{% endif %}><a href="{{ url_for('pacientes') }}" title="Pacientes"><span class="icon"><i class="fas fa-users fa-lg"></i></span><span class="md-none">Pacientes</span></a></li>
 				<li><a href="" title="Sesiones"><span class="icon"><i class="fas fa-notes-medical fa-lg"></i></span><span class="md-none">Sesiones</span></a></li>
 				<li><a href="" title="Agenda semanal"><span class="icon"><i class="fas fa-calendar-alt fa-lg"></i></span><span class="md-none">Agenda semanal</span></a></li>
 				<li><a href="" title="Capilares"><span class="icon"><i class="fas fa-prescription-bottle fa-lg"></i></span><span class="md-none">Capilares</span></a></li>
-				<li><a href="" title="Usuarios"><span class="icon"><i class="fas fa-user-lock fa-lg"></i></span><span class="md-none">Usuarios</span></a></li>
+				<li{% if "usuarios" in request.url_rule.endpoint %} class="active"{% endif %}><a href="{{ url_for('usuarios') }}"" title="Usuarios"><span class="icon"><i class="fas fa-user-lock fa-lg"></i></span><span class="md-none">Usuarios</span></a></li>
 				<li><a href="" title="Salas y puestos"><span class="icon"><i class="fas fa-sitemap fa-lg"></i></span><span class="md-none">Salas y puestos</span></a></li>
 				<li><a href="" title="Configuración"><span class="icon"><i class="fas fa-cog fa-lg"></i></span><span class="md-none">Configuración</span></a></li>
 			</ul>

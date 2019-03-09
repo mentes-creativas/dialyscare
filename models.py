@@ -43,7 +43,7 @@ class Personas(MyModel):
     ingreso = DateTimeField(default=datetime.datetime.now())
     #ingreso = TimestampField(default=int(datetime.datetime.now().timestamp()))   otra forma de hacerlo
     observaciones = TextField()
-    estado = BooleanField
+    estado = BooleanField()
 
     class Meta:
         table_name = 'personas'
@@ -52,7 +52,7 @@ class Personas(MyModel):
 
 class Usuarios(MyModel):
     id = PrimaryKeyField()
-    persona_id = ForeignKeyField(Personas, backref='usuarios', unique=True)
+    personas_id = ForeignKeyField(Personas, backref='usuarios', unique=True)
     rol = CharField(max_length=20)
     usuario = CharField(max_length=20, unique=True)
     clave = CharField(66)
@@ -60,8 +60,9 @@ class Usuarios(MyModel):
     class Meta:
         table_name = 'usuarios'
         indexes = (
-        (('id', 'persona_id'), True)
+        (('id', 'personas_id'), True)
         )
+
 
 
 class Mutualistas(MyModel):
@@ -74,7 +75,7 @@ class Mutualistas(MyModel):
 
 class Doctores(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='doctores')
+    usuarios_id = ForeignKeyField(Usuarios, backref='doctores', unique=True)
     numero_profesional = IntegerField(unique=True)
     super_doctor = BooleanField(default=False)
 
@@ -97,9 +98,10 @@ class Nurses(MyModel):
         )
 
 
+
 class Enfermeros(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='enfermeros') 
+    usuarios_id = ForeignKeyField(Usuarios, backref='enfermeros', unique=True) 
 
     class Meta:
         table_name = 'enfermeros'

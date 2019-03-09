@@ -3,11 +3,14 @@
 {% block contenido_de_la_seccion %}
 <!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
 
-<h1>Título de la sección</h1>
+<h1>Usuarios</h1>
 
 <div class="container">
-	...Acá va el listado...
+	<a href="{{ url_for('usuarios_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar usuario</a>
+
+	<br><br>...Acá va el listado...<br><br><br>
 </div>
+
 
 <!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
 {% endblock %}

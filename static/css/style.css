@@ -244,7 +244,32 @@ aside a .icon {
 
 main {
 	flex: 1 1 80%;
+	background: #eceff4;
 	padding: 10.5rem 3rem 3rem;
+}
+
+main h1 {
+	margin-bottom: 2rem;
+}
+
+main .container {
+	display: block;
+	background: #fff;
+	border-top: .3rem solid #d2d5de;
+	padding: 1rem;
+}
+
+.button {
+	display: inline-block;
+	border: 1px solid #d2d5de;
+	border-radius: .5rem;
+	padding: .7rem 2rem .8rem;
+}
+
+.button:hover {
+	background: rgb(66, 123, 197);
+	border: 1px solid rgb(66, 123, 197);
+	color: #fff;
 }
 
 /* #endregion Admin comin */
