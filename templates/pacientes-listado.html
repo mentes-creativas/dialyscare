@@ -8,8 +8,79 @@
 <div class="container">
 	<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar paciente</a>
 
-	<br><br>...Acá va el listado...<br><br><br>
+	<class="<button>"
+		<form>
+			<select name="filtrar">
+				<option>filtrar</option>
+			</select>
+
+			<class="button">
+				<label>
+			    	<input name="Nombre o CI" placeholder="Nombre o CI">
+			    	<button>Buscar</button>
+			</label>
+		</form>
+	</class>
 </div>
+
+<style>
+	table {
+	   border-collapse: collapse;
+	   width: 100%;
+	}
+
+	td,
+	th {
+		border: 1px solid;
+		text-align: center;
+		padding: 8px;
+	}
+</style>
+
+<table>
+	<tr>
+		<th>Nombre</th>
+		<th>CI</th>
+		<th>Número FNR</th>
+		<th>Médico</th>
+		<th>Vacío</th>
+	</tr>
+	    <td>Pérez Juan</td>
+	    <td>12345678</td>
+    	<td>123456</td>
+    	<td>Pereyra Delia</td>
+    	<td>
+	    	<div class="container">
+		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="fal fa-plus"></i>Ver más</a>
+
+		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="fal fa-user-edit"></i>Editar</a>
+				
+		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="far fa-user-times"></i>Deshabilitar</a>
+		   </div>
+		</td>
+	</tr>
+	<tr>
+	    <td>Fernández Leopoldo</td>
+	    <td>23456789</td>
+    	<td>234567</td>
+    	<td>Pereyra Delia</td>
+    	<td>
+	    	<div class="container">
+		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="fal fa-plus"></i>Ver más</a>
+
+		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="fal fa-user-edit"></i>Editar</a>
+				
+		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="far fa-user-times"></i>Deshabilitar</a>
+		   </div>
+		</td>
+	</tr>
+	
+</table>
+
+
+				
+	
+	
 
 <!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
 {% endblock %}
