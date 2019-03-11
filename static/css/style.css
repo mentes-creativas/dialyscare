@@ -272,6 +272,17 @@ main .container {
 	color: #fff;
 }
 
+.data-table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.data-table th {
+ border: 1px solid;
+ text-align: center;
+ padding: 8px;
+}
+
 .pagination a {
 	color: black;
 	float: left;
@@ -279,10 +290,12 @@ main .container {
 	text-decoration: none;
 	transition:background-color .3s;
 }
+
 .pagination a.active {
 	background-color: dodgerblue;
 	color: white;
 }
+
 .pagination a.hover:not(.active)
 {background-color: #ddd;}
 
