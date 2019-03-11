@@ -47,6 +47,7 @@ class Personas(MyModel):
 
     class Meta:
         table_name = 'personas'
+        
 
 
 class Usuarios(MyModel):
@@ -58,6 +59,10 @@ class Usuarios(MyModel):
 
     class Meta:
         table_name = 'usuarios'
+        indexes = (
+        (('id', 'personas_id'), True)
+        )
+
 
 
 class Mutualistas(MyModel):
@@ -76,6 +81,22 @@ class Doctores(MyModel):
 
     class Meta:
         table_name = 'doctores'
+        indexes = (
+        (('id', 'usuarios_id'), True)
+        )
+
+
+class Nurses(MyModel):
+    id = PrimaryKeyField()
+    usuarios_id = ForeignKeyField(Usuarios, backref='nurses')
+    super_nurse = BooleanField(default=False)
+
+    class Meta:
+        table_name = 'nurses'
+        indexes = (
+        (('id', 'usuarios_id'), True)
+        )
+
 
 
 class Enfermeros(MyModel):
@@ -84,6 +105,20 @@ class Enfermeros(MyModel):
 
     class Meta:
         table_name = 'enfermeros'
+        indexes = (
+        (('id', 'usuarios_id'), True)
+        )
+
+
+class Administrativos(MyModel):
+    id = PrimaryKeyField()
+    usuarios_id = ForeignKeyField(Usuarios, backref='administrativos') 
+
+    class Meta:
+        table_name = 'administrativos'
+        indexes = (
+        (('id', 'usuarios_id'), True)
+        )
 
 
 class Pacientes(MyModel):
@@ -106,8 +141,13 @@ class Pacientes(MyModel):
     
     class Meta:
         table_name = 'pacientes'
+        indexes = (
+        (('id', 'personas_id', 'mutualistas_id', 'doctores_id', 'enfermeros_id'), True)
+        )
 
 
 if __name__ == '__main__':
     db.connect()
-    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Enfermeros, Pacientes], safe=True)  # con safe=True no tira error si la tabla ya fue creada
+    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses, Enfermeros, Administrativos, Pacientes], safe=True)
+    # con safe=True no tira error si la tabla ya fue creada
+    db.close()
