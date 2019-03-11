@@ -138,6 +138,7 @@ class Pacientes(MyModel):
     alergico = BooleanField(default=False)
     numero_fnr = IntegerField()
     habilitar_lavado_capilar = BooleanField()
+    paciente_vigente = BooleanField()
     
     class Meta:
         table_name = 'pacientes'
