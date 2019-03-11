@@ -138,6 +138,7 @@ class Pacientes(MyModel):
     alergico = BooleanField(default=False)
     numero_fnr = IntegerField()
     habilitar_lavado_capilar = BooleanField()
+    paciente_vigente = BooleanField()
     
     class Meta:
         table_name = 'pacientes'
@@ -150,4 +151,4 @@ if __name__ == '__main__':
     db.connect()
     db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses, Enfermeros, Administrativos, Pacientes], safe=True)
     # con safe=True no tira error si la tabla ya fue creada
-    db.close()
+db.close()
