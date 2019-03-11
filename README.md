@@ -8,6 +8,4 @@ Proyecto final de primer año del programa b_IT
 
 # Instalar dependencias
 
-pip install flask flask-peewee flask-mysqldb
-
-(o ejecutar el archivo install.bat incluido en el repositorio)
+pip install -r requirements.txt
