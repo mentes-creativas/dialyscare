@@ -17,15 +17,13 @@
                 <option value="Doctores">Doctores</option>
             </select>
 
+
             <class="button">
                 <label>
                     <input name="Nombre o CI" placeholder="Nombre o CI">
                     <button>Buscar</button>
             </label>
         </form>
-
-
-
 
         <style>
             table {
@@ -41,14 +39,39 @@
             }
         </style>
 
-
+        <style>
+            .button {
+                background-color: #d3e4ec;
+                border: none;
+                color: black;
+                padding: 8px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 12px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+            
+            .button1 {
+                border-radius: 8px;
+            }
+            
+            .button2 {
+                border-radius: 8px;
+            }
+            
+            .button3 {
+                border-radius: 8px;
+            }
+        </style>
         <table>
             <tr>
                 <th>Nombre</th>
                 <th>CI</th>
                 <th>Tipo de Usuario</th>
                 <th>Teléfono</th>
-                <th>Vacío</th>
+                <th> </th>
             </tr>
             <tr>
                 <td>text</td>
@@ -56,12 +79,13 @@
                 <td>text</td>
                 <td>text</td>
                 <td>
+
                     <div class="container">
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="fal fa-plus"></i>Ver mas</a>
+                        <a href="{{ url_for('Ver más') }}" class="button"><i class="fal fa-plus"></i>&nbsp;&nbsp; Ver más</a>
 
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="fal fa-user-edit"></i>Editar</a>
+                        <a href="{{ url_for('Editar') }}" class="button"><i class="fal fa-user-edit"></i>&nbsp;&nbsp; Editar</a>
 
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="far fa-user-times"></i>Deshabilitar</a>
+                        <a href="{{ url_for('Deshabilitar') }}" class="button"><i class="far fa-user-times"></i>&nbsp;&nbsp; Deshabilitar</a>
                     </div>
                 </td>
             </tr>
@@ -72,11 +96,11 @@
                 <td>text</td>
                 <td>
                     <div class="container">
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="fal fa-plus"></i>Ver mas</a>
+                        <a href="{{ url_for('Ver más') }}" class="button"><i class="fal fa-plus"></i>&nbsp;&nbsp; Ver más</a>
 
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="fal fa-user-edit"></i>Editar</a>
+                        <a href="{{ url_for('Editar') }}" class="button"><i class="fal fa-user-edit"></i>&nbsp;&nbsp; Editar</a>
 
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="far fa-user-times"></i>Deshabilitar</a>
+                        <a href="{{ url_for('Deshabilitar') }}" class="button"><i class="far fa-user-times"></i>&nbsp;&nbsp; Deshabilitar</a>
                     </div>
                 </td>
             </tr>
@@ -87,17 +111,18 @@
                 <td>text</td>
                 <td>
                     <div class="container">
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="fal fa-plus"></i>Ver mas</a>
 
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="fal fa-user-edit"></i>Editar</a>
 
-                        <a href="{{ url_for('usuarios') }}" class="button"><i class="far fa-user-times"></i>Deshabilitar</a>
+                        <a href="{{ url_for('Ver más') }}" class="button"><i class="fal fa-plus"></i>&nbsp;&nbsp; Ver más</a>
+
+                        <a href="{{ url_for('Editar') }}" class="button"><i class="fal fa-user-edit"></i>&nbsp;&nbsp; Editar</a>
+
+                        <a href="{{ url_for('Deshabilitar') }}" class="button"><i class="far fa-user-times"></i>&nbsp;&nbsp; Deshabilitar</a>
                     </div>
                 </td>
             </tr>
 
         </table>
-
 </div>
 
 <style>
@@ -120,9 +145,9 @@
     }
     
     .pagination a.active {
-        background-color: #89b8ce;
+        background-color: #d3e4ec;
         color: white;
-        border: 1px solid #89b8ce;
+        border: 1px solid #d3e4ec;
     }
     
     .pagination a:hover:not(.active) {
@@ -135,7 +160,7 @@
         <div class="pagination">
             <a href="#">&laquo;</a>
             <a href="#">1</a>
-            <a href="#" class="active">2</a>
+            <a href="#">2</a>
             <a href="#">3</a>
             <a href="#">4</a>
             <a href="#">5</a>
@@ -144,6 +169,7 @@
         </div>
     </div>
 </div>
+
 
 
 <!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
