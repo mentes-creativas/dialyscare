@@ -12,236 +12,192 @@
 			<div>
 				<label>
 					Nombres
-					<input type="text" id="Nombre" name="nombres" required/>
+					<input type="text" name="nombres" required />
 				</label>
 			</div>
 			<div>
 				<label>
 					Apellidos
-					<input type="text" id="apellido" name="apellidos" required>
+					<input type="text" name="apellido" required>
 				</label>
-	
 			</div>
 			<div>
 				<label>
 					E-mail
-					<input type="email" id="e-mail" name="email"required>
+					<input type="email" name="email" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					Dirección
-					<input type="text" id="dirección" name="direccion"required>
+					<input type="text" name="direccion" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					Localidad
-					<input type="text" id="localidad" name="localidad" required>
-	
+					<input type="text" name="localidad" required>
+
 				</label>
-	
+
 			</div>
 			<div>
 				<label>
 					Departamento
-					<input type="text" id="departamento" name="departamento" required>
+					<input type="text" name="departamento" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					País
-					<input type="text" id="país" name="pais" required>
-					
+					<input type="text" name="pais" required>
 				</label>
 			</div>
 			<div>
 				<label>
-					C.I. 
-					<input type="text" id="c.i." name="ci"required>
+					C.I.
+					<input type="text" name="ci" required>
 				</label>
 			</div>
 			<div>
+				<label>
+					Teléfono 1
+					<input type="text" name="telefono1" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					Teléfono 2
+					<input type="text" name="telefono2">
+				</label>
+			</div>
+			<div>
+				<label>
+					Teléfono 3
+					<input type="text" name="telefono3">
+				</label>
+			</div>
+			<div>
+				<label>
+					Fecha de nacimiento
+					<input type="date" name="fecha_de_nacimiento" required>
+				</label>
+			</div>
+			<div>
+				<legend>Sexo</legend>
+				<label><input type="radio" name="gender" value="h"> Hombre</label>
+				<label><input type="radio" name="gender" value="m"> Mujer</label>
+				<label><input type="radio" name="gender" value="o"> Otro</label>
+			</div>
+			<div>
+				<label>
+					Obsevaciones
+					<textarea name="obsevaciones" rows="3"></textarea>
+				</label>
+			</div>
+		</fieldset>
+		<fieldset>
+			<form>
+				<legend>Datos Clinicos</legend>
+				<div>
 					<label>
-						Teléfono 1 
-						<input type="text" id="telefono 1" name="telefono1"required>
+						Médico Tratante
+						<select name="doctor_id">
+							<option value="">Seleccionar...</option>
+							<option value="1">Delia Pereyra</option>
+							<option value="2">Cecilia Tognola</option>
+							<option value="3">Gonzalo Acuña</option>
+							<option value="4">Carina Suviza</option>
+						</select>
 					</label>
 				</div>
 				<div>
-						<label>
-							Teléfono 2
-							<input type="text" id="telefono 2" name="telefono2">
-						</label>
-					</div>
-					<div>
-							<label>
-								Teléfono 3
-							<input type="text" id="telefono 3" name="telefono3">
-							
-							</label>
-						</div>
-						<div>
-								<label>
-									Fecha de nacimiento 
-							<input type="date" id="fecha de nacimiento" name="fecha_de_nacimiento"required>
-								</label>
-							</div>
-							<div>
-							<legend>Sexo</legend>
-							<label><input type="radio" name="gender"> Hombre</label>
-							<label><input type="radio" name="gender"> Mujer</label>
-							<label><input type="radio" name="gender"> Otro</label>
-						</div>
-						<div>
-							<label>
-								Observaciones
-							<textarea name="observaciones" rows="3"></textarea>
-						</label>
-						</div>
-		</fieldset>
-		
-		<fieldset>
-			<form>
-			<legend>Datos Clinicos</legend>
-	
-	
-			
-			<div>
-				<label>
-					Médico Tratante
-					<input type="text" id="medico tratante" name="medico_tratante">
-		
-				</label>
-		
-		
-			</div>
-			<div>
-				<label>
-					Enfermero Responsable
-					<input type="text" id="enfermero responsable" name="enfermero_responsable">
-			
-				</label>
-			
-			
-			</div>
-			<div>
-				<label for="mutualista">Mutualista</label>
-					<select name="mutualista" id="mutualista">
-						<option value="ASSE">ASSE</option>
-						<option value="Comero">Comero</option>
-						<option value="Medica Uruguaya">Medica Uruguaya</option>
-	
-	
+					<label>
+						Enfermero Responsable
+						<select name="enfermero_id">
+							<option value="">Seleccionar...</option>
+							<option value="1">María Antonieta</option>
+							<option value="2">Florinda Meza</option>
+						</select>
+					</label>
+				</div>
+				<div>
+					<label for="country">Mutualista</label>
+					<select name="country">
+						<option value="">Seleccionar...</option>
+						<option value="1">ASSE</option>
+						<option value="2">COMERO</option>
+						<option value="3">Médica Uruguaya</option>
 					</select>
-								
-							   
-				
-			</div>
-			<div>
-				<label >Tipo de Paciente</label>
+				</div>
+				<div>
+					<label for="tipo_de_paciente">Tipo de Paciente</label>
 					<select name="tipo_de_paciente">
-						<option value="Agudo">Agudo</option>
-						<option value="Ambulatorio">Ambulatorio</option>
-						<option value="Estable">Estable </option>
-						<option value="Transitorio">Transitorio </option>
-						<option value="Transplantado">Transplantado </option>
-						<option value="Obito">Obito </option>
+						<option value="">Seleccionar...</option>
+						<option value="agudo">Agudo</option>
+						<option value="ambulatorio">Ambulatorio</option>
+						<option value="estable">Estable </option>
+						<option value="transitorio">Transitorio </option>
+						<option value="transplantado">Transplantado </option>
+						<option value="obito">Obito </option>
 					</select>
-									
-								   
-					
-			</div>
-			<div>
-				<label>
-				   	Número FNR
-					<input type="text" id="numero frn" name="numero_frn">
-				
-				</label>
-				
-				
-			</div>
-			<div>
-				<label> <input type="checkbox" name="paciente_vigente">Paciente vigente </label>
-			</div>
-			<div>
-				<label>
-					Primer diálisis
-					<input type="date" id="primer dialiis" name="primer_dialiis">
-	
-				</label>
-				
-				
-			</div>
-			<div>
-				<fieldset>
-					<legend>Grupo sanguineo</legend>
+				</div>
+				<div>
+					<label>
+						Número FNR
+						<input type="text" name="numero_frn">
+					</label>
+				</div>
+				<div>
+					<label><input type="checkbox" name="estado">Paciente vigente</label>
+				</div>
+				<div>
+					<label>
+						Primer diálisis
+						<input type="date" name="primer_dialisis">
+					</label>
+				</div>
+				<div>
 					<fieldset>
-					
-						<legend>Tipo</legend>
-	
-							
-						<label><input type="radio" name="gender">A</label>
-						<label><input type="radio" name="gender">B</label>
-						<label><input type="radio" name="gender">AB</label>
-						<label><input type="radio" name="gender">O</label>
-					</fieldset>
-					<fieldset>
-						   
-						
-						
-								
-						<legend>Rh</legend>
-	
-						<label><input type="radio" name="Rh">+</label>
-						<label><input type="radio" name="Rh">-</label>
-					</fieldset>
-				</fieldset>
-	
-			</div>
-					
-			<div>
-	
-			
-				<label>
-					Altura (m)
-					<input type="text" id="altura (m)" name="altura">
-			
-				</label>
-			
-			
-			</div>
-			<div>
-				<label> <input type="checkbox" name="hta">HTA</label>
-				<label> <input type="checkbox" name="alergico">Alérgico</label>
-				<label> <input type="checkbox" name="diabetico">Diabético</label>
-				<label> <input type="checkbox"name="habilitar_lavado_capilar">Habilitar lavado capilar</label>
-	
-			</div>
-			<div>
-				<label for="tipo_de_puesto">Tipo de Puesto</label>
-				<select name="tipo_de_puesto" id="tipo_de_puesto">
-					<option value="Normal">Normal</option>
-					<option value="HVC+">HVC+</option>
-							   
-	
-				</select>
-								
-							   
-				
-						
-			</div>
-			</form>
+						<legend>Grupo sanguineo</legend>
+						<fieldset>
+							<legend>Tipo</legend>
+							<label><input type="radio" name="gender" value="a">A</label>
+							<label><input type="radio" name="gender" value="b">B</label>
+							<label><input type="radio" name="gender" value="ab">AB</label>
+							<label><input type="radio" name="gender" value="o">O</label>
+						</fieldset>
+						<fieldset>
+							<legend>Rh</legend>
+							<label><input type="radio" name="Rh" value="+">+</label>
+							<label><input type="radio" name="Rh" value="-">-</label>
+						</fieldset>
+				</div>
+				<div>
+					<label>
+						Altura (cm)
+						<input type="number" name="altura" min="100" max="250">
+					</label>
+				</div>
+				<div>
+					<label> <input type="checkbox" name="hta">HTA</label>
+					<label> <input type="checkbox" name="alergico">Alérgico</label>
+					<label> <input type="checkbox" name="diabetico">Diabético</label>
+					<label> <input type="checkbox" name="habilitar_lavado_de_capilar">Habilitar lavado capilar</label>
+				</div>
+				<div>
+					<label for="country">Tipo de Puesto</label>
+					<select name="tipo_de_puesto">
+						<option value="">Seleccionar...</option>
+						<option value="Normal">Normal</option>
+						<option value="HVC+">HVC+</option>
+					</select>
+				</div>
 		</fieldset>
-		
 		<button>Guardar</button>
 		<button>Cancelar</button>
-	
-	
 	</form>
-	
-	<br><br>
 </div>
-
 
 <!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
 {% endblock %}
