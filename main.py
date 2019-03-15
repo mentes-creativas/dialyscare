@@ -22,7 +22,7 @@ login_manager.login_view('login')
 def load_user(userid):
     try:
         return models.Usuarios.get(models.Usuarios.id == userid)
-    except models.DoesNotExist
+    except models.DoesNotExist:
         return None
 
 
@@ -30,7 +30,7 @@ def load_user(userid):
 def before_request():
     """Conecta a la base de datos antes de cada request"""
 
-    if not hasattr(g, 'db')
+    if not hasattr(g, 'db'):
         g.db = models.db
         g.db.connect()
 
