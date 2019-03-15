@@ -2,3 +2,5 @@ pylint
 flask
 flask-peewee
 flask-mysqldb
+flask-bcrypt
+flask-login

@@ -1,8 +1,45 @@
 import json
 
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, g, render_template, url_for, redirect, request
+from flask_login import LoginManager
+
+import models
+
+DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
+PORT = 5000  # 5000 para desarrollo | 80 es el puerto por defecto del protocolo http
+HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
+
 
 app = Flask(__name__)
+app.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view('login')
+
+@login_manager.user_loader
+def load_user(userid):
+    try:
+        return models.Usuarios.get(models.Usuarios.id == userid)
+    except models.DoesNotExist
+        return None
+
+
+@app.before_request
+def before_request():
+    """Conecta a la base de datos antes de cada request"""
+
+    if not hasattr(g, 'db')
+        g.db = models.db
+        g.db.connect()
+
+
+@app.after_request
+def after_request():
+    """Cerramos la conección a la base de datos"""
+    g.db.close()
+    return response
+
 
 
 @app.route("/", methods = ['GET', 'POST'])
@@ -100,7 +137,7 @@ def login():
             response.set_cookie('session', json.dumps(dict(request.form.items())))
 
         return response
-        
+
         #tambien podia ser asi
         #usuario = request.form["usuario"]
         #contrasena = request.form["contrasena"]
@@ -108,6 +145,5 @@ def login():
 
 
 if __name__ == '__main__':
-    # con debug=True no tenemos que reiniciar el servidor para ver los cambios
-    # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
-    app.run(debug=True, host='0.0.0.0')
+    models.initialize()
+    app.run(debug=DEBUG, host=HOST, port=PORT)
