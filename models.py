@@ -226,10 +226,45 @@ class Pacientes(MyModel):
     alergico = BooleanField(default=False)
     numero_fnr = IntegerField()
     habilitar_lavado_capilar = BooleanField()
-    paciente_vigente = BooleanField()
 
     class Meta:
         table_name = 'pacientes'
+
+    @classmethod
+    def create_paciente(cls, p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+        p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+        p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, mutualista,
+        doctor, enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular,
+        grupo_sanguineo, rh, primer_dialisis, diabetico, alergico, numero_fnr,
+        habilitar_lavado_capilar):
+
+        try:
+            persona = Personas.create_persona(p_nombres, p_apellidos, p_email,
+                p_ci, p_telefono1, p_telefono2, p_apellidos, p_direccion, p_localidad,
+                p_departamento, p_pais, p_fecha_de_nacimiento, p_sexo, p_observaciones,
+                p_estado)
+
+            paciente = cls.create(
+                personas_id = persona,
+                mutualistas_id = mutualista,
+                doctores_id = doctor,
+                enfermero_id = enfermero,
+                altura = altura,
+                tipo_de_paciente = tipo_de_paciente,
+                tipo_de_acceso_vascular = tipo_de_acceso_vascular,
+                grupo_sanguineo = grupo_sanguineo,
+                rh = rh,
+                primer_dialisis = primer_dialisis,
+                diabetico = diabetico,
+                alergico = alergico,
+                numero_fnr = numero_fnr,
+                habilitar_lavado_capilar = habilitar_lavado_capilar
+            }
+
+            return paciente
+
+        except IntegrityError:
+            raise ValueError('User already exists')
 
 
 def initialize():
