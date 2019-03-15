@@ -29,7 +29,7 @@ class General(MyModel):
 
     @classmethod
     def default_data(cls):
-        """Agrega datos por defecto"""
+        """Agregar datos por defecto"""
         data_source = {'admin_nombre': 'Denry Techera',
                 'admin_email': 'denrytech@gmail.com',
                 'admin_telefono': '091243955',
@@ -281,7 +281,7 @@ if __name__ == '__main__':
         Enfermeros, Administrativos, Pacientes], safe=True)
     # con safe=True no tira error si la tabla ya fue creada
 
-    #Si no existe configuracion general, la creamos
+    #Si no existe configuracion general, agregamos la por defecto
     if( General.select().count() == 0 ):
         General.default_data()
 
