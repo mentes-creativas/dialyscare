@@ -35,7 +35,7 @@ class General(MyModel):
                 'admin_telefono': '091243955',
                 'balanza_clave': 918273}
 
-        General.create(**data_source)
+        cls.create(**data_source)
 
 
 class Personas(MyModel):
