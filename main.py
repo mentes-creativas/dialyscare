@@ -16,7 +16,7 @@ app.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view('login')
+login_manager.login_view
 
 @login_manager.user_loader
 def load_user(userid):
@@ -36,7 +36,7 @@ def before_request():
 
 
 @app.after_request
-def after_request():
+def after_request(response):
     """Cerramos la conección a la base de datos"""
     g.db.close()
     return response

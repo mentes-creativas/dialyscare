@@ -114,7 +114,7 @@ class Usuarios(UserMixin, MyModel):
 
         try:
             persona = Personas.create_persona(p_nombres, p_apellidos, p_email,
-                p_ci, p_telefono1, p_telefono2, p_apellidos, p_direccion, p_localidad,
+                p_ci, p_telefono1, p_telefono2, p_telefono3, p_direccion, p_localidad,
                 p_departamento, p_pais, p_fecha_de_nacimiento, p_sexo, p_observaciones,
                 p_estado)
 
@@ -136,7 +136,7 @@ class Usuarios(UserMixin, MyModel):
                 enfermero = Enfermeros.create_enfermero(usuario)
 
             elif( u_rol == 'administrativo' ):
-                enfermero = Administrativos.create_administrativo(usuario)
+                administrativo = Administrativos.create_administrativo(usuario)
 
             else:
                 pass
@@ -175,12 +175,12 @@ class Doctores(MyModel):
         table_name = 'doctores'
 
     @classmethod
-    def create_doctor(cls, usuario, numero_profesional, super_nurse):
+    def create_doctor(cls, usuario, numero_profesional, super_doctor):
         try:
             doctor = cls.create(
                 usuarios_id = usuario,
                 numero_profesional = numero_profesional,
-                super_nurse = super_nurse
+                super_doctor = super_doctor
             )
 
             return doctor
@@ -286,7 +286,7 @@ class Pacientes(MyModel):
 
         try:
             persona = Personas.create_persona(p_nombres, p_apellidos, p_email,
-                p_ci, p_telefono1, p_telefono2, p_apellidos, p_direccion, p_localidad,
+                p_ci, p_telefono1, p_telefono2, p_telefono3, p_direccion, p_localidad,
                 p_departamento, p_pais, p_fecha_de_nacimiento, p_sexo, p_observaciones,
                 p_estado)
 
@@ -340,18 +340,18 @@ if __name__ == '__main__':
     #Si no existe configuracion general, agregamos la por defecto
     if( General.select().count() == 0 ):
         General.default_data()
-
+        
     ##Insertar datos de ejemplo
 
     ##Crear nurse en jefe
-    if( Usuarios.check_usuario_ci(1234567) ):
+    if( Usuarios.check_usuario_ci(1234560) ):
         print('Horacio Sosa ya existe')
     else:
         usuario = Usuarios.create_usuario(
             'Horacio',
             'Sosa',
-            'horaciososa@comero.com.uy',
-            1234567,
+            'horaciososa1@comero.com.uy',
+            1234560,
             '091111111',
             'sin 2º telefono',
             'sin 3er telefono',
@@ -365,8 +365,8 @@ if __name__ == '__main__':
             True,
             'nurse',
             'horaciososa',
-            '123456',
-            True,
+            '123458',
+            False,
             ''
         )
 
