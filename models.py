@@ -5,6 +5,12 @@ from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash, check_password_hash
 from peewee import *
 
+# Print all queries to stderr.
+import logging
+logger = logging.getLogger('peewee')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.DEBUG)
+
 db = MySQLDatabase('bevc2jessjfwwvi2ekjy', # nombre de la base de datos
                    host='bevc2jessjfwwvi2ekjy-mysql.services.clever-cloud.com',
                    user='unrdx4dncf6xxhtq',
@@ -87,7 +93,7 @@ class Personas(MyModel):
 
             return persona
         except IntegrityError:
-            raise ValueError('Person already exists')
+            raise ValueError('La persona ya existe')
 
 
 class Usuarios(UserMixin, MyModel):
@@ -125,13 +131,13 @@ class Usuarios(UserMixin, MyModel):
             elif( u_rol == 'doctor'):
                 doctor = Doctores.create_doctor(usuario, d_numero_profesional,
                                                 n_d_super)
-            
+
             elif( u_rol == 'enfermero' ):
                 enfermero = Enfermeros.create_enfermero(usuario)
-            
+
             elif( u_rol == 'administrativo' ):
                 enfermero = Administrativos.create_administrativo(usuario)
-            
+
             else:
                 pass
 
@@ -148,7 +154,7 @@ class Usuarios(UserMixin, MyModel):
             return False
         else:
             return True
-    
+
     @classmethod
     def check_usuario_ci(cls, ci):
         try:
@@ -209,7 +215,7 @@ class Enfermeros(MyModel):
 
     class Meta:
         table_name = 'enfermeros'
-    
+
     @classmethod
     def create_enfermero(cls, usuario):
         try:
@@ -228,8 +234,8 @@ class Administrativos(MyModel):
 
     class Meta:
         table_name = 'administrativos'
-    
-     @classmethod
+
+    @classmethod
     def create_administrativo(cls, usuario):
         try:
             administrativo = cls.create(
@@ -251,10 +257,10 @@ class Mutualistas(MyModel):
 
 class Pacientes(MyModel):
     id = PrimaryKeyField()
-    personas_id = ForeignKeyField(Personas, backref='pacientes', unique=True)
-    mutualistas_id = ForeignKeyField(Mutualistas, backref='mutualista', unique=True)
-    doctores_id = ForeignKeyField(Doctores, backref='doctores', unique=True)
-    enfermeros_id = ForeignKeyField(Enfermeros, backref='enfermeros', unique=True)
+    personas_id = ForeignKeyField(Personas, backref='pacientes1', unique=True)
+    mutualistas_id = ForeignKeyField(Mutualistas, backref='pacientes2')
+    doctores_id = ForeignKeyField(Doctores, backref='pacientes3')
+    enfermeros_id = ForeignKeyField(Enfermeros, backref='pacientes4')
     altura = IntegerField()
     tipo_de_paciente = CharField(max_length=20)
     tipo_de_acceso_vascular = CharField(max_length=20)
@@ -275,7 +281,7 @@ class Pacientes(MyModel):
         p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
         p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, mutualista,
         doctor, enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular,
-        grupo_sanguineo, rh, primer_dialisis, diabetico, alergico, numero_fnr,
+        grupo_sanguineo, rh, primer_dialisis, diabetico, hta, alergico, numero_fnr,
         habilitar_lavado_capilar):
 
         try:
@@ -288,7 +294,7 @@ class Pacientes(MyModel):
                 personas_id = persona,
                 mutualistas_id = mutualista,
                 doctores_id = doctor,
-                enfermero_id = enfermero,
+                enfermeros_id = enfermero,
                 altura = altura,
                 tipo_de_paciente = tipo_de_paciente,
                 tipo_de_acceso_vascular = tipo_de_acceso_vascular,
@@ -296,6 +302,7 @@ class Pacientes(MyModel):
                 rh = rh,
                 primer_dialisis = primer_dialisis,
                 diabetico = diabetico,
+                hta = hta,
                 alergico = alergico,
                 numero_fnr = numero_fnr,
                 habilitar_lavado_capilar = habilitar_lavado_capilar
@@ -304,8 +311,8 @@ class Pacientes(MyModel):
             return paciente
 
         except IntegrityError:
-            raise ValueError('User already exists')
-    
+            raise ValueError('El paciente ya existe')
+
     @classmethod
     def check_paciente_ci(cls, ci):
         try:
@@ -364,9 +371,10 @@ if __name__ == '__main__':
         )
 
         print('Horacio Sosa fue agregado con éxito')
-    
+
     ##Crear doctora en jefe
     if( Usuarios.check_usuario_ci(2345678) ):
+        doctor = Usuarios.get(Usuarios.usuario == 'deliapereyra')
         print('Delia Pereyra ya existe')
     else:
         doctor = Usuarios.create_usuario(
@@ -396,6 +404,7 @@ if __name__ == '__main__':
 
     ##Crear enfermera
     if( Usuarios.check_usuario_ci(3456789) ):
+        enfermero = Usuarios.get(Usuarios.usuario == 'bettinarey')
         print('Bettina Rey ya existe')
     else:
         enfermero = Usuarios.create_usuario(
@@ -419,10 +428,10 @@ if __name__ == '__main__':
             '123456'
         )
 
-        print('Delia Pereyra fue agregada con éxito')
+        print('Bettina Rey fue agregada con éxito')
 
     ##Crear mutualista
-    mutualista, created = Mutualistas.get_or_create(Mutualistas.nombre = 'ASSE')
+    mutualista = Mutualistas.create(nombre = 'ASSE')
 
     ##Crear paciente
     if( Pacientes.check_paciente_ci(4694361) ):
@@ -454,6 +463,7 @@ if __name__ == '__main__':
             '+',
             datetime.datetime.strptime('Jul 9 2008', '%b %d %Y'),
             False,
+            True,
             True,
             211076,
             True
