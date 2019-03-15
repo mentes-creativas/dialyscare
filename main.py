@@ -13,6 +13,7 @@ HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al ser
 app = Flask(__name__)
 app.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
 
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view('login')

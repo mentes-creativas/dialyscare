@@ -234,14 +234,16 @@ class Pacientes(MyModel):
 
 def initialize():
     db.connect()
-    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses, Enfermeros, Administrativos, Pacientes], safe=True)
+    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses,
+        Enfermeros, Administrativos, Pacientes], safe=True)
     db.close()
 
 
 
 if __name__ == '__main__':
     db.connect()
-    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses, Enfermeros, Administrativos, Pacientes], safe=True)
+    db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses,
+        Enfermeros, Administrativos, Pacientes], safe=True)
     # con safe=True no tira error si la tabla ya fue creada
 
     #Si no existe configuracion general, la creamos
