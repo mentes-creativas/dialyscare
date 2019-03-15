@@ -87,7 +87,7 @@ class Personas(MyModel):
 
             return persona
         except IntegrityError:
-            raise ValueError('User already exists')
+            raise ValueError('Person already exists')
 
 
 class Usuarios(UserMixin, MyModel):
@@ -125,16 +125,34 @@ class Usuarios(UserMixin, MyModel):
             elif( u_rol == 'doctor'):
                 doctor = Doctores.create_doctor(usuario, d_numero_profesional,
                                                 n_d_super)
+            
+            elif( u_rol == 'enfermero' ):
+                enfermero = Enfermeros.create_enfermero(usuario)
+            
+            elif( u_rol == 'administrativo' ):
+                enfermero = Administrativos.create_administrativo(usuario)
+            
+            else:
+                pass
 
             return usuario
 
         except IntegrityError:
-            raise ValueError('User already exists')
+            raise ValueError('El usuario ya existe')
 
     @classmethod
     def check_usuario_email(cls, email):
         try:
             persona = Personas.get(Personas.email == email)
+        except:
+            return False
+        else:
+            return True
+    
+    @classmethod
+    def check_usuario_ci(cls, ci):
+        try:
+            persona = Personas.get(Personas.ci == ci)
         except:
             return False
         else:
@@ -161,7 +179,7 @@ class Doctores(MyModel):
 
             return doctor
         except IntegrityError:
-            raise ValueError('User already exists')
+            raise ValueError('El doctor ya existe')
 
 
 class Nurses(MyModel):
@@ -182,7 +200,7 @@ class Nurses(MyModel):
 
             return nurse
         except IntegrityError:
-            raise ValueError('User already exists')
+            raise ValueError('El nurse ya existe')
 
 
 class Enfermeros(MyModel):
@@ -191,6 +209,17 @@ class Enfermeros(MyModel):
 
     class Meta:
         table_name = 'enfermeros'
+    
+    @classmethod
+    def create_enfermero(cls, usuario):
+        try:
+            enfermero = cls.create(
+                usuarios_id = usuario,
+            )
+
+            return enfermero
+        except IntegrityError:
+            raise ValueError('El enfermero ya existe')
 
 
 class Administrativos(MyModel):
@@ -199,6 +228,17 @@ class Administrativos(MyModel):
 
     class Meta:
         table_name = 'administrativos'
+    
+     @classmethod
+    def create_administrativo(cls, usuario):
+        try:
+            administrativo = cls.create(
+                usuarios_id = usuario,
+            )
+
+            return administrativo
+        except IntegrityError:
+            raise ValueError('El administrativo ya existe')
 
 
 class Mutualistas(MyModel):
@@ -259,12 +299,21 @@ class Pacientes(MyModel):
                 alergico = alergico,
                 numero_fnr = numero_fnr,
                 habilitar_lavado_capilar = habilitar_lavado_capilar
-            }
+            )
 
             return paciente
 
         except IntegrityError:
             raise ValueError('User already exists')
+    
+    @classmethod
+    def check_paciente_ci(cls, ci):
+        try:
+            persona = Personas.get(Personas.ci == ci)
+        except:
+            return False
+        else:
+            return True
 
 
 def initialize():
@@ -288,7 +337,7 @@ if __name__ == '__main__':
     ##Insertar datos de ejemplo
 
     ##Crear nurse en jefe
-    if( Usuarios.check_usuario_email('horaciososa@comero.com.uy') ):
+    if( Usuarios.check_usuario_ci(1234567) ):
         print('Horacio Sosa ya existe')
     else:
         usuario = Usuarios.create_usuario(
@@ -315,6 +364,101 @@ if __name__ == '__main__':
         )
 
         print('Horacio Sosa fue agregado con éxito')
+    
+    ##Crear doctora en jefe
+    if( Usuarios.check_usuario_ci(2345678) ):
+        print('Delia Pereyra ya existe')
+    else:
+        doctor = Usuarios.create_usuario(
+            'Delia',
+            'Pereyra',
+            'deliapereyra@comero.com.uy',
+            2345678,
+            '092222222',
+            'sin 2º telefono',
+            'sin 3er telefono',
+            'General Artigas 1234',
+            'Rocha',
+            'Rocha',
+            'Uruguay',
+            datetime.datetime.strptime('Nov 3 1955', '%b %d %Y'),
+            'f',
+            'Sin observaciones',
+            True,
+            'doctor',
+            'deliapereyra',
+            '654321',
+            True,
+            1234
+        )
 
+        print('Delia Pereyra fue agregada con éxito')
+
+    ##Crear enfermera
+    if( Usuarios.check_usuario_ci(3456789) ):
+        print('Bettina Rey ya existe')
+    else:
+        enfermero = Usuarios.create_usuario(
+            'Bettina',
+            'Rey',
+            'bettinarey@comero.com.uy',
+            3456789,
+            '093333333',
+            'sin 2º telefono',
+            'sin 3er telefono',
+            'Martinez Rodriguez 1234',
+            'Rocha',
+            'Rocha',
+            'Uruguay',
+            datetime.datetime.strptime('Jan 3 1945', '%b %d %Y'),
+            'f',
+            'Sin observaciones',
+            True,
+            'enfermero',
+            'bettinarey',
+            '123456'
+        )
+
+        print('Delia Pereyra fue agregada con éxito')
+
+    ##Crear mutualista
+    mutualista, created = Mutualistas.get_or_create(Mutualistas.nombre = 'ASSE')
+
+    ##Crear paciente
+    if( Pacientes.check_paciente_ci(4694361) ):
+        print('Denry Techera ya existe')
+    else:
+        paciente = Pacientes.create_paciente(
+            'Denry',
+            'Techera',
+            'denrytech@gmail.com',
+            46944361,
+            '091243955',
+            'sin 2º telefono',
+            'sin 3er telefono',
+            'Eliseo Marzol 1234',
+            'Rocha',
+            'Rocha',
+            'Uruguay',
+            datetime.datetime.strptime('Feb 9 1985', '%b %d %Y'),
+            'm',
+            'Sin observaciones',
+            True,
+            mutualista,
+            doctor,
+            enfermero,
+            182,
+            'ambulatorio',
+            'fistula_nativa',
+            'b',
+            '+',
+            datetime.datetime.strptime('Jul 9 2008', '%b %d %Y'),
+            False,
+            True,
+            211076,
+            True
+        )
+
+        print('Denry Techera fue agregado con éxito')
 
     db.close()
