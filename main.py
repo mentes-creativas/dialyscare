@@ -1,9 +1,13 @@
 import json
 
-from flask import Flask, g, render_template, url_for, redirect, request
+from flask import (Flask, g, render_template, flash, url_for, redirect, request)
+
 from flask_login import LoginManager
 
 import models
+
+import forms
+
 
 DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
 PORT = 5000  # 5000 para desarrollo | 80 es el puerto por defecto del protocolo http
@@ -16,7 +20,7 @@ app.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view
+login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(userid):
@@ -28,11 +32,11 @@ def load_user(userid):
 
 @app.before_request
 def before_request():
-    """Conecta a la base de datos antes de cada request"""
-
-    if not hasattr(g, 'db'):
-        g.db = models.db
+    #Conecta a la base de datos antes de cada request
+    g.db = models.db
+    if g.db.is_closed():
         g.db.connect()
+    
 
 
 @app.after_request
@@ -110,8 +114,33 @@ def usuarios_agregar():
     else:
         nombre = data.get('usuario')
         context = {'titulo_de_la_pagina': 'Agregar usuario', 'nombre_de_usuario': nombre}
-        return render_template('usuarios-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
-
+        form = forms.registro_usuario()
+        if form.validate_on_submit():
+            print('Usuario validado')
+            models.Usuarios.create_usuario(
+                p_nombres = form.nombres.data,
+                p_apellidos = form.apellidos.data,
+                p_email = form.email.data,
+                p_ci = form.ci.data,
+                p_telefono1 = form.telefono1.data,
+                p_telefono2 = form.telefono2.data,
+                p_telefono3 = form.telefono3.data,
+                p_direccion = form.direccion.data,
+                p_localidad = form.localidad.data,
+                p_departamento = form.departamento.data,
+                p_pais = form.pais.data,
+                p_fecha_de_nacimiento = form.fecha_nacimiento.data,
+                p_sexo = form.sexo.data,
+                p_observaciones = form.observaciones.data,
+                p_estado = form.estado.data,
+                u_rol = form.rol.data,
+                u_usuario = form.usuario.data,
+                u_clave = form.clave.data,
+                n_d_super = form.n_d_super.data,
+                d_numero_profesional = form.num_prof.data
+                )
+            return render_template('usuarios-listado.html', **context)
+        return render_template('usuarios-agregar.html', form = form, **context ) # doble asterisco desempaqueta las variables en el template
 
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():
