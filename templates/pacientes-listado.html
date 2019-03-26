@@ -10,7 +10,7 @@
 <div class="container">
 	<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar paciente</a>
 	<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
-	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-line-chart"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
+	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-chart-bar"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
 
 	<div class="searchBox">
 		<form>
@@ -30,6 +30,8 @@
 				<th>Número FNR</th>
 				<th>Médico</th>
 				<th>Enfermero</th>
+				<th>Teléfono</th>
+				<th>Email</th>
 				<th>Operaciones</th>
 			</tr>
 		</thead>
@@ -41,6 +43,8 @@
 				<td>{{ paciente.numero_fnr }}</td>
 				<td>{{ paciente.doctor.usuario.persona.nombres }} {{ paciente.doctor.usuario.persona.apellidos }}</td>
 				<td>{{ paciente.enfermero.usuario.persona.nombres }} {{ paciente.enfermero.usuario.persona.apellidos }}</td>
+				<td>{{ paciente.persona.telefono1 }}</td>
+				<td>{{ paciente.persona.email }}</td>
 				<td>
 					<a href="{{ url_for('pacientes_ver', paciente_id = paciente.id) }}" class="button" ><i class="fa fa-address-card"></i>&nbsp;&nbsp;Ver más</a>
 			   	<a href="{{ url_for('pacientes_editar', paciente_id = paciente.id) }}" class="button"><i class="fa fa-user-edit"></i>&nbsp;&nbsp;Editar</a>

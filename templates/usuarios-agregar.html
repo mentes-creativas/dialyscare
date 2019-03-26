@@ -9,20 +9,138 @@
 <h1>Agregar usuario</h1>
 
 <div class="container">
-	<form class="form" action="" methods= ['GET','POST'] >
-		{{ form.hidden_tag }}
+	<form>
 		<fieldset>
-			{% for field in form %}
-				{{ render_field(field) }}
-			{% endfor %}
+			<legend>Datos personales</legend>
+			<div>
+				<label>
+					Nombres
+					<input type="text" name="nombres" required />
+				</label>
+			</div>
+			<div>
+				<label>
+					Apellidos
+					<input type="text" name="apellido" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					E-mail
+					<input type="email" name="email" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					Dirección
+					<input type="text" name="direccion" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					Localidad
+					<input type="text" name="localidad" required>
+
+				</label>
+
+			</div>
+			<div>
+				<label>
+					Departamento
+					<input type="text" name="departamento" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					País
+					<input type="text" name="pais" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					C.I.
+					<input type="text" name="ci" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					Teléfono 1
+					<input type="text" name="telefono1" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					Teléfono 2
+					<input type="text" name="telefono2">
+				</label>
+			</div>
+			<div>
+				<label>
+					Teléfono 3
+					<input type="text" name="telefono3">
+				</label>
+			</div>
+			<div>
+				<label>
+					Fecha de nacimiento
+					<input type="date" name="fecha_de_nacimiento" required>
+				</label>
+			</div>
+			<div>
+				<legend>Sexo</legend>
+				<label><input type="radio" name="gender" value="h" required> Hombre</label>
+				<label><input type="radio" name="gender" value="m" required> Mujer</label>
+				<label><input type="radio" name="gender" value="o" required> Otro</label>
+			</div>
+			<div>
+				<label>
+					Obsevaciones
+					<textarea name="obsevaciones" rows="3"></textarea>
+				</label>
+			</div>
 		</fieldset>
-		<a href="{{ url_for('usuarios') }}" class="button"><i class="fa fa-save"></i>&nbsp;&nbsp; Guardar</a>
-		<a href="" class="button" type="reset"><i class="fa fa-eraser"></i>&nbsp;&nbsp;Cancelar</a>
-		<a href="{{ url_for('usuarios') }}" class="button" type="reset"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Atrás</a>
-		
+		<fieldset>
+			<form>
+				<legend>Datos de usuario</legend>
+				<div>
+					<label>
+						Nombre de usuario
+						<input type="text" name="usuario" required />
+					</label>
+				</div>
+				<div>
+					<label>
+						Contraseña
+						<input type="password" name="clave" required>
+					</label>
+				</div>
+				<div>
+					<label>
+						Tipo de usuario
+						<select name="tipo_de_usuario" required>
+							<option value="">Seleccionar...</option>
+							<option value="enfermero">Enfermero</option>
+							<option value="doctor">Doctor</<option>
+							<option value="nurse">Nurse</<option>
+							<option value="administrativo">Administrativo</option>
+						</select>
+					</label>
+				</div>
+				<div>
+					<label>
+						Número profesional
+						<input type="text" name="numero_profesional">
+					</label>
+				</div>
+				<div>
+					<label><input type="checkbox" name="super_user">Super usuario</label>
+				</div>
+			</form>
+		</fieldset>
+		<button type="submit">Guardar</button>
+		<button type="reset">Cancelar</button>
 	</form>
 </div>
-
 
 <!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
 {% endblock %}

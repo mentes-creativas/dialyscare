@@ -150,7 +150,8 @@ class Usuarios(UserMixin, MyModel):
 
     @classmethod
     def list( cls ):
-        return cls.select()
+        query = cls.select().join(Personas).order_by(Personas.nombres)
+        return query
 
 
 class Doctores(MyModel):
@@ -373,8 +374,8 @@ class Pacientes(MyModel):
 
     @classmethod
     def list( cls ):
-        return cls.select()
-
+        query = cls.select().join(Personas).order_by(Personas.nombres)
+        return query
 
 def initialize():
     db.connect()
