@@ -6,10 +6,10 @@ from flask_bcrypt import generate_password_hash, check_password_hash
 from peewee import *
 
 # Print all queries to stderr.
-import logging
-logger = logging.getLogger('peewee')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+# import logging
+# logger = logging.getLogger('peewee')
+# logger.addHandler(logging.StreamHandler())
+# logger.setLevel(logging.DEBUG)
 
 db = MySQLDatabase('bevc2jessjfwwvi2ekjy', # nombre de la base de datos
                    host='bevc2jessjfwwvi2ekjy-mysql.services.clever-cloud.com',
@@ -98,7 +98,7 @@ class Personas(MyModel):
 
 class Usuarios(UserMixin, MyModel):
     id = PrimaryKeyField()
-    personas_id = ForeignKeyField(Personas, backref='usuarios', unique=True)
+    persona = ForeignKeyField(Personas, backref='usuario', unique=True)
     rol = CharField(max_length=20)
     usuario = CharField(max_length=20, unique=True)
     clave = CharField(66)
@@ -119,27 +119,11 @@ class Usuarios(UserMixin, MyModel):
                 p_estado)
 
             usuario = cls.create(
-                personas_id = persona,
+                persona = persona,
                 rol = u_rol,
                 usuario = u_usuario,
                 clave = generate_password_hash(u_clave)
             )
-
-            if( u_rol == 'nurse'):
-                nurse = Nurses.create_nurse(usuario, n_d_super)
-
-            elif( u_rol == 'doctor'):
-                doctor = Doctores.create_doctor(usuario, d_numero_profesional,
-                                                n_d_super)
-
-            elif( u_rol == 'enfermero' ):
-                enfermero = Enfermeros.create_enfermero(usuario)
-
-            elif( u_rol == 'administrativo' ):
-                administrativo = Administrativos.create_administrativo(usuario)
-
-            else:
-                pass
 
             return usuario
 
@@ -167,7 +151,7 @@ class Usuarios(UserMixin, MyModel):
 
 class Doctores(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='doctores', unique=True)
+    usuario = ForeignKeyField(Usuarios, backref='doctor', unique=True)
     numero_profesional = IntegerField(unique=True)
     super_doctor = BooleanField(default=False)
 
@@ -175,10 +159,18 @@ class Doctores(MyModel):
         table_name = 'doctores'
 
     @classmethod
-    def create_doctor(cls, usuario, numero_profesional, super_doctor):
+    def create_doctor(cls, p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+        p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+        p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, u_usuario,
+        u_clave, super_doctor, numero_profesional):
         try:
+            usuario = Usuarios.create_usuario(p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+                p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+                p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, 'doctor', u_usuario,
+                u_clave, super_doctor, numero_profesional)
+
             doctor = cls.create(
-                usuarios_id = usuario,
+                usuario = usuario,
                 numero_profesional = numero_profesional,
                 super_doctor = super_doctor
             )
@@ -190,17 +182,25 @@ class Doctores(MyModel):
 
 class Nurses(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='nurses')
+    usuario = ForeignKeyField(Usuarios, backref='nurse')
     super_nurse = BooleanField(default=False)
 
     class Meta:
         table_name = 'nurses'
 
     @classmethod
-    def create_nurse(cls, usuario, super_nurse):
+    def create_nurse(cls, p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+        p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+        p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, u_usuario,
+        u_clave, super_nurse = False):
         try:
+            usuario = Usuarios.create_usuario(p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+                p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+                p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, 'nurse', u_usuario,
+                u_clave, super_nurse)
+
             nurse = cls.create(
-                usuarios_id = usuario,
+                usuario = usuario,
                 super_nurse = super_nurse
             )
 
@@ -211,16 +211,24 @@ class Nurses(MyModel):
 
 class Enfermeros(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='enfermeros', unique=True)
+    usuario = ForeignKeyField(Usuarios, backref='enfermero', unique=True)
 
     class Meta:
         table_name = 'enfermeros'
 
     @classmethod
-    def create_enfermero(cls, usuario):
+    def create_enfermero(cls, p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+        p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+        p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, u_usuario,
+        u_clave):
         try:
+            usuario = Usuarios.create_usuario(p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+                p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+                p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, 'enfermero', u_usuario,
+                u_clave)
+
             enfermero = cls.create(
-                usuarios_id = usuario,
+                usuario = usuario,
             )
 
             return enfermero
@@ -230,16 +238,24 @@ class Enfermeros(MyModel):
 
 class Administrativos(MyModel):
     id = PrimaryKeyField()
-    usuarios_id = ForeignKeyField(Usuarios, backref='administrativos')
+    usuario = ForeignKeyField(Usuarios, backref='administrativo')
 
     class Meta:
         table_name = 'administrativos'
 
     @classmethod
-    def create_administrativo(cls, usuario):
+    def create_administrativo(cls, p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+        p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+        p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, u_usuario,
+        u_clave):
         try:
+            usuario = Usuarios.create_usuario(p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+                p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+                p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, 'administrativo', u_usuario,
+                u_clave)
+
             administrativo = cls.create(
-                usuarios_id = usuario,
+                usuario = usuario,
             )
 
             return administrativo
@@ -257,10 +273,10 @@ class Mutualistas(MyModel):
 
 class Pacientes(MyModel):
     id = PrimaryKeyField()
-    personas_id = ForeignKeyField(Personas, backref='pacientes1', unique=True)
-    mutualistas_id = ForeignKeyField(Mutualistas, backref='pacientes2')
-    doctores_id = ForeignKeyField(Doctores, backref='pacientes3')
-    enfermeros_id = ForeignKeyField(Enfermeros, backref='pacientes4')
+    persona = ForeignKeyField(Personas, backref='paciente', unique=True)
+    mutualista = ForeignKeyField(Mutualistas, backref='paciente')
+    doctor = ForeignKeyField(Doctores, backref='paciente')
+    enfermero = ForeignKeyField(Enfermeros, backref='paciente')
     altura = IntegerField()
     tipo_de_paciente = CharField(max_length=20)
     tipo_de_acceso_vascular = CharField(max_length=20)
@@ -291,10 +307,10 @@ class Pacientes(MyModel):
                 p_estado)
 
             paciente = cls.create(
-                personas_id = persona,
-                mutualistas_id = mutualista,
-                doctores_id = doctor,
-                enfermeros_id = enfermero,
+                persona = persona,
+                mutualista = mutualista,
+                doctor = doctor,
+                enfermero = enfermero,
                 altura = altura,
                 tipo_de_paciente = tipo_de_paciente,
                 tipo_de_acceso_vascular = tipo_de_acceso_vascular,
@@ -340,14 +356,14 @@ if __name__ == '__main__':
     #Si no existe configuracion general, agregamos la por defecto
     if( General.select().count() == 0 ):
         General.default_data()
-        
+
     ##Insertar datos de ejemplo
 
     ##Crear nurse en jefe
     if( Usuarios.check_usuario_ci(1234560) ):
         print('Horacio Sosa ya existe')
     else:
-        usuario = Usuarios.create_usuario(
+        nurse = Nurses.create_nurse(
             'Horacio',
             'Sosa',
             'horaciososa1@comero.com.uy',
@@ -363,21 +379,19 @@ if __name__ == '__main__':
             'm',
             'Sin observaciones',
             True,
-            'nurse',
             'horaciososa',
             '123458',
-            False,
-            ''
+            True
         )
 
         print('Horacio Sosa fue agregado con éxito')
 
     ##Crear doctora en jefe
     if( Usuarios.check_usuario_ci(2345678) ):
-        doctor = Usuarios.get(Usuarios.usuario == 'deliapereyra')
+        doctor = Usuarios.get(Usuarios.usuario == 'deliapereyra').doctor
         print('Delia Pereyra ya existe')
     else:
-        doctor = Usuarios.create_usuario(
+        doctor = Doctores.create_doctor(
             'Delia',
             'Pereyra',
             'deliapereyra@comero.com.uy',
@@ -393,7 +407,6 @@ if __name__ == '__main__':
             'f',
             'Sin observaciones',
             True,
-            'doctor',
             'deliapereyra',
             '654321',
             True,
@@ -404,10 +417,10 @@ if __name__ == '__main__':
 
     ##Crear enfermera
     if( Usuarios.check_usuario_ci(3456789) ):
-        enfermero = Usuarios.get(Usuarios.usuario == 'bettinarey')
+        enfermero = Usuarios.get(Usuarios.usuario == 'bettinarey').enfermero
         print('Bettina Rey ya existe')
     else:
-        enfermero = Usuarios.create_usuario(
+        enfermero = Enfermeros.create_enfermero(
             'Bettina',
             'Rey',
             'bettinarey@comero.com.uy',
@@ -423,7 +436,6 @@ if __name__ == '__main__':
             'f',
             'Sin observaciones',
             True,
-            'enfermero',
             'bettinarey',
             '123456'
         )
@@ -434,7 +446,7 @@ if __name__ == '__main__':
     mutualista = Mutualistas.create(nombre = 'ASSE')
 
     ##Crear paciente
-    if( Pacientes.check_paciente_ci(4694361) ):
+    if( Pacientes.check_paciente_ci(46944361) ):
         print('Denry Techera ya existe')
     else:
         paciente = Pacientes.create_paciente(
