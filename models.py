@@ -148,6 +148,10 @@ class Usuarios(UserMixin, MyModel):
         else:
             return True
 
+    @classmethod
+    def list( cls ):
+        return cls.select()
+
 
 class Doctores(MyModel):
     id = PrimaryKeyField()
@@ -179,6 +183,10 @@ class Doctores(MyModel):
         except IntegrityError:
             raise ValueError('El doctor ya existe')
 
+    @classmethod
+    def list( cls ):
+        return cls.select()
+
 
 class Nurses(MyModel):
     id = PrimaryKeyField()
@@ -208,6 +216,10 @@ class Nurses(MyModel):
         except IntegrityError:
             raise ValueError('El nurse ya existe')
 
+    @classmethod
+    def list( cls ):
+        return cls.select()
+
 
 class Enfermeros(MyModel):
     id = PrimaryKeyField()
@@ -234,6 +246,10 @@ class Enfermeros(MyModel):
             return enfermero
         except IntegrityError:
             raise ValueError('El enfermero ya existe')
+
+    @classmethod
+    def list( cls ):
+        return cls.select()
 
 
 class Administrativos(MyModel):
@@ -262,6 +278,10 @@ class Administrativos(MyModel):
         except IntegrityError:
             raise ValueError('El administrativo ya existe')
 
+    @classmethod
+    def list( cls ):
+        return cls.select()
+
 
 class Mutualistas(MyModel):
     id = PrimaryKeyField()
@@ -269,6 +289,19 @@ class Mutualistas(MyModel):
 
     class Meta:
         table_name = 'mutualistas'
+
+    @classmethod
+    def check_mutualista_exists(cls, nombre):
+        try:
+            mutualista = cls.get(cls.nombre == nombre)
+        except:
+            return False
+        else:
+            return True
+
+    @classmethod
+    def list( cls ):
+        return cls.select()
 
 
 class Pacientes(MyModel):
@@ -337,6 +370,10 @@ class Pacientes(MyModel):
             return False
         else:
             return True
+
+    @classmethod
+    def list( cls ):
+        return cls.select()
 
 
 def initialize():
@@ -442,8 +479,15 @@ if __name__ == '__main__':
 
         print('Bettina Rey fue agregada con éxito')
 
-    ##Crear mutualista
-    mutualista = Mutualistas.create(nombre = 'ASSE')
+    ##Crear mutualistas
+    if( Mutualistas.check_mutualista_exists('ASSE') is False ):
+        mutualista = Mutualistas.create(nombre = 'ASSE')
+
+    if( Mutualistas.check_mutualista_exists('COMERO') is False ):
+        Mutualistas.create(nombre = 'COMERO')
+
+    if( Mutualistas.check_mutualista_exists('Médica Uruguaya') is False ):
+        Mutualistas.create(nombre = 'Médica Uruguaya')
 
     ##Crear paciente
     if( Pacientes.check_paciente_ci(46944361) ):

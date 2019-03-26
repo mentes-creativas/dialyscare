@@ -4,183 +4,49 @@
 <h1>Usuarios</h1>
 
 <div class="container">
+	<a href="{{ url_for('usuarios_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar usuario</a>
 
+	<div class="searchBox">
+		<form>
+			<select name="filtrar">
+				<option>Filtrar</option>
+			</select>
+    	<input name="Nombre o CI" placeholder="Nombre o CI">
+    	<button>Buscar</button>
+		</form>
+	</div>
 
-    <a href="{{ url_for('usuarios_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar usuario</a>
+	<table class="data-table">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>CI</th>
+				<th>Tipo de usuario</th>
+				<th>Teléfono</th>
+				<th>Email</th>
+				<th>Operaciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for usuario in usuarios %}
+			<tr>
+				<td>{{ usuario.persona.nombres }} {{ usuario.persona.apellidos }}</td>
+				<td>{{ usuario.persona.ci }}</td>
+				<td>{{ usuario.rol[0]|upper}}{{usuario.rol[1:] }}</td>
+				<td>{{ usuario.persona.telefono1 }}</td>
+				<td>{{ usuario.persona.email }}</td>
+				<td>
+					<a href="" class="button" ><i class="fa fa-address-card"></i></i>&nbsp;&nbsp;Ver más</a>
+			   	<a href="" class="button"><i class="fa fa-user-edit"></i>&nbsp;&nbsp;Editar</a>
+			    <a href="{{ url_for('usuarios') }}" class="button"><i class="fa fa-user-times"></i>&nbsp;&nbsp;Deshabilitar</a>
+				</td>
+			</tr>
+	    {% endfor %}
+		</tbody>
+	</table>
 
-
-    
-
-        <form>
-            <select name="filtrar">
-                <option>Filtrar</option>
-                <option value="Administrativos">Administrativos</option>
-                <option value="Enfermeros">Enfermeros</option>
-                <option value="Nurses">Nurses</option>
-                <option value="Doctores">Doctores</option>
-            </select>
-
-
-            <class="button">
-                <label>
-                    <input name="Nombre o CI" placeholder="Nombre o CI">
-                    <button>Buscar</button>
-            </label>
-        </form>
-
-
-        <style>
-            table {
-                border-collapse: collapse;
-                width: 100%;
-            }
-            
-            td {
-                background-color: #fff;
-                border: 2px solid #dddddd;
-                text-align: center;
-                padding: 8px;
-            }
-            
-            th {
-                background-color: whitesmoke;
-                color: black;
-                border: 2px solid #dddddd;
-                text-align: center;
-                padding: 8px;
-            }
-        </style>
-
-        <style>
-            .button {
-                background-color: #e9eef0;
-                border: none;
-                color: black;
-                padding: 8px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 12px;
-                margin: 4px 2px;
-                cursor: pointer;
-            }
-            
-            .button1 {
-                border-radius: 8px;
-            }
-            
-            .button2 {
-                border-radius: 8px;
-            }
-            
-            .button3 {
-                border-radius: 8px;
-            }
-        </style>
-        <table>
-            <tr>
-                <th>Nombre</th>
-                <th>CI</th>
-                <th>Tipo de Usuario</th>
-                <th>Teléfono</th>
-                <th> </th>
-            </tr>
-            <tr>
-                <td>text</td>
-                <td>text</td>
-                <td>text</td>
-                <td>text</td>
-                <td>
-
-                    <div class="container">
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Ver más</a>
-
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Editar</a>
-
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Deshabilitar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>text</td>
-                <td>text</td>
-                <td>text</td>
-                <td>text</td>
-                <td>
-                    <div class="container">
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Ver más</a>
-
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Editar</a>
-
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Deshabilitar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>text</td>
-                <td>text</td>
-                <td>text</td>
-                <td>text</td>
-                <td>
-                    <div class="container">
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Ver más</a>
-
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Editar</a>
-
-                        <a href="{{ url_for('usuarios') }}" class="button">&nbsp;&nbsp; Deshabilitar</a>
-                    </div>
-                </td>
-            </tr>
-
-        </table>
-
-
-        <style>
-            .center {
-                text-align: center;
-            }
-            
-            .pagination {
-                display: inline-block;
-            }
-            
-            .pagination a {
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: background-color .3s;
-                border: 1px solid #ddd;
-                margin: 0 4px;
-            }
-            
-            .pagination a.active {
-                background-color: #d3e4ec;
-                color: white;
-                border: 1px solid #d3e4ec;
-            }
-            
-            .pagination a:hover:not(.active) {
-                background-color: #ddd;
-            }
-        </style>
-
-        <div>
-            <div class="center">
-                <div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">&raquo;</a>
-                </div>
-            </div>
-        </div>
+  <p>Usuarios totales:  {{ usuarios.count() }}</p>
 </div>
-
 
 <!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
 {% endblock %}

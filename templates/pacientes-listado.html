@@ -11,68 +11,47 @@
 	<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar paciente</a>
 	<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
 	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-line-chart"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
-	<p> </p>
 
-	<div class="button">
+	<div class="searchBox">
 		<form>
 			<select name="filtrar">
-				<option>filtrar</option>
+				<option>Filtrar</option>
 			</select>
-
-			<class="button">
-				<label>
-			    	<input name="Nombre o CI" placeholder="Nombre o CI">
-			    	<button>Buscar</button>
-				</label>
-			<p> </p>
+    	<input name="Nombre o CI" placeholder="Nombre o CI">
+    	<button>Buscar</button>
 		</form>
 	</div>
 
-	<style>
-		table {
-		border-collapse: collapse;
-		width: 100%;
-		}
-
-		td,
-		th {
-			border: 1px solid;
-			text-align: center;
-			padding: 8px;
-		}
-	</style>
-
-	<table>
-		<tr>
-			<th>Nombre</th>
-			<th>CI</th>
-			<th>Número FNR</th>
-			<th>Médico</th>
-			<th>Operaciones</th>
-		</tr>
-			<td>Pérez Rosas José María</td>
-			<td>28597613</td>
-			<td>12569</td>
-			<td>Cecilia Tognola</td>
-			<td>
-				<div class="container">
-					{{ render_btn_pac_list() }}
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>Fernández Leopoldo</td>
-			<td>23456789</td>
-			<td>234567</td>
-			<td>Pereyra Delia</td>
-			<td>
-				<div class="container">
-					{{ render_btn_pac_list() }}
-				</div>
-			</td>
-		</tr>
-		
+	<table class="data-table">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>CI</th>
+				<th>Número FNR</th>
+				<th>Médico</th>
+				<th>Enfermero</th>
+				<th>Operaciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for paciente in pacientes %}
+			<tr>
+				<td>{{ paciente.persona.nombres }} {{ paciente.persona.apellidos }}</td>
+				<td>{{ paciente.persona.ci }}</td>
+				<td>{{ paciente.numero_fnr }}</td>
+				<td>{{ paciente.doctor.usuario.persona.nombres }} {{ paciente.doctor.usuario.persona.apellidos }}</td>
+				<td>{{ paciente.enfermero.usuario.persona.nombres }} {{ paciente.enfermero.usuario.persona.apellidos }}</td>
+				<td>
+					<a href="{{ url_for('pacientes_ver', paciente_id = paciente.id) }}" class="button" ><i class="fa fa-address-card"></i>&nbsp;&nbsp;Ver más</a>
+			   	<a href="{{ url_for('pacientes_editar', paciente_id = paciente.id) }}" class="button"><i class="fa fa-user-edit"></i>&nbsp;&nbsp;Editar</a>
+			    <a href="{{ url_for('pacientes') }}" class="button"><i class="fa fa-user-times"></i>&nbsp;&nbsp;Deshabilitar</a>
+				</td>
+			</tr>
+	    {% endfor %}
+		</tbody>
 	</table>
+
+	<p>Pacientes totales:  {{ pacientes.count() }}</p>
 </div>
 
 

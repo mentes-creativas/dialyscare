@@ -1,12 +1,11 @@
+# Por convención: primero van los módulos propios de python, después van los que
+# instalamos y por último los nuestros
 import json
 
-import models
-
-import forms
-
 from flask import (Flask, g, render_template, flash, url_for, redirect, request)
-
 from flask_login import LoginManager
+
+import models
 
 
 DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
@@ -33,11 +32,10 @@ def load_user(userid):
 
 @app.before_request
 def before_request():
-    #Conecta a la base de datos antes de cada request
+    """Conecta a la base de datos antes de cada request"""
     g.db = models.db
     if g.db.is_closed():
         g.db.connect()
-    
 
 
 @app.after_request
@@ -45,7 +43,6 @@ def after_request(response):
     """Cerramos la conección a la base de datos"""
     g.db.close()
     return response
-
 
 
 @app.route("/", methods = ['GET', 'POST'])
@@ -75,7 +72,11 @@ def pacientes():
         return response
     else:
         nombre = data.get('usuario')
-        context = {'titulo_de_la_pagina': 'Listado de pacientes', 'nombre_de_usuario': nombre}
+        context = {
+            'titulo_de_la_pagina': 'Listado de pacientes',
+            'nombre_de_usuario': nombre,
+            'pacientes': models.Pacientes.list()
+        }
         return render_template('pacientes-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
@@ -88,11 +89,17 @@ def pacientes_agregar():
         return response
     else:
         nombre = data.get('usuario')
-        context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
+        context = {
+            'titulo_de_la_pagina': 'Agregar paciente',
+            'nombre_de_usuario': nombre,
+            'doctores': models.Doctores.list(),
+            'enfermeros': models.Enfermeros.list(),
+            'mutualistas': models.Mutualistas.list()
+        }
         return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/pacientes/ver", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
 def pacientes_ver():
     try:
         data = json.loads(request.cookies.get('session'))
@@ -105,7 +112,7 @@ def pacientes_ver():
         return render_template('pacientes-ver.html', **context)
 
 
-@app.route("/admin/pacientes/editar", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_editar():
     try:
         data = json.loads(request.cookies.get('session'))
@@ -119,6 +126,7 @@ def pacientes_editar():
 
 
 @app.route("/admin/pacientes/evolucion", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/evolucion/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_evolucion():
     try:
         data = json.loads(request.cookies.get('session'))
@@ -130,8 +138,8 @@ def pacientes_evolucion():
         context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
         return render_template('pacientes-evolucion.html', **context)
 
-
-@app.route("/admin/pacientes/indicaciones", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/indicaciones", methods = ['GET'])
+@app.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
 def pacientes_indicaciones():
     try:
         data = json.loads(request.cookies.get('session'))
@@ -153,11 +161,15 @@ def usuarios():
         return response
     else:
         nombre = data.get('usuario')
-        context = {'titulo_de_la_pagina': 'Listado de usuarios', 'nombre_de_usuario': nombre}
+        context = {
+            'titulo_de_la_pagina': 'Listado de usuarios',
+            'nombre_de_usuario': nombre,
+            'usuarios': models.Usuarios.list()
+        }
         return render_template('usuarios-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/usuarios/agregar", methods = ['GET', 'POST']) 
+@app.route("/admin/usuarios/agregar", methods = ['GET', 'POST'])
 def usuarios_agregar():
     try:
         data = json.loads(request.cookies.get('session'))
@@ -167,34 +179,9 @@ def usuarios_agregar():
     else:
         nombre = data.get('usuario')
         context = {'titulo_de_la_pagina': 'Agregar usuario', 'nombre_de_usuario': nombre}
-        form = forms.registro_usuario()
-        print(form)
-        if form.validate_on_submit():
-            print('Usuario validado')
-            models.Usuarios.create_usuario(
-                p_nombres = form.nombres.data,
-                p_apellidos = form.apellidos.data,
-                p_email = form.email.data,
-                p_ci = form.ci.data,
-                p_telefono1 = form.telefono1.data,
-                p_telefono2 = form.telefono2.data,
-                p_telefono3 = form.telefono3.data,
-                p_direccion = form.direccion.data,
-                p_localidad = form.localidad.data,
-                p_departamento = form.departamento.data,
-                p_pais = form.pais.data,
-                p_fecha_de_nacimiento = form.fecha_nacimiento.data,
-                p_sexo = form.sexo.data,
-                p_observaciones = form.observaciones.data,
-                p_estado = form.estado.data,
-                u_rol = form.rol.data,
-                u_usuario = form.usuario.data,
-                u_clave = form.clave.data,
-                n_d_super = form.n_d_super.data,
-                d_numero_profesional = form.num_prof.data
-                )
-            return render_template('usuarios-listado.html', **context)
-        return render_template('usuarios-agregar.html', form = form, **context ) # doble asterisco desempaqueta las variables en el template
+
+        return render_template('usuarios-agregar.html', **context ) # doble asterisco desempaqueta las variables en el template
+
 
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():

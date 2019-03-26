@@ -85,9 +85,9 @@
 			</div>
 			<div>
 				<legend>Sexo</legend>
-				<label><input type="radio" name="gender" value="h"> Hombre</label>
-				<label><input type="radio" name="gender" value="m"> Mujer</label>
-				<label><input type="radio" name="gender" value="o"> Otro</label>
+				<label><input type="radio" name="gender" value="h" required> Hombre</label>
+				<label><input type="radio" name="gender" value="m" required> Mujer</label>
+				<label><input type="radio" name="gender" value="o" required> Otro</label>
 			</div>
 			<div>
 				<label>
@@ -102,32 +102,32 @@
 				<div>
 					<label>
 						Médico Tratante
-						<select name="doctor_id">
+						<select name="doctor_id" required>
 							<option value="">Seleccionar...</option>
-							<option value="1">Delia Pereyra</option>
-							<option value="2">Cecilia Tognola</option>
-							<option value="3">Gonzalo Acuña</option>
-							<option value="4">Carina Suviza</option>
+							{% for doctor in doctores %}
+							<option value="{{ doctor.id }}">{{ doctor.usuario.persona.nombres }} {{ doctor.usuario.persona.apellidos }}</option>
+							{% endfor %}
 						</select>
 					</label>
 				</div>
 				<div>
 					<label>
 						Enfermero Responsable
-						<select name="enfermero_id">
+						<select name="enfermero_id" required>
 							<option value="">Seleccionar...</option>
-							<option value="1">María Antonieta</option>
-							<option value="2">Florinda Meza</option>
+							{% for enfermero in enfermeros %}
+							<option value="{{ enfermero.id }}">{{ enfermero.usuario.persona.nombres }} {{ enfermero.usuario.persona.apellidos }}</option>
+							{% endfor %}
 						</select>
 					</label>
 				</div>
 				<div>
-					<label for="country">Mutualista</label>
-					<select name="country">
+					<label for="mutualista_id">Mutualista</label>
+					<select name="mututalista_id" required>
 						<option value="">Seleccionar...</option>
-						<option value="1">ASSE</option>
-						<option value="2">COMERO</option>
-						<option value="3">Médica Uruguaya</option>
+						{% for mutualista in mutualistas %}
+						<option value="{{ mutualista.id }}">{{ mutualista.nombre }}</option>
+						{% endfor %}
 					</select>
 				</div>
 				<div>

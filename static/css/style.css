@@ -272,13 +272,18 @@ main .container {
 	color: #fff;
 }
 
+.searchBox {
+	float: right;
+}
+
 .data-table {
 	border-collapse: collapse;
+	margin: 1rem 0 2rem;
 	width: 100%;
 }
 
-.data-table th {
- border: 1px solid;
+.data-table td, .data-table th {
+ border: 1px solid #DDD;
  text-align: center;
  padding: 8px;
 }
