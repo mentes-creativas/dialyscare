@@ -23,7 +23,7 @@ class registro_usuario(FlaskForm):
             Regexp(
                 r'^[a-zA-Z0-9_]+$'
             ),
-            user_exists
+            #user_exists
             ])
         
     email = StringField( 
@@ -31,20 +31,20 @@ class registro_usuario(FlaskForm):
         validators=[
             DataRequired(),
             Email(),
-            email_exists
+            #email_exists
             ])
     
-    clave = PasswordField(
+    clave = StringField(
         'Contraseña',
         validators = [
             DataRequired(),
-            Length(min=8),
-            EqualTo('clave2', message ='Ambas contraseñas deben coinicidir')
+            Length(min=4),
+           # EqualTo('clave2', message ='Ambas contraseñas deben coinicidir')
         ])
     
-    clave2 = PasswordField(
-        'Repita la contraseña', 
-        validators = [DataRequired()])
+   # clave2 = PasswordField(
+      #  'Repita la contraseña', 
+      #  validators = [DataRequired()])
     
     nombres = StringField('Nombres',
         validators=[
@@ -65,7 +65,7 @@ class registro_usuario(FlaskForm):
         validators = [
             DataRequired(),
             Length(min=8, max=8, message='Sin puntos ni guiones'),
-            ci_exists
+            #ci_exists
         ])
 
     telefono1 = StringField(
@@ -131,7 +131,7 @@ class registro_usuario(FlaskForm):
     
     observaciones = TextAreaField('Observaciones')
 
-    estado = BooleanField('Vigente',
+    estado = BooleanField('Vigente?',
         validators = [DataRequired()])
 
     rol = StringField('Rol',
@@ -141,12 +141,10 @@ class registro_usuario(FlaskForm):
             Length(max=15)
             ])
 
-    n_d_super = BooleanField('Superusuario)',
-        validators=[DataRequired()])
+    n_d_super = BooleanField('Superusuario?')
 
     num_prof = StringField('Nro. CJPPU',
         validators=[
-            DataRequired(),
             Regexp(r'^[0-9]+$'),
             Length(max=6)
             ])

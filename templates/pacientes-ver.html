@@ -1,0 +1,164 @@
+{% extends '_base_layout_admin.html' %}
+
+{% block contenido_de_la_seccion %}
+<!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
+
+<h1>Ficha del Paciente</h1>
+
+<div class="container">
+		<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-users"></i>&nbsp;&nbsp; Lista de pacientes</a>
+		<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
+		<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-line-chart"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
+		<p> </p>
+	<form>
+		<fieldset>
+			<legend>Datos personales</legend>
+			<div>
+				<label>
+					Nombres: José María
+					
+				</label>
+			</div>
+			<div>
+				<label>
+					Apellidos: Pérez Rosas
+					
+				</label>
+			</div>
+			<div>
+				<label>
+					E-mail: jpr@gmail.com
+				</label>
+			</div>
+			<div>
+				<label>
+					Dirección: Rodó 123
+				</label>
+			</div>
+			<div>
+				<label>
+					Localidad: Rocha
+				</label>
+
+			</div>
+			<div>
+				<label>
+					Departamento: Rocha
+				</label>
+			</div>
+			<div>
+				<label>
+					País: Uruguay
+				</label>
+			</div>
+			<div>
+				<label>
+					C.I.: 28597613
+				</label>
+			</div>
+			<div>
+				<label>
+					Teléfono 1: 098555666
+				</label>
+			</div>
+			<div>
+				<label>
+					Teléfono 2:
+				</label>
+			</div>
+			<div>
+				<label>
+					Teléfono 3:
+				</label>
+			</div>
+			<div>
+				<label>
+					Fecha de nacimiento: 15/11/1973
+				</label>
+			</div>
+			<div>
+				<label>
+					Sexo: M
+				</label>
+			</div>
+			<div>
+				<label>
+					Observaciones:
+					<textarea name="observaciones" rows="3"></textarea>
+				</label>
+			</div>
+		</fieldset>
+		<fieldset>
+			<form>
+				<legend>Datos Clínicos</legend>
+				<div>
+					<label>
+						Médico Tratante: Cecilia Tognola
+					</label>
+				</div>
+				<div>
+					<label>
+						Enfermero Responsable: Delia Techera
+					</label>
+				</div>
+				<div>
+					<label>COMERO</label>
+					
+				</div>
+				<div>
+					<label>Tipo de Paciente: Ambulatorio</label>
+				</div>
+				<div>
+					<label>
+						Número FNR: 12569
+					</label>
+				</div>
+				<div>
+					<label>Paciente vigente</label>
+				</div>
+				<div>
+					<label>
+						Primer diálisis: 10/12/1990
+					</label>
+				</div>
+				<div>
+					<label>Grupo Sanguíneo: A</label>
+				</div>
+				<div>
+					<label>Rh-</label>
+				</div>
+				<div>
+					<label>
+						Altura (cm): 169
+					</label>
+				</div>
+				<div>
+					<label>HTA: Si</label>
+				</div>
+				<div>
+					<label>Alérgico: No</label>
+				</div>
+				<div>
+					<label>Diabético: No</label>
+				</div>
+				<div>
+					<label>Habilitar lavado capilar: Si</label>
+				</div>
+				<div>
+					<label>Tipo de Puesto: Normal</label>
+				</div>
+		</fieldset>
+		<a href= "{{ url_for('pacientes_editar') }}" class="button">
+			<i class="fa fa-edit"></i>&nbsp;&nbsp; Editar
+		</a>
+		&nbsp;&nbsp;
+		<a class="button">
+			<i class="fa fa-print"></i>&nbsp;&nbsp; Imprimir
+		</a>
+		&nbsp;&nbsp;
+		<a class="button"><i class="fa fa-user-times"></i>&nbsp;&nbsp; Deshabilitar</a>
+	</form>
+</div>
+
+<!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
+{% endblock %}

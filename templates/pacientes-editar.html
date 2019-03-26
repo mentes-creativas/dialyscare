@@ -3,7 +3,7 @@
 {% block contenido_de_la_seccion %}
 <!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
 
-<h1>Agregar paciente</h1>
+<h1>Editar paciente</h1>
 
 <div class="container">
 	<form>
@@ -11,32 +11,32 @@
 			<legend>Datos personales</legend>
 			<div>
 				<label>
-					Nombres
-					<input type="text" name="nombres" required />
+					Nombres 
+					<input type="text" name="nombres" placeholder= "Jose Maria" required />
 				</label>
 			</div>
 			<div>
 				<label>
 					Apellidos
-					<input type="text" name="apellido" required>
+					<input type="text" name="apellido" placeholder="Perez Rosas" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					E-mail
-					<input type="email" name="email" required>
+					<input type="email" name="email" placeholder="jpr@gmail.com" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					Dirección
-					<input type="text" name="direccion" required>
+					<input type="text" name="direccion" placeholder="Rodó 123" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					Localidad
-					<input type="text" name="localidad" required>
+					<input type="text" name="localidad" placeholder="Rocha" required>
 
 				</label>
 
@@ -44,25 +44,25 @@
 			<div>
 				<label>
 					Departamento
-					<input type="text" name="departamento" required>
+					<input type="text" name="departamento" placeholder="Rocha" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					País
-					<input type="text" name="pais" required>
+					<input type="text" name="pais" placeholder="Uruguay" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					C.I.
-					<input type="text" name="ci" required>
+					<input type="text" name="ci" placeholder="28597613" required>
 				</label>
 			</div>
 			<div>
 				<label>
 					Teléfono 1
-					<input type="text" name="telefono1" required>
+					<input type="text" name="telefono1" placeholder="098555666" required>
 				</label>
 			</div>
 			<div>
@@ -80,19 +80,18 @@
 			<div>
 				<label>
 					Fecha de nacimiento
-					<input type="date" name="fecha_de_nacimiento" required>
+					<input type="date" name="fecha_de_nacimiento" placeholder="015/11/1973" required>
 				</label>
 			</div>
 			<div>
-				<legend>Sexo</legend>
-				<label><input type="radio" name="gender" value="h"> Hombre</label>
-				<label><input type="radio" name="gender" value="m"> Mujer</label>
-				<label><input type="radio" name="gender" value="o"> Otro</label>
+				<label>
+					Sexo: M
+				</label>
 			</div>
 			<div>
 				<label>
-					Obsevaciones
-					<textarea name="obsevaciones" rows="3"></textarea>
+					Observaciones
+					<textarea name="observaciones" rows="3"></textarea>
 				</label>
 			</div>
 		</fieldset>
@@ -103,7 +102,7 @@
 					<label>
 						Médico Tratante
 						<select name="doctor_id">
-							<option value="">Seleccionar...</option>
+							<option value="">Cecilia Tognola</option>
 							<option value="1">Delia Pereyra</option>
 							<option value="2">Cecilia Tognola</option>
 							<option value="3">Gonzalo Acuña</option>
@@ -115,7 +114,7 @@
 					<label>
 						Enfermero Responsable
 						<select name="enfermero_id">
-							<option value="">Seleccionar...</option>
+							<option value="">Delia Techera</option>
 							<option value="1">María Antonieta</option>
 							<option value="2">Florinda Meza</option>
 						</select>
@@ -124,7 +123,7 @@
 				<div>
 					<label for="country">Mutualista</label>
 					<select name="country">
-						<option value="">Seleccionar...</option>
+						<option value="">COMERO</option>
 						<option value="1">ASSE</option>
 						<option value="2">COMERO</option>
 						<option value="3">Médica Uruguaya</option>
@@ -133,7 +132,7 @@
 				<div>
 					<label for="tipo_de_paciente">Tipo de Paciente</label>
 					<select name="tipo_de_paciente">
-						<option value="">Seleccionar...</option>
+						<option value="">Ambulatorio</option>
 						<option value="agudo">Agudo</option>
 						<option value="ambulatorio">Ambulatorio</option>
 						<option value="estable">Estable </option>
@@ -145,16 +144,16 @@
 				<div>
 					<label>
 						Número FNR
-						<input type="text" name="numero_frn">
+						<input type="text" name="numero_frn" placeholder="12569">
 					</label>
 				</div>
 				<div>
-					<label><input type="checkbox" name="estado">Paciente vigente</label>
+					<label><input type="checkbox" name="estado" >Paciente vigente</label>
 				</div>
 				<div>
 					<label>
 						Primer diálisis
-						<input type="date" name="primer_dialisis">
+						<input type="date" name="primer_dialisis" placeholder="10/12/1990">
 					</label>
 				</div>
 				<div>
@@ -175,8 +174,7 @@
 				</div>
 				<div>
 					<label>
-						Altura (cm)
-						<input type="number" name="altura" min="100" max="250">
+						Altura (cm): 169
 					</label>
 				</div>
 				<div>
@@ -188,14 +186,15 @@
 				<div>
 					<label for="country">Tipo de Puesto</label>
 					<select name="tipo_de_puesto">
-						<option value="">Seleccionar...</option>
+						<option value="">Normal</option>
 						<option value="Normal">Normal</option>
 						<option value="HVC+">HVC+</option>
 					</select>
 				</div>
 		</fieldset>
-		<button type="submit">Guardar</button>
-		<button type="reset">Cancelar</button>
+
+	<a href="{{ url_for('pacientes') }}" class="button" type="reset"><i class="fa fa-fw fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="{{ url_for('pacientes') }}" class="button" type="submit"><i class="fa fa-fw fa-save"></i>&nbsp;&nbsp;Guardar</a>
 	</form>
 </div>
 

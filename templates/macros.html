@@ -1,4 +1,5 @@
 {% macro render_field(field) %}
+
     <div class = "field">
         {% if field.errors %}
             {% for error in field.errors %}
@@ -7,6 +8,18 @@
                 </div>
             {% endfor %}
         {% endif %}
-        {{ field(placeholder=field.label.text) }}
+        <div>
+            <label>
+                {{ field.label.text }}
+                {{ field() }}
+            </label>
+        </div>
     </div>
+{% endmacro %}
+{% macro render_btn_pac_list() %}
+    <a href="{{ url_for('pacientes_ver') }}" class="button" ><i class="fa fa-plus"></i>&nbsp;&nbsp;Ver más</a>
+
+		    	<a href="{{ url_for('pacientes_editar') }}" class="button"><i class="fa fa-user-edit"></i>&nbsp;&nbsp;Editar</a>
+				
+                <a href="{{ url_for('pacientes') }}" class="button"><i class="fa fa-user-times"></i>&nbsp;&nbsp;Deshabilitar</a>
 {% endmacro %}

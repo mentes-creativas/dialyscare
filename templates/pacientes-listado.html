@@ -1,3 +1,5 @@
+{% from 'macros.html' import render_btn_pac_list %}
+
 {% extends '_base_layout_admin.html' %}
 
 {% block contenido_de_la_seccion %}
@@ -7,20 +9,11 @@
 
 <div class="container">
 	<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar paciente</a>
+	<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
+	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-line-chart"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
+	<p> </p>
 
-	<div class=<"button">
-			<form>
-				<select name="Indicaciones Médicas">
-				</select>
-	
-				<class=<"button">
-					<label>
-						<input name="Gráficos de Evolución" placeholder="Gráficos de Evolución">
-				    </label>
-			</form>
-		</div>
-
-	<div class=<"button">
+	<div class="button">
 		<form>
 			<select name="filtrar">
 				<option>filtrar</option>
@@ -30,63 +23,56 @@
 				<label>
 			    	<input name="Nombre o CI" placeholder="Nombre o CI">
 			    	<button>Buscar</button>
-			    </label>
+				</label>
+			<p> </p>
 		</form>
 	</div>
 
-<style>
-	table {
-	   border-collapse: collapse;
-	   width: 100%;
-	}
+	<style>
+		table {
+		border-collapse: collapse;
+		width: 100%;
+		}
 
-	td,
-	th {
-		border: 1px solid;
-		text-align: center;
-		padding: 8px;
-	}
-</style>
+		td,
+		th {
+			border: 1px solid;
+			text-align: center;
+			padding: 8px;
+		}
+	</style>
 
-<table>
-	<tr>
-		<th>Nombre</th>
-		<th>CI</th>
-		<th>Número FNR</th>
-		<th>Médico</th>
-		<th>Vacío</th>
-	</tr>
-	    <td>Pérez Juan</td>
-	    <td>12345678</td>
-    	<td>123456</td>
-    	<td>Pereyra Delia</td>
-    	<td>
-	    	<div class="container">
-		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="fal fa-plus"></i>Ver más</a>
-
-		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="fal fa-user-edit"></i>Editar</a>
-				
-		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="far fa-user-times"></i>Deshabilitar</a>
-		   </div>
-		</td>
-	</tr>
-	<tr>
-	    <td>Fernández Leopoldo</td>
-	    <td>23456789</td>
-    	<td>234567</td>
-    	<td>Pereyra Delia</td>
-    	<td>
-	    	<div class="container">
-		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="fal fa-plus"></i>Ver más</a>
-
-		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="fal fa-user-edit"></i>Editar</a>
-				
-		    	<a href="{{ url_for('pacientes') }}" class="button"><i class="far fa-user-times"></i>Deshabilitar</a>
-		   </div>
-		</td>
-	</tr>
-	
-</table>
+	<table>
+		<tr>
+			<th>Nombre</th>
+			<th>CI</th>
+			<th>Número FNR</th>
+			<th>Médico</th>
+			<th>Operaciones</th>
+		</tr>
+			<td>Pérez Rosas José María</td>
+			<td>28597613</td>
+			<td>12569</td>
+			<td>Cecilia Tognola</td>
+			<td>
+				<div class="container">
+					{{ render_btn_pac_list() }}
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Fernández Leopoldo</td>
+			<td>23456789</td>
+			<td>234567</td>
+			<td>Pereyra Delia</td>
+			<td>
+				<div class="container">
+					{{ render_btn_pac_list() }}
+				</div>
+			</td>
+		</tr>
+		
+	</table>
 </div>
 
 

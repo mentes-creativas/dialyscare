@@ -1,12 +1,12 @@
 import json
 
-from flask import (Flask, g, render_template, flash, url_for, redirect, request)
-
-from flask_login import LoginManager
-
 import models
 
 import forms
+
+from flask import (Flask, g, render_template, flash, url_for, redirect, request)
+
+from flask_login import LoginManager
 
 
 DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
@@ -21,6 +21,7 @@ app.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
 
 @login_manager.user_loader
 def load_user(userid):
@@ -91,6 +92,58 @@ def pacientes_agregar():
         return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
+@app.route("/admin/pacientes/ver", methods = ['GET', 'POST'])
+def pacientes_ver():
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
+        return render_template('pacientes-ver.html', **context)
+
+
+@app.route("/admin/pacientes/editar", methods = ['GET', 'POST'])
+def pacientes_editar():
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
+        return render_template('pacientes-editar.html', **context)
+
+
+@app.route("/admin/pacientes/evolucion", methods = ['GET', 'POST'])
+def pacientes_evolucion():
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
+        return render_template('pacientes-evolucion.html', **context)
+
+
+@app.route("/admin/pacientes/indicaciones", methods = ['GET', 'POST'])
+def pacientes_indicaciones():
+    try:
+        data = json.loads(request.cookies.get('session'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
+        return render_template('pacientes-indicaciones.html', **context)
+
+
 @app.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
 def usuarios():
     try:
@@ -104,7 +157,7 @@ def usuarios():
         return render_template('usuarios-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/usuarios/agregar", methods = ['GET', 'POST'])
+@app.route("/admin/usuarios/agregar", methods = ['GET', 'POST']) 
 def usuarios_agregar():
     try:
         data = json.loads(request.cookies.get('session'))
@@ -115,6 +168,7 @@ def usuarios_agregar():
         nombre = data.get('usuario')
         context = {'titulo_de_la_pagina': 'Agregar usuario', 'nombre_de_usuario': nombre}
         form = forms.registro_usuario()
+        print(form)
         if form.validate_on_submit():
             print('Usuario validado')
             models.Usuarios.create_usuario(
