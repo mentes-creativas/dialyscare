@@ -4,7 +4,7 @@
 <h1>Usuarios</h1>
 
 <div class="container">
-	<a href="{{ url_for('usuarios_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar usuario</a>
+	<a href="{{ url_for('usuarios_agregar') }}" class="button"><i class="fas fa-user-plus"></i><span class="md-none">&nbsp;&nbsp; Agregar usuario</span></a>
 
 	<div class="searchBox">
 		<form>
@@ -20,10 +20,10 @@
 		<thead>
 			<tr>
 				<th>Nombre</th>
-				<th>CI</th>
+				<th class="md-none">CI</th>
 				<th>Tipo de usuario</th>
-				<th>Teléfono</th>
-				<th>Email</th>
+				<th class="md-none">Teléfono</th>
+				<th class="lg-none">Email</th>
 				<th>Operaciones</th>
 			</tr>
 		</thead>
@@ -31,14 +31,14 @@
 			{% for usuario in usuarios %}
 			<tr>
 				<td>{{ usuario.persona.nombres }} {{ usuario.persona.apellidos }}</td>
-				<td>{{ usuario.persona.ci }}</td>
+				<td class="md-none">{{ usuario.persona.ci }}</td>
 				<td>{{ usuario.rol[0]|upper}}{{usuario.rol[1:] }}</td>
-				<td>{{ usuario.persona.telefono1 }}</td>
-				<td>{{ usuario.persona.email }}</td>
-				<td>
-					<a href="" class="button" ><i class="fa fa-address-card"></i></i>&nbsp;&nbsp;Ver más</a>
-			   	<a href="" class="button"><i class="fa fa-user-edit"></i>&nbsp;&nbsp;Editar</a>
-			    <a href="{{ url_for('usuarios') }}" class="button"><i class="fa fa-user-times"></i>&nbsp;&nbsp;Deshabilitar</a>
+				<td class="md-none">{{ usuario.persona.telefono1 }}</td>
+				<td class="lg-none">{{ usuario.persona.email }}</td>
+				<td class="nowrap">
+					<a href="" class="button" title="Ver más"><i class="fa fa-address-card"></i><span class="xl-none">&nbsp;&nbsp;Ver más</span></a>
+			   	<a href="" class="button" title="Editar"><i class="fa fa-user-edit"></i><span class="xl-none">&nbsp;&nbsp;Editar</span></a>
+			    <a href="{{ url_for('usuarios') }}" class="button" title="Deshabilitar"><i class="fa fa-user-times"></i><span class="xl-none">&nbsp;&nbsp;Deshabilitar</span></a>
 				</td>
 			</tr>
 	    {% endfor %}

@@ -5,12 +5,15 @@
 {% block contenido_de_la_seccion %}
 <!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
 
+<div class="sections">
+	<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i><span class="md-none">&nbsp;&nbsp; Indicaciones Médicas</span></a>
+	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-chart-bar"></i><span class="md-none">&nbsp;&nbsp; Gráficos de Evolución</span></a>
+</div>
+
 <h1>Pacientes</h1>
 
 <div class="container">
-	<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-user-plus"></i>&nbsp;&nbsp; Agregar paciente</a>
-	<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
-	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-chart-bar"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
+	<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-user-plus"></i><span class="md-none">&nbsp;&nbsp; Agregar paciente</span></a>
 
 	<div class="searchBox">
 		<form>
@@ -26,12 +29,12 @@
 		<thead>
 			<tr>
 				<th>Nombre</th>
-				<th>CI</th>
-				<th>Número FNR</th>
-				<th>Médico</th>
-				<th>Enfermero</th>
+				<th class="md-none">CI</th>
+				<th class="lg-none">Número FNR</th>
+				<th class="md-none">Médico</th>
+				<th class="lg-none">Enfermero</th>
 				<th>Teléfono</th>
-				<th>Email</th>
+				<th class="lg-none">Email</th>
 				<th>Operaciones</th>
 			</tr>
 		</thead>
@@ -39,16 +42,16 @@
 			{% for paciente in pacientes %}
 			<tr>
 				<td>{{ paciente.persona.nombres }} {{ paciente.persona.apellidos }}</td>
-				<td>{{ paciente.persona.ci }}</td>
-				<td>{{ paciente.numero_fnr }}</td>
-				<td>{{ paciente.doctor.usuario.persona.nombres }} {{ paciente.doctor.usuario.persona.apellidos }}</td>
-				<td>{{ paciente.enfermero.usuario.persona.nombres }} {{ paciente.enfermero.usuario.persona.apellidos }}</td>
+				<td class="md-none">{{ paciente.persona.ci }}</td>
+				<td class="lg-none">{{ paciente.numero_fnr }}</td>
+				<td class="md-none">{{ paciente.doctor.usuario.persona.nombres }} {{ paciente.doctor.usuario.persona.apellidos }}</td>
+				<td class="lg-none">{{ paciente.enfermero.usuario.persona.nombres }} {{ paciente.enfermero.usuario.persona.apellidos }}</td>
 				<td>{{ paciente.persona.telefono1 }}</td>
-				<td>{{ paciente.persona.email }}</td>
-				<td>
-					<a href="{{ url_for('pacientes_ver', paciente_id = paciente.id) }}" class="button" ><i class="fa fa-address-card"></i>&nbsp;&nbsp;Ver más</a>
-			   	<a href="{{ url_for('pacientes_editar', paciente_id = paciente.id) }}" class="button"><i class="fa fa-user-edit"></i>&nbsp;&nbsp;Editar</a>
-			    <a href="{{ url_for('pacientes') }}" class="button"><i class="fa fa-user-times"></i>&nbsp;&nbsp;Deshabilitar</a>
+				<td class="lg-none">{{ paciente.persona.email }}</td>
+				<td class="nowrap">
+					<a href="{{ url_for('pacientes_ver', paciente_id = paciente.id) }}" class="button" title="Ver más"><i class="fa fa-address-card"></i><span class="xl-none">&nbsp;&nbsp;Ver más</span></a>
+			   	<a href="{{ url_for('pacientes_editar', paciente_id = paciente.id) }}" class="button" title="Editar"><i class="fa fa-user-edit"></i><span class="xl-none">&nbsp;&nbsp;Editar</span></a>
+			    <a href="{{ url_for('pacientes') }}" class="button" title="Deshabilitar"><i class="fa fa-user-times"></i><span class="xl-none">&nbsp;&nbsp;Deshabilitar</span></a>
 				</td>
 			</tr>
 	    {% endfor %}
