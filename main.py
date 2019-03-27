@@ -146,7 +146,10 @@ def pacientes_agregar():
                     'nombre_de_usuario': nombre,
                     'doctores': models.Doctores.list(),
                     'enfermeros': models.Enfermeros.list(),
-                    'mutualistas': models.Mutualistas.list()
+                    'mutualistas': models.Mutualistas.list(),
+                    'tipos_de_pacientes': constants.TIPOS_DE_PACIENTES,
+                    'tipos_de_accesos_vasculares': constants.TIPOS_DE_ACCESOS_VASCULARES,
+                    'tipos_de_puestos': constants.TIPOS_DE_PUESTOS
                 }
                 return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
             else:
