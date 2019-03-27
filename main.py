@@ -2,10 +2,11 @@
 # instalamos y por último los nuestros
 import json
 
-from flask import (Flask, g, render_template, flash, url_for, redirect, request)
+from flask import Flask, g, flash, render_template, flash, url_for, redirect, request
 from flask_login import LoginManager
 
 import models
+import constants
 
 
 DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
@@ -88,15 +89,64 @@ def pacientes_agregar():
         response = redirect(url_for('index'))
         return response
     else:
-        nombre = data.get('usuario')
-        context = {
-            'titulo_de_la_pagina': 'Agregar paciente',
-            'nombre_de_usuario': nombre,
-            'doctores': models.Doctores.list(),
-            'enfermeros': models.Enfermeros.list(),
-            'mutualistas': models.Mutualistas.list()
-        }
-        return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
+        if( request.method == 'POST' ):
+            try:
+                ci = request.form.get('ci')
+
+                if( Pacientes.check_paciente_ci(ci) ):
+                    flash('El paciente ya existe', 'error')
+                    return redirect(url_for('pacientes'))
+                else:
+                    nombres = request.form.get('nombres')
+                    apellidos = request.form.get('apellidos')
+                    email = request.form.get('email')
+                    direccion = request.form.get('direccion')
+                    localidad = request.form.get('localidad')
+                    departamento = request.form.get('departamento')
+                    pais = request.form.get('pais')
+                    telefono1 = request.form.get('telefono1')
+                    telefono2 = request.form.get('telefono2')
+                    telefono3 = request.form.get('telefono3')
+                    fecha_de_nacimiento = request.form.get('fecha_de_nacimiento')
+                    sexo = request.form.get('sexo')
+                    observaciones = request.form.get('observaciones')
+                    doctor_id = request.form.get('doctor_id')
+                    enfermero_id = request.form.get('enfermero_id')
+                    mutualista_id = request.form.get('mutualista_id')
+                    tipo_de_paciente = request.form.get('tipo_de_paciente')
+                    numero_fnr = request.form.get('numero_fnr')
+                    estado = request.form.get('estado')
+                    primer_dialisis = request.form.get('primer_dialisis')
+                    grupo_sanguineo = request.form.get('grupo_sanguineo')
+                    rh = request.form.get('rh')
+                    altura = request.form.get('altura')
+                    hta = request.form.get('hta')
+                    alergico = request.form.get('alergico')
+                    diabetico = request.form.get('diabetico')
+                    habilitar_lavado_capilar = request.form.get('habilitar_lavado_capilar')
+                    tipo_de_puesto = request.form.get('tipo_de_puesto')
+
+                    models.Pacientes.create_paciente(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
+                        localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, mutualista_id, doctor_id,
+                        enfermero_id, altura, tipo_de_paciente, tipo_de_acceso_vascular, grupo_sanguineo, rh, primer_dialisis,
+                        diabetico, hta, alergico, numero_fnr, habilitar_lavado_capilar)
+            except:
+                flash('Ocurrió un error al intentar ingresar el paciente', 'error')
+                return redirect(url_for('pacientes_agregar'))
+            else:
+                flash('¡El paciente ha sido agregado con éxito!', 'ok')
+                return redirect(url_for('pacientes'))
+
+        else:
+            nombre = data.get('usuario')
+            context = {
+                'titulo_de_la_pagina': 'Agregar paciente',
+                'nombre_de_usuario': nombre,
+                'doctores': models.Doctores.list(),
+                'enfermeros': models.Enfermeros.list(),
+                'mutualistas': models.Mutualistas.list()
+            }
+            return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
 @app.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])

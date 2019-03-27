@@ -5,121 +5,99 @@
 
 <h1>Agregar paciente</h1>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <div class="container">
-	<form>
+	<form action="{{ url_for('pacientes_agregar') }}">
 		<fieldset>
 			<legend>Datos personales</legend>
 			<div>
-				<label>
-					Nombres
-					<input type="text" name="nombres" required />
-				</label>
+				<label for="nombres">Nombres</label>
+				<input type="text" name="nombres" required />
 			</div>
 			<div>
-				<label>
-					Apellidos
-					<input type="text" name="apellido" required>
-				</label>
+				<label for="apellidos">Apellidos</label>
+				<input type="text" name="apellidos" required>
 			</div>
 			<div>
-				<label>
-					E-mail
-					<input type="email" name="email" required>
-				</label>
+				<label for="ci">C.I.</label>
+				<input type="text" name="ci" required>
 			</div>
 			<div>
-				<label>
-					Dirección
-					<input type="text" name="direccion" required>
-				</label>
+				<label for="email">E-mail</label>
+				<input type="email" name="email" required>
 			</div>
 			<div>
-				<label>
-					Localidad
-					<input type="text" name="localidad" required>
-
-				</label>
-
+				<label for="direccion">Dirección</label>
+				<input type="text" name="direccion" required>
 			</div>
 			<div>
-				<label>
-					Departamento
-					<input type="text" name="departamento" required>
-				</label>
+				<label for="localidad">Localidad</label>
+				<input type="text" name="localidad" required>
 			</div>
 			<div>
-				<label>
-					País
-					<input type="text" name="pais" required>
-				</label>
+				<label for="departamento">Departamento</label>
+				<input type="text" name="departamento" required>
 			</div>
 			<div>
-				<label>
-					C.I.
-					<input type="text" name="ci" required>
-				</label>
+				<label for="pais">País</label>
+				<input type="text" name="pais" required>
 			</div>
 			<div>
-				<label>
-					Teléfono 1
-					<input type="text" name="telefono1" required>
-				</label>
+				<label for="telefono1">Teléfono 1</label>
+				<input type="text" name="telefono1" required>
 			</div>
 			<div>
-				<label>
-					Teléfono 2
-					<input type="text" name="telefono2">
-				</label>
+				<label for="telefono2">Teléfono 2</label>
+				<input type="text" name="telefono2">
 			</div>
 			<div>
-				<label>
-					Teléfono 3
-					<input type="text" name="telefono3">
-				</label>
+				<label for="telefono3">Teléfono 3</label>
+				<input type="text" name="telefono3">
 			</div>
 			<div>
-				<label>
-					Fecha de nacimiento
-					<input type="date" name="fecha_de_nacimiento" required>
-				</label>
+				<label for="fecha_de_nacimiento">Fecha de nacimiento</label>
+				<input type="date" name="fecha_de_nacimiento" required>
 			</div>
 			<div>
-				<legend>Sexo</legend>
-				<label><input type="radio" name="gender" value="h" required> Hombre</label>
-				<label><input type="radio" name="gender" value="m" required> Mujer</label>
-				<label><input type="radio" name="gender" value="o" required> Otro</label>
+				Sexo
+				<label><input type="radio" name="sexo" value="m" required> Hombre</label>
+				<label><input type="radio" name="sexo" value="f" required> Mujer</label>
+				<label><input type="radio" name="sexo" value="o" required> Otro</label>
 			</div>
 			<div>
-				<label>
-					Obsevaciones
-					<textarea name="obsevaciones" rows="3"></textarea>
-				</label>
+				<label for="observaciones">Obsevaciones</label>
+				<textarea name="obsevaciones" rows="3"></textarea>
 			</div>
 		</fieldset>
 		<fieldset>
 			<form>
-				<legend>Datos Clinicos</legend>
+				<legend>Datos Clínicos</legend>
 				<div>
-					<label>
-						Médico Tratante
-						<select name="doctor_id" required>
-							<option value="">Seleccionar...</option>
-							{% for doctor in doctores %}
-							<option value="{{ doctor.id }}">{{ doctor.usuario.persona.nombres }} {{ doctor.usuario.persona.apellidos }}</option>
-							{% endfor %}
-						</select>
-					</label>
+					<label for="doctor_id">Médico Tratante</label>
+					<select name="doctor_id" required>
+						<option value="">Seleccionar...</option>
+						{% for doctor in doctores %}
+						<option value="{{ doctor.id }}">{{ doctor.usuario.persona.nombres }} {{ doctor.usuario.persona.apellidos }}</option>
+						{% endfor %}
+					</select>
 				</div>
 				<div>
-					<label>
-						Enfermero Responsable
-						<select name="enfermero_id" required>
-							<option value="">Seleccionar...</option>
-							{% for enfermero in enfermeros %}
-							<option value="{{ enfermero.id }}">{{ enfermero.usuario.persona.nombres }} {{ enfermero.usuario.persona.apellidos }}</option>
-							{% endfor %}
-						</select>
-					</label>
+					<label for="enfermero_id">Enfermero Responsable</label>
+					<select name="enfermero_id" required>
+						<option value="">Seleccionar...</option>
+						{% for enfermero in enfermeros %}
+						<option value="{{ enfermero.id }}">{{ enfermero.usuario.persona.nombres }} {{ enfermero.usuario.persona.apellidos }}</option>
+						{% endfor %}
+					</select>
 				</div>
 				<div>
 					<label for="mutualista_id">Mutualista</label>
@@ -143,54 +121,48 @@
 					</select>
 				</div>
 				<div>
-					<label>
-						Número FNR
-						<input type="text" name="numero_frn">
-					</label>
+					<label for="numero_fnr">Número FNR</label>
+					<input type="text" name="numero_frn">
 				</div>
 				<div>
-					<label><input type="checkbox" name="estado">Paciente vigente</label>
+					<label><input type="checkbox" name="estado" value="1">Paciente vigente</label>
 				</div>
 				<div>
-					<label>
-						Primer diálisis
-						<input type="date" name="primer_dialisis">
-					</label>
+					<label for="primer_dialisis">Primer diálisis</label>
+					<input type="date" name="primer_dialisis">
 				</div>
 				<div>
 					<fieldset>
 						<legend>Grupo sanguineo</legend>
 						<fieldset>
 							<legend>Tipo</legend>
-							<label><input type="radio" name="gender" value="a">A</label>
-							<label><input type="radio" name="gender" value="b">B</label>
-							<label><input type="radio" name="gender" value="ab">AB</label>
-							<label><input type="radio" name="gender" value="o">O</label>
+							<label><input type="radio" name="grupo_sanguineo" value="a">A</label>
+							<label><input type="radio" name="grupo_sanguineo" value="b">B</label>
+							<label><input type="radio" name="grupo_sanguineo" value="ab">AB</label>
+							<label><input type="radio" name="grupo_sanguineo" value="o">O</label>
 						</fieldset>
 						<fieldset>
 							<legend>Rh</legend>
-							<label><input type="radio" name="Rh" value="+">+</label>
-							<label><input type="radio" name="Rh" value="-">-</label>
+							<label><input type="radio" name="rh" value="+">+</label>
+							<label><input type="radio" name="rh" value="-">-</label>
 						</fieldset>
 				</div>
 				<div>
-					<label>
-						Altura (cm)
-						<input type="number" name="altura" min="100" max="250">
-					</label>
+					<label for="altura">Altura (cm)</label>
+					<input type="number" name="altura" min="100" max="250">
 				</div>
 				<div>
-					<label> <input type="checkbox" name="hta">HTA</label>
-					<label> <input type="checkbox" name="alergico">Alérgico</label>
-					<label> <input type="checkbox" name="diabetico">Diabético</label>
-					<label> <input type="checkbox" name="habilitar_lavado_de_capilar">Habilitar lavado capilar</label>
+					<label> <input type="checkbox" name="hta" value="1">HTA</label>
+					<label> <input type="checkbox" name="alergico" value="1">Alérgico</label>
+					<label> <input type="checkbox" name="diabetico" value="1">Diabético</label>
+					<label> <input type="checkbox" name="habilitar_lavado_capilar" value="1">Habilitar lavado de capilar</label>
 				</div>
 				<div>
-					<label for="country">Tipo de Puesto</label>
+					<label for="tipo_de_puesto">Tipo de Puesto</label>
 					<select name="tipo_de_puesto">
 						<option value="">Seleccionar...</option>
-						<option value="Normal">Normal</option>
-						<option value="HVC+">HVC+</option>
+						<option value="normal">Normal</option>
+						<option value="hvc+">HVC+</option>
 					</select>
 				</div>
 		</fieldset>
