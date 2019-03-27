@@ -6,7 +6,7 @@ from flask_bcrypt import generate_password_hash, check_password_hash
 from peewee import *
 
 # Print all queries to stderr.
-import logging
+# import logging
 # logger = logging.getLogger('peewee')
 # logger.addHandler(logging.StreamHandler())
 # logger.setLevel(logging.DEBUG)
@@ -363,7 +363,7 @@ class Pacientes(MyModel):
 
             return paciente
 
-        except IntegrityError:
+        except IntegrityError as e:
             raise ValueError('El paciente ya existe')
 
     @classmethod
