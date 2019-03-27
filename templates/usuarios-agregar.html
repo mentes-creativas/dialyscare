@@ -8,132 +8,106 @@
 
 <h1>Agregar usuario</h1>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <div class="container">
-	<form>
+	<form action="{{ url_for('usuarios_agregar') }}" method="post">
 		<fieldset>
 			<legend>Datos personales</legend>
 			<div>
-				<label>
-					Nombres
-					<input type="text" name="nombres" required />
-				</label>
+				<label for="nombres">Nombres</label>
+				<input type="text" name="nombres" required />
 			</div>
 			<div>
-				<label>
-					Apellidos
-					<input type="text" name="apellido" required>
-				</label>
+				<label for="apellidos">Apellidos</label>
+				<input type="text" name="apellidos" required>
 			</div>
 			<div>
-				<label>
-					E-mail
-					<input type="email" name="email" required>
-				</label>
+				<label for="ci">C.I.</label>
+				<input type="text" name="ci" required>
 			</div>
 			<div>
-				<label>
-					Dirección
-					<input type="text" name="direccion" required>
-				</label>
+				<label for="email">E-mail</label>
+				<input type="email" name="email" required>
 			</div>
 			<div>
-				<label>
-					Localidad
-					<input type="text" name="localidad" required>
-
-				</label>
-
+				<label for="direccion">Dirección</label>
+				<input type="text" name="direccion" required>
 			</div>
 			<div>
-				<label>
-					Departamento
-					<input type="text" name="departamento" required>
-				</label>
+				<label for="localidad">Localidad</label>
+				<input type="text" name="localidad" required>
 			</div>
 			<div>
-				<label>
-					País
-					<input type="text" name="pais" required>
-				</label>
+				<label for="departamento">Departamento</label>
+				<input type="text" name="departamento" required>
 			</div>
 			<div>
-				<label>
-					C.I.
-					<input type="text" name="ci" required>
-				</label>
+				<label for="pais">País</label>
+				<input type="text" name="pais" required>
 			</div>
 			<div>
-				<label>
-					Teléfono 1
-					<input type="text" name="telefono1" required>
-				</label>
+				<label for="telefono1">Teléfono 1</label>
+				<input type="text" name="telefono1" required>
 			</div>
 			<div>
-				<label>
-					Teléfono 2
-					<input type="text" name="telefono2">
-				</label>
+				<label for="telefono2">Teléfono 2</label>
+				<input type="text" name="telefono2">
 			</div>
 			<div>
-				<label>
-					Teléfono 3
-					<input type="text" name="telefono3">
-				</label>
+				<label for="telefono3">Teléfono 3</label>
+				<input type="text" name="telefono3">
 			</div>
 			<div>
-				<label>
-					Fecha de nacimiento
-					<input type="date" name="fecha_de_nacimiento" required>
-				</label>
+				<label for="fecha_de_nacimiento">Fecha de nacimiento</label>
+				<input type="date" name="fecha_de_nacimiento" required>
 			</div>
 			<div>
-				<legend>Sexo</legend>
-				<label><input type="radio" name="gender" value="h" required> Hombre</label>
-				<label><input type="radio" name="gender" value="m" required> Mujer</label>
-				<label><input type="radio" name="gender" value="o" required> Otro</label>
+				Sexo
+				<label><input type="radio" name="sexo" value="m" required> Hombre</label>
+				<label><input type="radio" name="sexo" value="f" required> Mujer</label>
+				<label><input type="radio" name="sexo" value="o" required> Otro</label>
 			</div>
 			<div>
-				<label>
-					Obsevaciones
-					<textarea name="obsevaciones" rows="3"></textarea>
-				</label>
+				<label for="observaciones">Obsevaciones</label>
+				<textarea name="obsevaciones" rows="3"></textarea>
 			</div>
 		</fieldset>
 		<fieldset>
 			<form>
 				<legend>Datos de usuario</legend>
 				<div>
-					<label>
-						Nombre de usuario
-						<input type="text" name="usuario" required />
-					</label>
+					<label for="usuario">Nombre de usuario<label>
+					<input type="text" name="usuario" required />
 				</div>
 				<div>
-					<label>
-						Contraseña
-						<input type="password" name="clave" required>
-					</label>
+					<label for="clave">Contraseña</label>
+					<input type="password" name="clave" required>
 				</div>
 				<div>
-					<label>
-						Tipo de usuario
-						<select name="tipo_de_usuario" required>
-							<option value="">Seleccionar...</option>
-							<option value="enfermero">Enfermero</option>
-							<option value="doctor">Doctor</<option>
-							<option value="nurse">Nurse</<option>
-							<option value="administrativo">Administrativo</option>
-						</select>
-					</label>
+					<label for="tipo_de_usuario">Tipo de usuario</label>
+					<select name="tipo_de_usuario" required>
+						<option value="">Seleccionar...</option>
+						<option value="enfermero">Enfermero</option>
+						<option value="doctor">Doctor</<option>
+						<option value="nurse">Nurse</<option>
+						<option value="administrativo">Administrativo</option>
+					</select>
 				</div>
 				<div>
-					<label>
-						Número profesional
-						<input type="text" name="numero_profesional">
-					</label>
+					<label for="numero_profesional">Número profesional</label>
+					<input type="text" name="numero_profesional">
 				</div>
 				<div>
-					<label><input type="checkbox" name="super_user">Super usuario</label>
+					<label><input type="checkbox" name="super_user" value="1">Super usuario</label>
 				</div>
 			</form>
 		</fieldset>
