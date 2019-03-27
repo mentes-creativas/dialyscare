@@ -6,7 +6,7 @@ from flask_bcrypt import generate_password_hash, check_password_hash
 from peewee import *
 
 # Print all queries to stderr.
-# import logging
+import logging
 # logger = logging.getLogger('peewee')
 # logger.addHandler(logging.StreamHandler())
 # logger.setLevel(logging.DEBUG)
@@ -323,7 +323,7 @@ class Pacientes(MyModel):
     alergico = BooleanField(default=False)
     numero_fnr = IntegerField()
     habilitar_lavado_capilar = BooleanField()
-    tipo_de_puesto = CharField(max_length=10)
+    tipo_de_puesto = CharField(max_length=20)
 
     class Meta:
         table_name = 'pacientes'
@@ -334,7 +334,7 @@ class Pacientes(MyModel):
         p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, mutualista,
         doctor, enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular,
         grupo_sanguineo, rh, primer_dialisis, diabetico, hta, alergico, numero_fnr,
-        habilitar_lavado_capilar, tipo_de_puesto ):
+        habilitar_lavado_capilar, tipo_de_puesto):
 
         try:
             persona = Personas.create_persona(p_nombres, p_apellidos, p_email,
@@ -370,7 +370,6 @@ class Pacientes(MyModel):
     def check_paciente_ci(cls, ci):
         try:
             persona = Personas.get(Personas.ci == ci)
-            print(persona)
         except:
             return False
         else:
@@ -487,6 +486,8 @@ if __name__ == '__main__':
     ##Crear mutualistas
     if( Mutualistas.check_mutualista_exists('ASSE') is False ):
         mutualista = Mutualistas.create(nombre = 'ASSE')
+    else:
+        mutualista = Mutualistas.get(Mutualistas.nombre == 'ASSE')
 
     if( Mutualistas.check_mutualista_exists('COMERO') is False ):
         Mutualistas.create(nombre = 'COMERO')
@@ -495,7 +496,7 @@ if __name__ == '__main__':
         Mutualistas.create(nombre = 'Médica Uruguaya')
 
     ##Crear paciente
-    if( Pacientes.check_paciente_ci(46944360) ):
+    if( Pacientes.check_paciente_ci(46944361) ):
         print('Denry Techera ya existe')
     else:
         paciente = Pacientes.create_paciente(
@@ -514,9 +515,9 @@ if __name__ == '__main__':
             'm',
             'Sin observaciones',
             True,
-            'COMERO',
-            'Cecilia Tognola',
-            'Bettina Rey',
+            mutualista,
+            doctor,
+            enfermero,
             182,
             'ambulatorio',
             'fistula_nativa',
@@ -528,7 +529,7 @@ if __name__ == '__main__':
             True,
             211076,
             True,
-            'Normal'
+            'normal'
         )
 
         print('Denry Techera fue agregado con éxito')

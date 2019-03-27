@@ -1,6 +1,8 @@
 # Por convención: primero van los módulos propios de python, después van los que
 # instalamos y por último los nuestros
 import json
+import datetime
+import sys
 
 from flask import Flask, g, flash, render_template, flash, url_for, redirect, request
 from flask_login import LoginManager
@@ -91,7 +93,7 @@ def pacientes_agregar():
     else:
         if( request.method == 'POST' ):
             try:
-                ci = request.form.get('ci')
+                ci = int(request.form.get('ci'))
 
                 if( models.Pacientes.check_paciente_ci(ci) ):
                     flash('El paciente ya existe', 'error')
@@ -107,26 +109,25 @@ def pacientes_agregar():
                     telefono1 = request.form.get('telefono1')
                     telefono2 = request.form.get('telefono2')
                     telefono3 = request.form.get('telefono3')
-                    fecha_de_nacimiento = request.form.get('fecha_de_nacimiento')
-                    print(fecha_de_nacimiento)
+                    fecha_de_nacimiento = datetime.datetime.strptime(request.form.get('fecha_de_nacimiento'), '%Y-%m-%d')
                     sexo = request.form.get('sexo')
                     observaciones = request.form.get('observaciones')
                     doctor_id = int(request.form.get('doctor_id'))
                     enfermero_id = int(request.form.get('enfermero_id'))
                     mutualista_id = int(request.form.get('mutualista_id'))
                     tipo_de_paciente = request.form.get('tipo_de_paciente')
-                    numero_fnr = request.form.get('numero_fnr')
-                    estado = int(request.form.get('estado'))
-                    primer_dialisis = request.form.get('primer_dialisis')
+                    tipo_de_acceso_vascular = request.form.get('tipo_de_acceso_vascular')
+                    numero_fnr = int(request.form.get('numero_fnr'))
+                    estado = bool(request.form.get('estado'))
+                    primer_dialisis = datetime.datetime.strptime(request.form.get('primer_dialisis'), '%Y-%m-%d')
                     grupo_sanguineo = request.form.get('grupo_sanguineo')
                     rh = request.form.get('rh')
                     altura = int(request.form.get('altura'))
-                    hta = int(request.form.get('hta'))
-                    alergico = int(request.form.get('alergico'))
-                    diabetico = int(request.form.get('diabetico'))
-                    habilitar_lavado_capilar = int(request.form.get('habilitar_lavado_capilar'))
+                    hta = bool(request.form.get('hta'))
+                    alergico = bool(request.form.get('alergico'))
+                    diabetico = bool(request.form.get('diabetico'))
+                    habilitar_lavado_capilar = bool(request.form.get('habilitar_lavado_capilar'))
                     tipo_de_puesto = request.form.get('tipo_de_puesto')
-                    tipo_de_acceso_vascular = request.form.get('tipo_de_acceso_vascular')
 
                     mutualista = models.Mutualistas.get(models.Mutualistas.id == mutualista_id)
                     doctor = models.Doctores.get(models.Doctores.id == doctor_id)
@@ -137,9 +138,18 @@ def pacientes_agregar():
                         enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular, grupo_sanguineo, rh, primer_dialisis,
                         diabetico, hta, alergico, numero_fnr, habilitar_lavado_capilar, tipo_de_puesto)
             except Exception as e:
-                error = e
-                flash('Ocurrió un error al intentar ingresar el paciente', 'error')
-                return redirect(url_for('pacientes_agregar'))
+                error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
+                flash('Ocurrió un error al intentar ingresar el paciente: ' + error, 'error')
+
+                nombre = data.get('usuario')
+                context = {
+                    'titulo_de_la_pagina': 'Agregar paciente',
+                    'nombre_de_usuario': nombre,
+                    'doctores': models.Doctores.list(),
+                    'enfermeros': models.Enfermeros.list(),
+                    'mutualistas': models.Mutualistas.list()
+                }
+                return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
             else:
                 flash('¡El paciente ha sido agregado con éxito!', 'ok')
                 return redirect(url_for('pacientes'))
@@ -195,6 +205,7 @@ def pacientes_evolucion():
         context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
         return render_template('pacientes-evolucion.html', **context)
 
+
 @app.route("/admin/pacientes/indicaciones", methods = ['GET'])
 @app.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
 def pacientes_indicaciones():
@@ -207,6 +218,22 @@ def pacientes_indicaciones():
         nombre = data.get('usuario')
         context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
         return render_template('pacientes-indicaciones.html', **context)
+
+
+@app.route("/admin/sesiones/listado", methods = ['GET', 'POST'])
+def sesiones():
+    try:
+        data = json.loads(request.cookies.get('userdata'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {
+            'titulo_de_la_pagina': 'Listado de sesiones',
+            'nombre_de_usuario': nombre
+        }
+        return render_template('sesiones-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
 @app.route("/admin/usuarios/listado", methods = ['GET', 'POST'])

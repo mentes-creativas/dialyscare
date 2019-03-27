@@ -109,20 +109,30 @@
 					</select>
 				</div>
 				<div>
-					<label for="tipo_de_paciente">Tipo de Paciente</label>
+					<label for="tipo_de_paciente">Tipo de paciente</label>
 					<select name="tipo_de_paciente">
 						<option value="">Seleccionar...</option>
 						<option value="agudo">Agudo</option>
 						<option value="ambulatorio">Ambulatorio</option>
-						<option value="estable">Estable </option>
-						<option value="transitorio">Transitorio </option>
-						<option value="transplantado">Transplantado </option>
+						<option value="estable">Estable</option>
+						<option value="transitorio">Transitorio</option>
+						<option value="transplantado">Transplantado</option>
 						<option value="obito">Obito </option>
+					</select>
+				</div>
+        <div>
+					<label for="tipo_de_acceso_vascular">Tipo de accedo vascular</label>
+					<select name="tipo_de_acceso_vascular" required>
+						<option value="">Seleccionar...</option>
+						<option value="cateter_permanente">Cateter permanente</option>
+						<option value="cateter_transitorio">Cateter transitorio</option>
+						<option value="fistula_nativa">Fistula nativa</option>
+						<option value="protesis">Prótesis</option>
 					</select>
 				</div>
 				<div>
 					<label for="numero_fnr">Número FNR</label>
-					<input type="text" name="numero_frn">
+					<input type="text" name="numero_fnr">
 				</div>
 				<div>
 					<label><input type="checkbox" name="estado" value="1">Paciente vigente</label>
