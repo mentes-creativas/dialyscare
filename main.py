@@ -132,8 +132,8 @@ def pacientes_agregar():
                     enfermero = models.Enfermeros.get(models.Enfermeros.id == enfermero_id)
 
                     models.Pacientes.create_paciente(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
-                        localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, mutualista_id, doctor_id,
-                        enfermero_id, altura, tipo_de_paciente, tipo_de_acceso_vascular, grupo_sanguineo, rh, primer_dialisis,
+                        localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, mutualista, doctor,
+                        enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular, grupo_sanguineo, rh, primer_dialisis,
                         diabetico, hta, alergico, numero_fnr, habilitar_lavado_capilar)
             except:
                 flash('Ocurrió un error al intentar ingresar el paciente', 'error')
