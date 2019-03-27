@@ -19,7 +19,6 @@ HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al ser
 app = Flask(__name__)
 app.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
 
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -161,7 +160,10 @@ def pacientes_agregar():
                 'nombre_de_usuario': nombre,
                 'doctores': models.Doctores.list(),
                 'enfermeros': models.Enfermeros.list(),
-                'mutualistas': models.Mutualistas.list()
+                'mutualistas': models.Mutualistas.list(),
+                'tipos_de_pacientes': constants.TIPOS_DE_PACIENTES,
+                'tipos_de_accesos_vasculares': constants.TIPOS_DE_ACCESOS_VASCULARES,
+                'tipos_de_puestos': constants.TIPOS_DE_PUESTOS
             }
             return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
 

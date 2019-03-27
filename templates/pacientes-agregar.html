@@ -112,22 +112,18 @@
 					<label for="tipo_de_paciente">Tipo de paciente</label>
 					<select name="tipo_de_paciente">
 						<option value="">Seleccionar...</option>
-						<option value="agudo">Agudo</option>
-						<option value="ambulatorio">Ambulatorio</option>
-						<option value="estable">Estable</option>
-						<option value="transitorio">Transitorio</option>
-						<option value="transplantado">Transplantado</option>
-						<option value="obito">Obito </option>
+            {% for key in tipos_de_pacientes %}
+						<option value="{{ key }} ">{{ tipos_de_pacientes[key] }}</option>
+            {% endfor %}
 					</select>
 				</div>
         <div>
 					<label for="tipo_de_acceso_vascular">Tipo de accedo vascular</label>
 					<select name="tipo_de_acceso_vascular" required>
 						<option value="">Seleccionar...</option>
-						<option value="cateter_permanente">Cateter permanente</option>
-						<option value="cateter_transitorio">Cateter transitorio</option>
-						<option value="fistula_nativa">Fistula nativa</option>
-						<option value="protesis">Prótesis</option>
+            {% for key in tipos_de_accesos_vasculares %}
+						<option value="{{ key }} ">{{ tipos_de_accesos_vasculares[key] }}</option>
+            {% endfor %}
 					</select>
 				</div>
 				<div>
@@ -171,8 +167,9 @@
 					<label for="tipo_de_puesto">Tipo de Puesto</label>
 					<select name="tipo_de_puesto">
 						<option value="">Seleccionar...</option>
-						<option value="normal">Normal</option>
-						<option value="hvc+">HVC+</option>
+            {% for key in tipos_de_puestos %}
+						<option value="{{ key }} ">{{ tipos_de_puestos[key] }}</option>
+            {% endfor %}
 					</select>
 				</div>
 		</fieldset>
