@@ -54,7 +54,7 @@ def index():
 @app.route("/admin", methods = ['GET', 'POST'])
 def inicio():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -67,7 +67,7 @@ def inicio():
 @app.route("/admin/pacientes/listado", methods = ['GET', 'POST'])
 def pacientes():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -84,7 +84,7 @@ def pacientes():
 @app.route("/admin/pacientes/agregar", methods = ['GET', 'POST'])
 def pacientes_agregar():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -108,23 +108,28 @@ def pacientes_agregar():
                     telefono2 = request.form.get('telefono2')
                     telefono3 = request.form.get('telefono3')
                     fecha_de_nacimiento = request.form.get('fecha_de_nacimiento')
+                    print(fecha_de_nacimiento)
                     sexo = request.form.get('sexo')
                     observaciones = request.form.get('observaciones')
-                    doctor_id = request.form.get('doctor_id')
-                    enfermero_id = request.form.get('enfermero_id')
-                    mutualista_id = request.form.get('mutualista_id')
+                    doctor_id = int(request.form.get('doctor_id'))
+                    enfermero_id = int(request.form.get('enfermero_id'))
+                    mutualista_id = int(request.form.get('mutualista_id'))
                     tipo_de_paciente = request.form.get('tipo_de_paciente')
                     numero_fnr = request.form.get('numero_fnr')
-                    estado = request.form.get('estado')
+                    estado = int(request.form.get('estado'))
                     primer_dialisis = request.form.get('primer_dialisis')
                     grupo_sanguineo = request.form.get('grupo_sanguineo')
                     rh = request.form.get('rh')
-                    altura = request.form.get('altura')
-                    hta = request.form.get('hta')
-                    alergico = request.form.get('alergico')
-                    diabetico = request.form.get('diabetico')
-                    habilitar_lavado_capilar = request.form.get('habilitar_lavado_capilar')
+                    altura = int(request.form.get('altura'))
+                    hta = int(request.form.get('hta'))
+                    alergico = int(request.form.get('alergico'))
+                    diabetico = int(request.form.get('diabetico'))
+                    habilitar_lavado_capilar = int(request.form.get('habilitar_lavado_capilar'))
                     tipo_de_puesto = request.form.get('tipo_de_puesto')
+
+                    mutualista = models.Mutualistas.get(models.Mutualistas.id == mutualista_id)
+                    doctor = models.Doctores.get(models.Doctores.id == doctor_id)
+                    enfermero = models.Enfermeros.get(models.Enfermeros.id == enfermero_id)
 
                     models.Pacientes.create_paciente(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
                         localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, mutualista_id, doctor_id,
@@ -152,7 +157,7 @@ def pacientes_agregar():
 @app.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
 def pacientes_ver():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -165,7 +170,7 @@ def pacientes_ver():
 @app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_editar():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -179,7 +184,7 @@ def pacientes_editar():
 @app.route("/admin/pacientes/evolucion/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_evolucion():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -192,7 +197,7 @@ def pacientes_evolucion():
 @app.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
 def pacientes_indicaciones():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -205,7 +210,7 @@ def pacientes_indicaciones():
 @app.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
 def usuarios():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -222,7 +227,7 @@ def usuarios():
 @app.route("/admin/usuarios/agregar", methods = ['GET', 'POST'])
 def usuarios_agregar():
     try:
-        data = json.loads(request.cookies.get('session'))
+        data = json.loads(request.cookies.get('userdata'))
     except TypeError:
         response = redirect(url_for('index'))
         return response
@@ -236,7 +241,7 @@ def usuarios_agregar():
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():
     response = redirect(url_for('index'))
-    response.delete_cookie('session')
+    response.delete_cookie('userdata')
     return response
 
 
@@ -255,7 +260,7 @@ def login():
         else:
             #response = 'Usuario: {}<br>Contraseña: {}<br><br>^_^'.format(form['usuario'], form['contrasena'])
             response = redirect(url_for('inicio'))
-            response.set_cookie('session', json.dumps(dict(request.form.items())))
+            response.set_cookie('userdata', json.dumps(dict(request.form.items())))
 
         return response
 

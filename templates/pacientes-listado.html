@@ -12,6 +12,16 @@
 
 <h1>Pacientes</h1>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <div class="container">
 	<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-user-plus"></i><span class="md-none">&nbsp;&nbsp; Agregar paciente</span></a>
 
