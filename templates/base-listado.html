@@ -1,0 +1,73 @@
+{% from 'macros.html' import render_btn_pac_list %}
+
+{% extends '_base_layout_admin.html' %}
+
+{% block contenido_de_la_seccion %}
+<!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
+
+<div class="sections">
+	<a href="" class="button"><i class="fas fa-user-md"></i><span class="md-none">&nbsp;&nbsp; Administrador de sesiones</span></a>
+</div>
+
+<h1>Pacientes</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<div class="container">
+	<a href="" class="button"><i class="fas fa-user-plus"></i><span class="md-none">&nbsp;&nbsp; Agregar paciente</span></a>
+
+	<div class="searchBox">
+		<form>
+			<select name="filtrar">
+				<option>Filtrar</option>
+			</select>
+    	<input name="Nombre o CI" placeholder="Nombre o CI">
+    	<button>Buscar</button>
+		</form>
+	</div>
+
+	<table class="data-table">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th class="md-none">CI</th>
+				<th class="md-none">Número FNR</th>
+				<th class="md-none">Médico</th>
+				<th class="lg-none">Enfermero</th>
+				<th>Teléfono</th>
+				<th class="lg-none">Email</th>
+				<th>Operaciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>asfdasf</td>
+				<td class="md-none">asdfsf</td>
+				<td class="md-none">asfsdf</td>
+				<td class="md-none">afdsfdsf</td>
+				<td class="lg-none">afsdfdsf</td>
+				<td>fsdfsdfds</td>
+				<td class="lg-none">fsdfdsf</td>
+				<td class="nowrap">
+					<a href="" class="button" title="Ver más"><i class="fa fa-address-card"></i><span class="xl-none">&nbsp;&nbsp;Ver más</span></a>
+			   	<a href="" class="button" title="Editar"><i class="fa fa-user-edit"></i><span class="xl-none">&nbsp;&nbsp;Editar</span></a>
+			    <a href="" class="button" title="Deshabilitar"><i class="fa fa-user-times"></i><span class="xl-none">&nbsp;&nbsp;Deshabilitar</span></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="center">Pacientes totales: </p>
+</div>
+
+
+<!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
+{% endblock %}

@@ -236,6 +236,22 @@ def sesiones():
         return render_template('sesiones-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
+@app.route("/admin/capilares/listado", methods = ['GET', 'POST'])
+def capilares():
+    try:
+        data = json.loads(request.cookies.get('userdata'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        nombre = data.get('usuario')
+        context = {
+            'titulo_de_la_pagina': 'Listado de capilares',
+            'nombre_de_usuario': nombre
+        }
+        return render_template('capilares-listado.html', **context) # doble asterisco desempaqueta las variables en el template
+
+
 @app.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
 def usuarios():
     try:
