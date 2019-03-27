@@ -74,8 +74,8 @@
 				<label><input type="radio" name="sexo" value="o" required> Otro</label>
 			</div>
 			<div>
-				<label for="observaciones">Obsevaciones</label>
-				<textarea name="obsevaciones" rows="3"></textarea>
+				<label for="observaciones">Observaciones</label>
+				<textarea name="observaciones" rows="3"></textarea>
 			</div>
 		</fieldset>
 		<fieldset>
@@ -101,7 +101,7 @@
 				</div>
 				<div>
 					<label for="mutualista_id">Mutualista</label>
-					<select name="mututalista_id" required>
+					<select name="mutualista_id" required>
 						<option value="">Seleccionar...</option>
 						{% for mutualista in mutualistas %}
 						<option value="{{ mutualista.id }}">{{ mutualista.nombre }}</option>

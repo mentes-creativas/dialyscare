@@ -93,7 +93,7 @@ def pacientes_agregar():
             try:
                 ci = request.form.get('ci')
 
-                if( Pacientes.check_paciente_ci(ci) ):
+                if( models.Pacientes.check_paciente_ci(ci) ):
                     flash('El paciente ya existe', 'error')
                     return redirect(url_for('pacientes'))
                 else:
@@ -126,6 +126,7 @@ def pacientes_agregar():
                     diabetico = int(request.form.get('diabetico'))
                     habilitar_lavado_capilar = int(request.form.get('habilitar_lavado_capilar'))
                     tipo_de_puesto = request.form.get('tipo_de_puesto')
+                    tipo_de_acceso_vascular = request.form.get('tipo_de_acceso_vascular')
 
                     mutualista = models.Mutualistas.get(models.Mutualistas.id == mutualista_id)
                     doctor = models.Doctores.get(models.Doctores.id == doctor_id)
@@ -134,8 +135,9 @@ def pacientes_agregar():
                     models.Pacientes.create_paciente(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
                         localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, mutualista, doctor,
                         enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular, grupo_sanguineo, rh, primer_dialisis,
-                        diabetico, hta, alergico, numero_fnr, habilitar_lavado_capilar)
-            except:
+                        diabetico, hta, alergico, numero_fnr, habilitar_lavado_capilar, tipo_de_puesto)
+            except Exception as e:
+                error = e
                 flash('Ocurrió un error al intentar ingresar el paciente', 'error')
                 return redirect(url_for('pacientes_agregar'))
             else:

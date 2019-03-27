@@ -143,6 +143,7 @@ class Usuarios(UserMixin, MyModel):
     def check_usuario_ci(cls, ci):
         try:
             persona = Personas.get(Personas.ci == ci)
+            print(persona)
         except:
             return False
         else:
@@ -322,6 +323,7 @@ class Pacientes(MyModel):
     alergico = BooleanField(default=False)
     numero_fnr = IntegerField()
     habilitar_lavado_capilar = BooleanField()
+    tipo_de_puesto = CharField(max_length=10)
 
     class Meta:
         table_name = 'pacientes'
@@ -332,7 +334,7 @@ class Pacientes(MyModel):
         p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, mutualista,
         doctor, enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular,
         grupo_sanguineo, rh, primer_dialisis, diabetico, hta, alergico, numero_fnr,
-        habilitar_lavado_capilar):
+        habilitar_lavado_capilar, tipo_de_puesto ):
 
         try:
             persona = Personas.create_persona(p_nombres, p_apellidos, p_email,
@@ -355,7 +357,8 @@ class Pacientes(MyModel):
                 hta = hta,
                 alergico = alergico,
                 numero_fnr = numero_fnr,
-                habilitar_lavado_capilar = habilitar_lavado_capilar
+                habilitar_lavado_capilar = habilitar_lavado_capilar,
+                tipo_de_puesto = tipo_de_puesto
             )
 
             return paciente
@@ -367,6 +370,7 @@ class Pacientes(MyModel):
     def check_paciente_ci(cls, ci):
         try:
             persona = Personas.get(Personas.ci == ci)
+            print(persona)
         except:
             return False
         else:
@@ -491,7 +495,7 @@ if __name__ == '__main__':
         Mutualistas.create(nombre = 'Médica Uruguaya')
 
     ##Crear paciente
-    if( Pacientes.check_paciente_ci(46944361) ):
+    if( Pacientes.check_paciente_ci(46944360) ):
         print('Denry Techera ya existe')
     else:
         paciente = Pacientes.create_paciente(
@@ -510,9 +514,9 @@ if __name__ == '__main__':
             'm',
             'Sin observaciones',
             True,
-            mutualista,
-            doctor,
-            enfermero,
+            'COMERO',
+            'Cecilia Tognola',
+            'Bettina Rey',
             182,
             'ambulatorio',
             'fistula_nativa',
@@ -523,7 +527,8 @@ if __name__ == '__main__':
             True,
             True,
             211076,
-            True
+            True,
+            'Normal'
         )
 
         print('Denry Techera fue agregado con éxito')
