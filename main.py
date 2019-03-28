@@ -1,4 +1,4 @@
-# Por convención: primero van los módulos propios de python, después van los de
+# Primero van los módulos propios de python, después van los de
 # tercerps que instalamos con pip y por último los nuestros
 import json
 import datetime
