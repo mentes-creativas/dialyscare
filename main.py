@@ -1,5 +1,5 @@
-# Por convención: primero van los módulos propios de python, después van los que
-# instalamos y por último los nuestros
+# Por convención: primero van los módulos propios de python, después van los de
+# tercerps que instalamos con pip y por último los nuestros
 import json
 import datetime
 import sys
@@ -155,7 +155,7 @@ def pacientes_agregar():
                 }
                 return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
             else:
-                flash('¡El paciente ha sido agregado con éxito!', 'ok')
+                flash('¡El paciente ha sido agregad con éxito!', 'ok')
                 return redirect(url_for('pacientes'))
 
         else:
