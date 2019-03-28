@@ -16,11 +16,11 @@ PORT = 5000  # 5000 para desarrollo | 80 es el puerto por defecto del protocolo 
 HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
 
 
-app = Flask(__name__)
-app.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
+application = Flask(__name__)
+application.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
 
 login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(application)
 login_manager.login_view = 'login'
 
 
@@ -32,7 +32,7 @@ def load_user(userid):
         return None
 
 
-@app.before_request
+@application.before_request
 def before_request():
     """Conecta a la base de datos antes de cada request"""
     g.db = models.db
@@ -40,19 +40,19 @@ def before_request():
         g.db.connect()
 
 
-@app.after_request
+@application.after_request
 def after_request(response):
     """Cerramos la conección a la base de datos"""
     g.db.close()
     return response
 
 
-@app.route("/", methods = ['GET', 'POST'])
+@application.route("/", methods = ['GET', 'POST'])
 def index():
     return render_template('login.html')
 
 
-@app.route("/admin", methods = ['GET', 'POST'])
+@application.route("/admin", methods = ['GET', 'POST'])
 def inicio():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -65,7 +65,7 @@ def inicio():
         return render_template('inicio.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/pacientes/listado", methods = ['GET', 'POST'])
+@application.route("/admin/pacientes/listado", methods = ['GET', 'POST'])
 def pacientes():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -82,7 +82,7 @@ def pacientes():
         return render_template('pacientes-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/pacientes/agregar", methods = ['GET', 'POST'])
+@application.route("/admin/pacientes/agregar", methods = ['GET', 'POST'])
 def pacientes_agregar():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -171,7 +171,7 @@ def pacientes_agregar():
             return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
+@application.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
 def pacientes_ver():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -184,7 +184,7 @@ def pacientes_ver():
         return render_template('pacientes-ver.html', **context)
 
 
-@app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
+@application.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_editar():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -197,8 +197,8 @@ def pacientes_editar():
         return render_template('pacientes-editar.html', **context)
 
 
-@app.route("/admin/pacientes/evolucion", methods = ['GET', 'POST'])
-@app.route("/admin/pacientes/evolucion/<int:paciente_id>", methods = ['GET', 'POST'])
+@application.route("/admin/pacientes/evolucion", methods = ['GET', 'POST'])
+@application.route("/admin/pacientes/evolucion/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_evolucion():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -211,8 +211,8 @@ def pacientes_evolucion():
         return render_template('pacientes-evolucion.html', **context)
 
 
-@app.route("/admin/pacientes/indicaciones", methods = ['GET'])
-@app.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
+@application.route("/admin/pacientes/indicaciones", methods = ['GET'])
+@application.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
 def pacientes_indicaciones():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -225,7 +225,7 @@ def pacientes_indicaciones():
         return render_template('pacientes-indicaciones.html', **context)
 
 
-@app.route("/admin/sesiones/listado", methods = ['GET', 'POST'])
+@application.route("/admin/sesiones/listado", methods = ['GET', 'POST'])
 def sesiones():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -241,7 +241,7 @@ def sesiones():
         return render_template('sesiones-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/capilares/listado", methods = ['GET', 'POST'])
+@application.route("/admin/capilares/listado", methods = ['GET', 'POST'])
 def capilares():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -257,7 +257,7 @@ def capilares():
         return render_template('capilares-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
+@application.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
 def usuarios():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -274,7 +274,7 @@ def usuarios():
         return render_template('usuarios-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/admin/usuarios/agregar", methods = ['GET', 'POST'])
+@application.route("/admin/usuarios/agregar", methods = ['GET', 'POST'])
 def usuarios_agregar():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -288,14 +288,14 @@ def usuarios_agregar():
         return render_template('usuarios-agregar.html', **context ) # doble asterisco desempaqueta las variables en el template
 
 
-@app.route("/logout", methods = ['GET', 'POST'])
+@application.route("/logout", methods = ['GET', 'POST'])
 def logout():
     response = redirect(url_for('index'))
     response.delete_cookie('userdata')
     return response
 
 
-@app.route("/login", methods = ['GET', 'POST'])
+@application.route("/login", methods = ['GET', 'POST'])
 def login():
     if request.method == "GET":
         response = redirect(url_for('index'))
@@ -322,4 +322,4 @@ def login():
 
 if __name__ == '__main__':
     models.initialize()
-    app.run(debug=DEBUG, host=HOST, port=PORT)
+    application.run(debug=DEBUG, host=HOST, port=PORT)
