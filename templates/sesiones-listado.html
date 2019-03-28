@@ -9,7 +9,7 @@
 	<a href="" class="button"><i class="fas fa-user-md"></i><span class="md-none">&nbsp;&nbsp; Administrador de sesiones</span></a>
 </div>
 
-<h1>Pacientes</h1>
+<h1>Sesiones</h1>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -24,12 +24,12 @@
 <div class="container">
 	<a href="" class="button"><i class="fas fa-user-plus"></i><span class="md-none">&nbsp;&nbsp; Agregar paciente</span></a>
 
-	<div class="searchBox">
+	<div class="Nueva sesión">
 		<form>
 			<select name="filtrar">
 				<option>Filtrar</option>
 			</select>
-    	<input name="Nombre o CI" placeholder="Nombre o CI">
+    	<input name="Nombre del paciente" placeholder="Nombre del paciente">
     	<button>Buscar</button>
 		</form>
 	</div>
@@ -37,25 +37,24 @@
 	<table class="data-table">
 		<thead>
 			<tr>
-				<th>Nombre</th>
-				<th class="md-none">CI</th>
-				<th class="md-none">Número FNR</th>
-				<th class="md-none">Médico</th>
-				<th class="lg-none">Enfermero</th>
-				<th>Teléfono</th>
-				<th class="lg-none">Email</th>
-				<th>Operaciones</th>
+				<th>Fecha</th>
+				<th class="md-none">Paciente</th>
+				<th class="md-none">Turno</th>
+				<th class="md-none">Sala</th>
+				<th class="md-none">Puesto</th>
+				<th class="md-none">Finalizado</th>
+				<th class="md-none">Enviado a FNR</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td>asfdasf</td>
-				<td class="md-none">asdfsf</td>
-				<td class="md-none">asfsdf</td>
-				<td class="md-none">afdsfdsf</td>
-				<td class="lg-none">afsdfdsf</td>
-				<td>fsdfsdfds</td>
-				<td class="lg-none">fsdfdsf</td>
+				<td>28/03/19</td>
+				<td class="md-none">Juan Pérez</td>
+				<td class="md-none">Matutino</td>
+				<td class="md-none">A</td>
+				<td class="md-none">1</td>
+				<td class="md-none">as</td>
+				<td class="md-none">af</td>
 				<td class="nowrap">
 					<a href="" class="button" title="Ver más"><i class="fa fa-address-card"></i><span class="xl-none">&nbsp;&nbsp;Ver más</span></a>
 			   	<a href="" class="button" title="Editar"><i class="fa fa-user-edit"></i><span class="xl-none">&nbsp;&nbsp;Editar</span></a>
@@ -65,7 +64,7 @@
 		</tbody>
 	</table>
 
-	<p class="center">Pacientes totales: </p>
+	<p class="center">Total de sesiones: </p>
 </div>
 
 
