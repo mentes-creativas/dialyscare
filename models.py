@@ -110,7 +110,7 @@ class Usuarios(UserMixin, MyModel):
     def create_usuario(cls, p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
         p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
         p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, u_rol, u_usuario,
-        u_clave, n_d_super=False, d_numero_profesional=''):
+        u_clave):
 
         try:
             persona = Personas.create_persona(p_nombres, p_apellidos, p_email,
@@ -173,7 +173,7 @@ class Doctores(MyModel):
             usuario = Usuarios.create_usuario(p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
                 p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
                 p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, 'doctor', u_usuario,
-                u_clave, super_doctor, numero_profesional)
+                u_clave)
 
             doctor = cls.create(
                 usuario = usuario,
@@ -207,7 +207,7 @@ class Nurses(MyModel):
             usuario = Usuarios.create_usuario(p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
                 p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
                 p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, 'nurse', u_usuario,
-                u_clave, super_nurse)
+                u_clave)
 
             nurse = cls.create(
                 usuario = usuario,

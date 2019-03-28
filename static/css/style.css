@@ -268,7 +268,8 @@ main .container {
 }
 
 .sections {
-	float: right;;
+	float: right;
+	margin-top: -1rem;
 }
 
 .button {

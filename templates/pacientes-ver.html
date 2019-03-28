@@ -3,13 +3,15 @@
 {% block contenido_de_la_seccion %}
 <!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
 
+<div class="sections">
+	<a href="{{ url_for('pacientes') }}" class="button"><i class="fas fa-users"></i>&nbsp;&nbsp; Listado de pacientes</a>
+	<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
+	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-chart-bar"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
+</div>
+
 <h1>Ficha del Paciente</h1>
 
 <div class="container">
-		<a href="{{ url_for('pacientes') }}" class="button"><i class="fas fa-users"></i>&nbsp;&nbsp; Listado de pacientes</a>
-		<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
-		<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-line-chart"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
-		<p> </p>
 	<form>
 		<fieldset>
 			<legend>Datos personales</legend>

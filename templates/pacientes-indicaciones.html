@@ -5,16 +5,14 @@
 {% block contenido_de_la_seccion %}
 <!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
 
-<h1>Pacientes</h1>
-<h2>Indicaciones Médicas</h2>
+<div class="sections">
+	<a href="{{ url_for('pacientes') }}" class="button"><i class="fas fa-users"></i>&nbsp;&nbsp; Listado de pacientes</a>
+	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-chart-bar"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
+</div>
 
+<h1>Indicaciones Médicas</h1>
 
 <div class="container">
-	<a href="{{ url_for('pacientes') }}" class="button"><i class="fa fa-fw fa-arrow-left"></i>Atrás  </a>&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fa fa-fw fa-line-chart"></i>Gráficos de Evolución  </a> &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="" class="button"><i class="fa fa-fw fa-print"></i>Imprimir</a>
-    <p>&nbsp;&nbsp;</p>
-
 	<div>
 		<select name="nombre-paciente">
             <option>Pérez Rosas José María</option>
@@ -70,7 +68,7 @@
             <td> </td>
             <td> </td>
             <td> </td>
-            
+
         </tr>
         <tr>
             <td>Peso Seco</td>
@@ -116,7 +114,7 @@
             <td> </td>
             <td> </td>
             <td> </td>
-        </tr>	     
+        </tr>
         <tr>
             <td>Heparina</td>
             <td> </td>
@@ -147,7 +145,7 @@
             <td> </td>
             <td> </td>
         </tr>
-        
+
         <tr>
             <td>HBPM</td>
             <td> </td>
@@ -303,6 +301,7 @@
             <td> </td>
         </tr>
     </table>
+		<a href="" class="button"><i class="fa fa-fw fa-print"></i>Imprimir</a>
 </div>
 
 

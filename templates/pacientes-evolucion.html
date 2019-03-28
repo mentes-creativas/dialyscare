@@ -3,10 +3,15 @@
 {% block contenido_de_la_seccion %}
 <!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
 
+<div class="sections">
+	<a href="{{ url_for('pacientes') }}" class="button"><i class="fas fa-users"></i>&nbsp;&nbsp; Listado de pacientes</a>
+	<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
+</div>
+
 <h1>Gráficos de Evolución</h1>
 
 <div class="container">
-	...Acá va el listado...
+	...Acá van los gráficos...
 </div>
 
 <!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
