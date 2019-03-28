@@ -6,7 +6,7 @@
 <h1>Ficha del Paciente</h1>
 
 <div class="container">
-		<a href="{{ url_for('pacientes_agregar') }}" class="button"><i class="fas fa-users"></i>&nbsp;&nbsp; Lista de pacientes</a>
+		<a href="{{ url_for('pacientes') }}" class="button"><i class="fas fa-users"></i>&nbsp;&nbsp; Listado de pacientes</a>
 		<a href="{{ url_for('pacientes_indicaciones') }}" class="button"><i class="fas fa-user-md"></i>&nbsp;&nbsp; Indicaciones Médicas</a>
 		<a href="{{ url_for('pacientes_evolucion') }}" class="button"><i class="fas fa-line-chart"></i>&nbsp;&nbsp; Gráficos de Evolución</a>
 		<p> </p>
@@ -16,13 +16,13 @@
 			<div>
 				<label>
 					Nombres: José María
-					
+
 				</label>
 			</div>
 			<div>
 				<label>
 					Apellidos: Pérez Rosas
-					
+
 				</label>
 			</div>
 			<div>
@@ -103,7 +103,7 @@
 				</div>
 				<div>
 					<label>COMERO</label>
-					
+
 				</div>
 				<div>
 					<label>Tipo de Paciente: Ambulatorio</label>
@@ -148,7 +148,7 @@
 					<label>Tipo de Puesto: Normal</label>
 				</div>
 		</fieldset>
-		<a href= "{{ url_for('pacientes_editar') }}" class="button">
+		<a href= "{{ url_for('pacientes_editar', paciente_id = 1) }}" class="button">
 			<i class="fa fa-edit"></i>&nbsp;&nbsp; Editar
 		</a>
 		&nbsp;&nbsp;

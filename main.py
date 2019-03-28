@@ -172,7 +172,7 @@ def pacientes_agregar():
 
 
 @application.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
-def pacientes_ver():
+def pacientes_ver( paciente_id ):
     try:
         data = json.loads(request.cookies.get('userdata'))
     except TypeError:
@@ -180,12 +180,12 @@ def pacientes_ver():
         return response
     else:
         nombre = data.get('usuario')
-        context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
+        context = {'titulo_de_la_pagina': 'Ver paciente', 'nombre_de_usuario': nombre}
         return render_template('pacientes-ver.html', **context)
 
 
 @application.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
-def pacientes_editar():
+def pacientes_editar( paciente_id ):
     try:
         data = json.loads(request.cookies.get('userdata'))
     except TypeError:
@@ -199,7 +199,7 @@ def pacientes_editar():
 
 @application.route("/admin/pacientes/evolucion", methods = ['GET', 'POST'])
 @application.route("/admin/pacientes/evolucion/<int:paciente_id>", methods = ['GET', 'POST'])
-def pacientes_evolucion():
+def pacientes_evolucion( paciente_id = 0 ):
     try:
         data = json.loads(request.cookies.get('userdata'))
     except TypeError:
@@ -213,7 +213,7 @@ def pacientes_evolucion():
 
 @application.route("/admin/pacientes/indicaciones", methods = ['GET'])
 @application.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
-def pacientes_indicaciones():
+def pacientes_indicaciones( paciente_id = 0 ):
     try:
         data = json.loads(request.cookies.get('userdata'))
     except TypeError:
