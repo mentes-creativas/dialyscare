@@ -7,8 +7,8 @@ import sys
 from flask import Flask, g, flash, render_template, flash, url_for, redirect, request
 from flask_login import LoginManager
 
-import models
-import constants
+import models as m
+import constants as c
 
 
 DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
@@ -16,43 +16,43 @@ PORT = 5000  # 5000 para desarrollo | 80 es el puerto por defecto del protocolo 
 HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
 
 
-application = Flask(__name__)
-application.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
+app = Flask(__name__)
+app.secret_key = '¬€~#@|PrOgRaMaB_It-MeNtEsCrEaTiVas-DiAlYsCaRe|@#~€¬'
 
 login_manager = LoginManager()
-login_manager.init_app(application)
+login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
 @login_manager.user_loader
 def load_user(userid):
     try:
-        return models.Usuarios.get(models.Usuarios.id == userid)
-    except models.DoesNotExist:
+        return m.Usuarios.get(m.Usuarios.id == userid)
+    except m.DoesNotExist:
         return None
 
 
-@application.before_request
+@app.before_request
 def before_request():
     """Conecta a la base de datos antes de cada request"""
-    g.db = models.db
+    g.db = m.db
     if g.db.is_closed():
         g.db.connect()
 
 
-@application.after_request
+@app.after_request
 def after_request(response):
     """Cerramos la conección a la base de datos"""
     g.db.close()
     return response
 
 
-@application.route("/", methods = ['GET', 'POST'])
+@app.route("/", methods = ['GET', 'POST'])
 def index():
     return render_template('login.html')
 
 
-@application.route("/admin", methods = ['GET', 'POST'])
+@app.route("/admin", methods = ['GET', 'POST'])
 def inicio():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -65,7 +65,7 @@ def inicio():
         return render_template('inicio.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@application.route("/admin/pacientes/listado", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/listado", methods = ['GET', 'POST'])
 def pacientes():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -77,12 +77,12 @@ def pacientes():
         context = {
             'titulo_de_la_pagina': 'Listado de pacientes',
             'nombre_de_usuario': nombre,
-            'pacientes': models.Pacientes.list()
+            'pacientes': m.Pacientes.list()
         }
         return render_template('pacientes-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@application.route("/admin/pacientes/agregar", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/agregar", methods = ['GET', 'POST'])
 def pacientes_agregar():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -93,14 +93,15 @@ def pacientes_agregar():
         if( request.method == 'POST' ):
             try:
                 ci = int(request.form.get('ci'))
+                email = request.form.get('email')
 
-                if( models.Pacientes.check_paciente_ci(ci) ):
-                    flash('El paciente ya existe', 'error')
-                    return redirect(url_for('pacientes'))
+                if( m.Pacientes.check_ci(ci) ):
+                    raise ValueError('La C.I. ' + str(ci) + ' ya se encuentra registrada')
+                elif( m.Pacientes.check_email(email) ):
+                    raise ValueError('El email ' + email + ' ya se encuentra registrado')
                 else:
                     nombres = request.form.get('nombres')
                     apellidos = request.form.get('apellidos')
-                    email = request.form.get('email')
                     direccion = request.form.get('direccion')
                     localidad = request.form.get('localidad')
                     departamento = request.form.get('departamento')
@@ -128,28 +129,29 @@ def pacientes_agregar():
                     habilitar_lavado_capilar = bool(request.form.get('habilitar_lavado_capilar'))
                     tipo_de_puesto = request.form.get('tipo_de_puesto')
 
-                    mutualista = models.Mutualistas.get(models.Mutualistas.id == mutualista_id)
-                    doctor = models.Doctores.get(models.Doctores.id == doctor_id)
-                    enfermero = models.Enfermeros.get(models.Enfermeros.id == enfermero_id)
+                    mutualista = m.Mutualistas.get(m.Mutualistas.id == mutualista_id)
+                    doctor = m.Doctores.get(m.Doctores.id == doctor_id)
+                    enfermero = m.Enfermeros.get(m.Enfermeros.id == enfermero_id)
 
-                    models.Pacientes.create_paciente(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
+                    m.Pacientes.create_paciente(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
                         localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, mutualista, doctor,
                         enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular, grupo_sanguineo, rh, primer_dialisis,
                         diabetico, hta, alergico, numero_fnr, habilitar_lavado_capilar, tipo_de_puesto)
             except Exception as e:
-                error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
-                flash('Ocurrió un error al intentar ingresar el paciente: ' + error, 'error')
+                #error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
+                error = str(e)
+                flash('Ocurrió un error: ' + error, 'error')
 
                 nombre = data.get('usuario')
                 context = {
                     'titulo_de_la_pagina': 'Agregar paciente',
                     'nombre_de_usuario': nombre,
-                    'doctores': models.Doctores.list(),
-                    'enfermeros': models.Enfermeros.list(),
-                    'mutualistas': models.Mutualistas.list(),
-                    'tipos_de_pacientes': constants.TIPOS_DE_PACIENTES,
-                    'tipos_de_accesos_vasculares': constants.TIPOS_DE_ACCESOS_VASCULARES,
-                    'tipos_de_puestos': constants.TIPOS_DE_PUESTOS
+                    'doctores': m.Doctores.list(),
+                    'enfermeros': m.Enfermeros.list(),
+                    'mutualistas': m.Mutualistas.list(),
+                    'tipos_de_pacientes': c.TIPOS_DE_PACIENTES,
+                    'tipos_de_accesos_vasculares': c.TIPOS_DE_ACCESOS_VASCULARES,
+                    'tipos_de_puestos': c.TIPOS_DE_PUESTOS
                 }
                 return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
             else:
@@ -161,17 +163,17 @@ def pacientes_agregar():
             context = {
                 'titulo_de_la_pagina': 'Agregar paciente',
                 'nombre_de_usuario': nombre,
-                'doctores': models.Doctores.list(),
-                'enfermeros': models.Enfermeros.list(),
-                'mutualistas': models.Mutualistas.list(),
-                'tipos_de_pacientes': constants.TIPOS_DE_PACIENTES,
-                'tipos_de_accesos_vasculares': constants.TIPOS_DE_ACCESOS_VASCULARES,
-                'tipos_de_puestos': constants.TIPOS_DE_PUESTOS
+                'doctores': m.Doctores.list(),
+                'enfermeros': m.Enfermeros.list(),
+                'mutualistas': m.Mutualistas.list(),
+                'tipos_de_pacientes': c.TIPOS_DE_PACIENTES,
+                'tipos_de_accesos_vasculares': c.TIPOS_DE_ACCESOS_VASCULARES,
+                'tipos_de_puestos': c.TIPOS_DE_PUESTOS
             }
             return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@application.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
+@app.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
 def pacientes_ver( paciente_id ):
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -184,7 +186,7 @@ def pacientes_ver( paciente_id ):
         return render_template('pacientes-ver.html', **context)
 
 
-@application.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_editar( paciente_id ):
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -197,8 +199,8 @@ def pacientes_editar( paciente_id ):
         return render_template('pacientes-editar.html', **context)
 
 
-@application.route("/admin/pacientes/evolucion", methods = ['GET', 'POST'])
-@application.route("/admin/pacientes/evolucion/<int:paciente_id>", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/evolucion", methods = ['GET', 'POST'])
+@app.route("/admin/pacientes/evolucion/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_evolucion( paciente_id = 0 ):
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -211,8 +213,8 @@ def pacientes_evolucion( paciente_id = 0 ):
         return render_template('pacientes-evolucion.html', **context)
 
 
-@application.route("/admin/pacientes/indicaciones", methods = ['GET'])
-@application.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
+@app.route("/admin/pacientes/indicaciones", methods = ['GET'])
+@app.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
 def pacientes_indicaciones( paciente_id = 0 ):
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -225,7 +227,7 @@ def pacientes_indicaciones( paciente_id = 0 ):
         return render_template('pacientes-indicaciones.html', **context)
 
 
-@application.route("/admin/sesiones/listado", methods = ['GET', 'POST'])
+@app.route("/admin/sesiones/listado", methods = ['GET', 'POST'])
 def sesiones():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -241,7 +243,7 @@ def sesiones():
         return render_template('sesiones-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@application.route("/admin/capilares/listado", methods = ['GET', 'POST'])
+@app.route("/admin/capilares/listado", methods = ['GET', 'POST'])
 def capilares():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -257,7 +259,7 @@ def capilares():
         return render_template('capilares-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@application.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
+@app.route("/admin/usuarios/listado", methods = ['GET', 'POST'])
 def usuarios():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -269,12 +271,12 @@ def usuarios():
         context = {
             'titulo_de_la_pagina': 'Listado de usuarios',
             'nombre_de_usuario': nombre,
-            'usuarios': models.Usuarios.list()
+            'usuarios': m.Usuarios.list()
         }
         return render_template('usuarios-listado.html', **context) # doble asterisco desempaqueta las variables en el template
 
 
-@application.route("/admin/usuarios/agregar", methods = ['GET', 'POST'])
+@app.route("/admin/usuarios/agregar", methods = ['GET', 'POST'])
 def usuarios_agregar():
     try:
         data = json.loads(request.cookies.get('userdata'))
@@ -288,14 +290,14 @@ def usuarios_agregar():
         return render_template('usuarios-agregar.html', **context ) # doble asterisco desempaqueta las variables en el template
 
 
-@application.route("/logout", methods = ['GET', 'POST'])
+@app.route("/logout", methods = ['GET', 'POST'])
 def logout():
     response = redirect(url_for('index'))
     response.delete_cookie('userdata')
     return response
 
 
-@application.route("/login", methods = ['GET', 'POST'])
+@app.route("/login", methods = ['GET', 'POST'])
 def login():
     if request.method == "GET":
         response = redirect(url_for('index'))
@@ -321,5 +323,5 @@ def login():
 
 
 if __name__ == '__main__':
-    models.initialize()
-    application.run(debug=DEBUG, host=HOST, port=PORT)
+    m.initialize()
+    app.run(debug=DEBUG, host=HOST, port=PORT)

@@ -131,7 +131,7 @@ class Usuarios(UserMixin, MyModel):
             raise ValueError('El usuario ya existe')
 
     @classmethod
-    def check_usuario_email(cls, email):
+    def check_email(cls, email):
         try:
             persona = Personas.get(Personas.email == email)
         except:
@@ -140,7 +140,7 @@ class Usuarios(UserMixin, MyModel):
             return True
 
     @classmethod
-    def check_usuario_ci(cls, ci):
+    def check_ci(cls, ci):
         try:
             persona = Personas.get(Personas.ci == ci)
             print(persona)
@@ -367,7 +367,16 @@ class Pacientes(MyModel):
             raise ValueError('El paciente ya existe')
 
     @classmethod
-    def check_paciente_ci(cls, ci):
+    def check_email(cls, email):
+        try:
+            persona = Personas.get(Personas.email == email)
+        except:
+            return False
+        else:
+            return True
+
+    @classmethod
+    def check_ci(cls, ci):
         try:
             persona = Personas.get(Personas.ci == ci)
         except:
@@ -401,7 +410,7 @@ if __name__ == '__main__':
     ##Insertar datos de ejemplo
 
     ##Crear nurse en jefe
-    if( Usuarios.check_usuario_ci(1234560) ):
+    if( Usuarios.check_ci(1234560) ):
         print('Horacio Sosa ya existe')
     else:
         nurse = Nurses.create_nurse(
@@ -428,7 +437,7 @@ if __name__ == '__main__':
         print('Horacio Sosa fue agregado con éxito')
 
     ##Crear doctora en jefe
-    if( Usuarios.check_usuario_ci(2345678) ):
+    if( Usuarios.check_ci(2345678) ):
         doctor = Usuarios.get(Usuarios.usuario == 'deliapereyra').doctor
         print('Delia Pereyra ya existe')
     else:
@@ -457,7 +466,7 @@ if __name__ == '__main__':
         print('Delia Pereyra fue agregada con éxito')
 
     ##Crear enfermera
-    if( Usuarios.check_usuario_ci(3456789) ):
+    if( Usuarios.check_ci(3456789) ):
         enfermero = Usuarios.get(Usuarios.usuario == 'bettinarey').enfermero
         print('Bettina Rey ya existe')
     else:
@@ -496,7 +505,7 @@ if __name__ == '__main__':
         Mutualistas.create(nombre = 'Médica Uruguaya')
 
     ##Crear paciente
-    if( Pacientes.check_paciente_ci(46944361) ):
+    if( Pacientes.check_ci(46944361) ):
         print('Denry Techera ya existe')
     else:
         paciente = Pacientes.create_paciente(
