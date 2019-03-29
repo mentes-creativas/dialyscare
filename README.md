@@ -1,6 +1,6 @@
 # dialyscare
 
-Proyecto final de primer año del programa b_IT
+Proyecto final de primer año del programa b_IT por Mentes Creativas
 
 ---
 # Requisitos
