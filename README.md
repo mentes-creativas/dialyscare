@@ -4,7 +4,7 @@ Proyecto final de primer año del programa b_IT de Mentes Creativas
 
 ## Demo online
 
-http://app.estudioingenio.com/
+http://app.dialyscare.com/
 
 Aún no valida datos de acceso, se accede ingresando cualquir usuario y contraseña
 
