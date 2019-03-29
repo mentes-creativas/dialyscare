@@ -26,7 +26,7 @@ Aún no valida datos de acceso, se accede ingresando cualquir usuario y contrase
 
 ## Solucionar problemas en Linux
 
-### Problema al intentar instalar flask-myslqdb en Ubuntu (y parientes)
+### Problema al instalar dependecias en Ubuntu (y parientes)
 
 Si aparece un error que dice algo así como que no encuentra el driver de MySQL
 
@@ -52,4 +52,4 @@ Traceback (most recent call last):
   ...
   ...
 
-Cambiar *DEBUG = True* a *False* en main.py
+**Cambiar *DEBUG = True* a *False* en main.py**
