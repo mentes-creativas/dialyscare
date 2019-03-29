@@ -1,5 +1,5 @@
 # dialyscare
----
+
 Proyecto final de primer año del programa b_IT
 
 ---
@@ -44,5 +44,3 @@ Traceback (most recent call last):
   ...
 
 Cambiar DEBUG = True a False en main.py
-
----
