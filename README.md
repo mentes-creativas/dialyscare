@@ -27,11 +27,11 @@ Si aparece un error que dice algo así como que no encuentra el driver de MySQL
 
 Lo que hay que hacer para solucionarlo es:
 
+(En caso de que se haya creado un entorno virtual, primero hay que salir de él y borrarlo. Una vez hecho eso ya se pueden ejecutadar los líneas comandos y volver a crear el entorno virtual. Tener cuidado de crear el entorno para la versión correcta de python.)
+
 *sudo apt-get install python3.6-dev libmysqlclient-dev*
 
 *pip install --upgrade setuptools*
-
-Si se había creado un entorno virtual, hay que salir de él y borrarlo. Una vez hecho eso ya se pueden ejecutadar las líneas anteriores y volver a crear el entorno virtual. Tener cuidado de crear el entorno para la versión correcta de python.
 
 
 ### Problema al ejecutar en modo DEBUG en Linux Mint
