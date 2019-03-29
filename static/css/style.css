@@ -272,7 +272,7 @@ main .container {
 	margin-top: -1rem;
 }
 
-.button {
+.button, .form-bts-footer .button {
 	display: inline-block;
 	color: color: rgb(42, 98, 172);;
 	border: 1px solid #d2d5de;
@@ -281,7 +281,7 @@ main .container {
 	padding: .7rem 2rem .8rem;
 }
 
-.button:hover {
+.button:hover, .form-bts-footer .button:hover {
 	background: rgb(66, 123, 197);
 	border: 1px solid rgb(66, 123, 197);
 	color: #fff;

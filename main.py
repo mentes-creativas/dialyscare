@@ -6,6 +6,7 @@ import sys
 
 from flask import Flask, g, flash, render_template, flash, url_for, redirect, request
 from flask_login import LoginManager
+from playhouse.shortcuts import model_to_dict, dict_to_model
 
 import models as m
 import constants as c
@@ -157,9 +158,9 @@ def pacientes_agregar():
                 form_data = dict(request.form.items());
                 context.update(form_data)
 
-                return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
+                return render_template('pacientes-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
             else:
-                flash('¡El paciente ha sido agregad con éxito!', 'ok')
+                flash('¡El paciente ha sido agregado con éxito!', 'ok')
                 return redirect(url_for('pacientes'))
 
         else:
@@ -174,7 +175,48 @@ def pacientes_agregar():
                 'tipos_de_accesos_vasculares': c.TIPOS_DE_ACCESOS_VASCULARES,
                 'tipos_de_puestos': c.TIPOS_DE_PUESTOS
             }
-            return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
+            return render_template('pacientes-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
+
+@app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
+def pacientes_editar( paciente_id ):
+    try:
+        data = json.loads(request.cookies.get('userdata'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        try:
+            paciente = m.Pacientes.get_by_id(paciente_id)
+            persona = paciente.persona
+        except:
+            flash('Error al recuperar el paciente', 'error')
+            return redirect(url_for('pacientes'))
+        else:
+            nombre = data.get('usuario')
+            context = {
+                'titulo_de_la_pagina': 'Editar paciente',
+                'nombre_de_usuario': nombre,
+                'doctores': m.Doctores.list(),
+                'enfermeros': m.Enfermeros.list(),
+                'mutualistas': m.Mutualistas.list(),
+                'tipos_de_pacientes': c.TIPOS_DE_PACIENTES,
+                'tipos_de_accesos_vasculares': c.TIPOS_DE_ACCESOS_VASCULARES,
+                'tipos_de_puestos': c.TIPOS_DE_PUESTOS
+            }
+
+            persona_data = model_to_dict(persona, recurse=False)
+
+            paciente_data = model_to_dict(paciente, recurse=False)
+            paciente_data['mutualista_id'] = paciente_data.pop('mutualista')
+            paciente_data['doctor_id'] = paciente_data.pop('doctor')
+            paciente_data['enfermero_id'] = paciente_data.pop('enfermero')
+
+            context.update(persona_data)
+            context.update(paciente_data)
+
+            print(context)
+
+            return render_template('pacientes-agregar-editar.html', **context)
 
 
 @app.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
@@ -188,19 +230,6 @@ def pacientes_ver( paciente_id ):
         nombre = data.get('usuario')
         context = {'titulo_de_la_pagina': 'Ver paciente', 'nombre_de_usuario': nombre}
         return render_template('pacientes-ver.html', **context)
-
-
-@app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
-def pacientes_editar( paciente_id ):
-    try:
-        data = json.loads(request.cookies.get('userdata'))
-    except TypeError:
-        response = redirect(url_for('index'))
-        return response
-    else:
-        nombre = data.get('usuario')
-        context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': nombre}
-        return render_template('pacientes-editar.html', **context)
 
 
 @app.route("/admin/pacientes/evolucion", methods = ['GET', 'POST'])
