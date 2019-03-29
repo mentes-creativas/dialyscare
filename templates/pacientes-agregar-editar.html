@@ -20,13 +20,13 @@
 {% endwith %}
 
 <div class="container">
-	<form action="{% if id %}{{ url_for('pacientes_editar', paciente_id = id) }}{% else %}{{ url_for('pacientes_agregar') }}{% endif %}" method="post">
+	<form action="{% if id %}{{ url_for('pacientes_editar', paciente_id = id) }}{% else %}{{ url_for('pacientes_agregar') }}{% endif %}" method="post" id="mainForm">
     {% if id %}<input type="hidden" name="id" value="{{ id }}">{% endif %}
 		<fieldset>
 			<legend>Datos personales</legend>
 			<div>
 				<label for="nombres">Nombres</label>
-				<input type="text" name="nombres"{% if nombres %} value="{{ nombres }}"{% endif %} required />
+				<input type="text" name="nombres"{% if nombres %} value="{{ nombres }}"{% endif %} required>
 			</div>
 			<div>
 				<label for="apellidos">Apellidos</label>
@@ -179,8 +179,8 @@
 				</div>
 		</fieldset>
     <div class="form-bts-footer">
-		    <button type="submit" class="button"><i class="far fa-save"></i>&nbsp;&nbsp;&nbsp;Guardar</button>
-		    <button type="reset" class="button"><i class="far fa-window-close"></i>&nbsp;&nbsp;&nbsp;Cancelar</button>
+		    <a href="javascript: document.getElementById('mainForm').submit(); " class="button"><i class="far fa-save"></i>&nbsp;&nbsp;&nbsp;Guardar</a>
+		    <a href="{{ url_for('pacientes') }}" class="button"><i class="far fa-window-close"></i>&nbsp;&nbsp;&nbsp;Cancelar</a>
     </div>
 	</form>
 </div>

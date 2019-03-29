@@ -57,6 +57,10 @@ a:hover {
 	text-decoration: none;
 }
 
+fieldset {
+	border: 1px solid #DDD;
+}
+
 .center {
 	text-align: center;
 }

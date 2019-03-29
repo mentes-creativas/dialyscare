@@ -373,6 +373,56 @@ class Pacientes(MyModel):
             raise ValueError('El paciente ya existe')
 
     @classmethod
+    def update_paciente(cls, id, p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+        p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+        p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, mutualista,
+        doctor, enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular,
+        grupo_sanguineo, rh, primer_dialisis, diabetico, hta, alergico, numero_fnr,
+        habilitar_lavado_capilar, tipo_de_puesto):
+
+        try:
+            paciente = cls.get_by_id(id)
+            paciente.mutualista = mutualista
+            paciente.doctor = doctor
+            paciente.enfermero = enfermero
+            paciente.altura = altura
+            paciente.tipo_de_paciente = tipo_de_paciente
+            paciente.tipo_de_acceso_vascular = tipo_de_acceso_vascular
+            paciente.grupo_sanguineo = grupo_sanguineo
+            paciente.rh = rh
+            paciente.primer_dialisis = primer_dialisis
+            paciente.diabetico = diabetico
+            paciente.hta = hta
+            paciente.alergico = alergico
+            paciente.numero_fnr = numero_fnr
+            paciente.habilitar_lavado_capilar = habilitar_lavado_capilar
+            paciente.tipo_de_puesto = tipo_de_puesto
+            paciente.save()
+
+            persona = Personas.get_by_id(paciente.persona.id)
+            persona.nombres = p_nombres
+            persona.apellidos = p_apellidos
+            persona.email = p_email
+            persona.ci = p_ci
+            persona.telefono1 = p_telefono1
+            persona.telefono2 = p_telefono2
+            persona.telefono3 = p_telefono3
+            persona.direccion = p_direccion
+            persona.localidad = p_localidad
+            persona.departamento = p_departamento
+            persona.pais = p_pais
+            persona.fecha_de_nacimiento = p_fecha_de_nacimiento
+            persona.sexo = p_sexo
+            persona.observaciones = p_observaciones
+            persona.estado = p_estado
+            persona.save()
+
+            return paciente
+
+        except IntegrityError as e:
+            raise ValueError('Error de integridad al intentar editar datos del paciente')
+
+    @classmethod
     def check_email(cls, email):
         try:
             persona = Personas.get(Personas.email == email)

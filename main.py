@@ -192,31 +192,96 @@ def pacientes_editar( paciente_id ):
             flash('Error al recuperar el paciente', 'error')
             return redirect(url_for('pacientes'))
         else:
-            nombre = data.get('usuario')
-            context = {
-                'titulo_de_la_pagina': 'Editar paciente',
-                'nombre_de_usuario': nombre,
-                'doctores': m.Doctores.list(),
-                'enfermeros': m.Enfermeros.list(),
-                'mutualistas': m.Mutualistas.list(),
-                'tipos_de_pacientes': c.TIPOS_DE_PACIENTES,
-                'tipos_de_accesos_vasculares': c.TIPOS_DE_ACCESOS_VASCULARES,
-                'tipos_de_puestos': c.TIPOS_DE_PUESTOS
-            }
+            if( request.method == 'POST' ):
+                try:
+                    ci = int(request.form.get('ci'))
+                    email = request.form.get('email')
+                    nombres = request.form.get('nombres')
+                    apellidos = request.form.get('apellidos')
+                    direccion = request.form.get('direccion')
+                    localidad = request.form.get('localidad')
+                    departamento = request.form.get('departamento')
+                    pais = request.form.get('pais')
+                    telefono1 = request.form.get('telefono1')
+                    telefono2 = request.form.get('telefono2')
+                    telefono3 = request.form.get('telefono3')
+                    fecha_de_nacimiento = datetime.datetime.strptime(request.form.get('fecha_de_nacimiento'), '%Y-%m-%d')
+                    sexo = request.form.get('sexo')
+                    observaciones = request.form.get('observaciones')
+                    doctor_id = int(request.form.get('doctor_id'))
+                    enfermero_id = int(request.form.get('enfermero_id'))
+                    mutualista_id = int(request.form.get('mutualista_id'))
+                    tipo_de_paciente = request.form.get('tipo_de_paciente')
+                    tipo_de_acceso_vascular = request.form.get('tipo_de_acceso_vascular')
+                    numero_fnr = int(request.form.get('numero_fnr'))
+                    estado = bool(request.form.get('estado'))
+                    primer_dialisis = datetime.datetime.strptime(request.form.get('primer_dialisis'), '%Y-%m-%d')
+                    grupo_sanguineo = request.form.get('grupo_sanguineo')
+                    rh = request.form.get('rh')
+                    altura = int(request.form.get('altura'))
+                    hta = bool(request.form.get('hta'))
+                    alergico = bool(request.form.get('alergico'))
+                    diabetico = bool(request.form.get('diabetico'))
+                    habilitar_lavado_capilar = bool(request.form.get('habilitar_lavado_capilar'))
+                    tipo_de_puesto = request.form.get('tipo_de_puesto')
 
-            persona_data = model_to_dict(persona, recurse=False)
+                    mutualista = m.Mutualistas.get(m.Mutualistas.id == mutualista_id)
+                    doctor = m.Doctores.get(m.Doctores.id == doctor_id)
+                    enfermero = m.Enfermeros.get(m.Enfermeros.id == enfermero_id)
 
-            paciente_data = model_to_dict(paciente, recurse=False)
-            paciente_data['mutualista_id'] = paciente_data.pop('mutualista')
-            paciente_data['doctor_id'] = paciente_data.pop('doctor')
-            paciente_data['enfermero_id'] = paciente_data.pop('enfermero')
+                    m.Pacientes.update_paciente(paciente_id, nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
+                        localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, mutualista, doctor,
+                        enfermero, altura, tipo_de_paciente, tipo_de_acceso_vascular, grupo_sanguineo, rh, primer_dialisis,
+                        diabetico, hta, alergico, numero_fnr, habilitar_lavado_capilar, tipo_de_puesto)
+                except Exception as e:
+                    #error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
+                    error = str(e)
+                    flash('Ocurrió un error: ' + error, 'error')
 
-            context.update(persona_data)
-            context.update(paciente_data)
+                    nombre = data.get('usuario')
+                    context = {
+                        'titulo_de_la_pagina': 'Editar paciente',
+                        'nombre_de_usuario': nombre,
+                        'doctores': m.Doctores.list(),
+                        'enfermeros': m.Enfermeros.list(),
+                        'mutualistas': m.Mutualistas.list(),
+                        'tipos_de_pacientes': c.TIPOS_DE_PACIENTES,
+                        'tipos_de_accesos_vasculares': c.TIPOS_DE_ACCESOS_VASCULARES,
+                        'tipos_de_puestos': c.TIPOS_DE_PUESTOS,
+                        'id': paciente_id
+                    }
 
-            print(context)
+                    form_data = dict(request.form.items());
+                    context.update(form_data)
 
-            return render_template('pacientes-agregar-editar.html', **context)
+                    return render_template('pacientes-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
+                else:
+                    flash('¡El paciente ha sido editado con éxito!', 'ok')
+                    return redirect(url_for('pacientes'))
+            else:
+                nombre = data.get('usuario')
+                context = {
+                    'titulo_de_la_pagina': 'Editar paciente',
+                    'nombre_de_usuario': nombre,
+                    'doctores': m.Doctores.list(),
+                    'enfermeros': m.Enfermeros.list(),
+                    'mutualistas': m.Mutualistas.list(),
+                    'tipos_de_pacientes': c.TIPOS_DE_PACIENTES,
+                    'tipos_de_accesos_vasculares': c.TIPOS_DE_ACCESOS_VASCULARES,
+                    'tipos_de_puestos': c.TIPOS_DE_PUESTOS
+                }
+
+                persona_data = model_to_dict(persona, recurse=False)
+
+                paciente_data = model_to_dict(paciente, recurse=False)
+                paciente_data['mutualista_id'] = paciente_data.pop('mutualista')
+                paciente_data['doctor_id'] = paciente_data.pop('doctor')
+                paciente_data['enfermero_id'] = paciente_data.pop('enfermero')
+
+                context.update(persona_data)
+                context.update(paciente_data)
+
+                return render_template('pacientes-agregar-editar.html', **context)
 
 
 @app.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
