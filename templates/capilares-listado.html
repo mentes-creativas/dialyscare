@@ -1,67 +1,75 @@
-{% from 'macros.html' import render_btn_pac_list %}
-
-{% extends '_base_layout_admin.html' %}
-
-{% block contenido_de_la_seccion %}
+{% from 'macros.html' import render_btn_pac_list %} {% extends '_base_layout_admin.html' %} {% block contenido_de_la_seccion %}
 <!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
 
-<h1>Pacientes</h1>
+<h1>Capilares</h1>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <ul class=flashes>
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+<ul class=flashes>
     {% for category, message in messages %}
-      <li class="{{ category }}">{{ message }}</li>
+    <li class="{{ category }}">{{ message }}</li>
     {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+</ul>
+{% endif %} {% endwith %}
 
 <div class="container">
-	<a href="" class="button"><i class="fas fa-user-plus"></i><span class="md-none">&nbsp;&nbsp; Agregar paciente</span></a>
+    <a href="" class="button"><i class="fas fa-user-plus"></i><span class="md-none">&nbsp;&nbsp; Agregar capilar</span></a>
 
-	<div class="searchBox">
-		<form>
-			<select name="filtrar">
+    <div class="searchBox">
+        <form>
+            <select name="filtrar">
 				<option>Filtrar</option>
 			</select>
-    	<input name="Nombre o CI" placeholder="Nombre o CI">
-    	<button>Buscar</button>
-		</form>
-	</div>
+            <input name="Numero o paciente" placeholder="Numero o paciente">
+            <button>Buscar</button>
+        </form>
+    </div>
 
-	<table class="data-table">
-		<thead>
-			<tr>
-				<th>Nombre</th>
-				<th class="md-none">CI</th>
-				<th class="md-none">Número FNR</th>
-				<th class="md-none">Médico</th>
-				<th class="lg-none">Enfermero</th>
-				<th>Teléfono</th>
-				<th class="lg-none">Email</th>
-				<th>Operaciones</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>asfdasf</td>
-				<td class="md-none">asdfsf</td>
-				<td class="md-none">asfsdf</td>
-				<td class="md-none">afdsfdsf</td>
-				<td class="lg-none">afsdfdsf</td>
-				<td>fsdfsdfds</td>
-				<td class="lg-none">fsdfdsf</td>
-				<td class="nowrap">
-					<a href="" class="button" title="Ver más"><i class="fa fa-address-card"></i><span class="xl-none">&nbsp;&nbsp;Ver más</span></a>
-			   	<a href="" class="button" title="Editar"><i class="fa fa-user-edit"></i><span class="xl-none">&nbsp;&nbsp;Editar</span></a>
-			    <a href="" class="button" title="Deshabilitar"><i class="fa fa-user-times"></i><span class="xl-none">&nbsp;&nbsp;Deshabilitar</span></a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th class="md-none">Paciente</th>
+                <th class="md-none">Tipo</th>
+                <th class="md-none">Volumen Minimo</th>
+                <th class="lg-none">Volumen Residual</th>
+                <th>Reusos</th>
+                <th class="lg-none">Ultima Accion</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td class="md-none">asdfsf</td>
+                <td class="md-none">asfsdf</td>
+                <td class="md-none">afdsfdsf</td>
+                <td class="lg-none">afsdfdsf</td>
+                <td>fsdfsdfds</td>
+                <td class="lg-none">fsdfdsf</td>
+                <td class="nowrap">
+                    <a href="" class="button" title="Imprimir etiqueta"><i class="fa fa-address-card"></i><span class="xl-none">&nbsp;&nbsp;Imprimir etiqueta</span></a>
+                    <a href="" class="button" title="Ver más"><i class="fa fa-address-card"></i><span class="xl-none">&nbsp;&nbsp;Ver más</span></a>
+                    <a href="" class="button" title="Agregar acción"><i class="fa fa-user-edit"></i><span class="xl-none">&nbsp;&nbsp;Agregar acción</span></a>
+                    <a href="" class="button" title="Eliminar"><i class="fa fa-user-times"></i><span class="xl-none">&nbsp;&nbsp;Eliminar</span></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-	<p class="center">Pacientes totales: </p>
+    <div>
+        <div class="center">
+            <div class="pagination">
+                <a href="#">&laquo;</a>
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">&raquo;</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 
