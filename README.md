@@ -14,12 +14,12 @@ Proyecto final de primer año del programa b_IT por Mentes Creativas
 *pip install -r requirements.txt*
 
 
-# Ejecución
+# Ejecucar aplicación
 
 *python main.py*
 
 
-# Posibles problemas en Linux
+# Solucionar problemas en Linux
 
 ### Problema al intentar instalar flask-myslqdb en Ubuntu (y parientes)
 
