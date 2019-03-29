@@ -2,10 +2,15 @@
 
 Proyecto final de primer año del programa b_IT de Mentes Creativas
 
+## Demo online
 
-## Requisitos
+http://app.estudioingenio.com/
 
-1. Python 3.6^
+Aún no valida datos de acceso, se accede ingresando cualquir usuario y contraseña
+
+## Requisitos de instalación
+
+1. Python 3.6 o superior
 2. Pip (en Windows actualmente viene por defecto con Python, pero sino es el caso: https://pip.pypa.io/en/stable/installing)
 
 
@@ -33,7 +38,7 @@ Lo que hay que hacer para solucionarlo es:
 
 *pip install --upgrade setuptools*
 
-*sudo apt-get install python3.6-dev libmysqlclient-dev*
+*sudo apt-get install python3-dev libmysqlclient-dev*
 
 Más info https://pypi.org/project/mysqlclient/
 
