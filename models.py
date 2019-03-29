@@ -11,6 +11,12 @@ from peewee import *
 # logger.addHandler(logging.StreamHandler())
 # logger.setLevel(logging.DEBUG)
 
+# db = MySQLDatabase('bevc2jessjfwwvi2ekjy', # nombre de la base de datos
+#                    host='bevc2jessjfwwvi2ekjy-mysql.services.clever-cloud.com',
+#                    user='unrdx4dncf6xxhtq',
+#                    password='5lYhw5xU96ki5H0p6lmY',
+#                    port=3306)
+
 db = MySQLDatabase('dialyscare_app', # nombre de la base de datos
                    host='209.141.40.91',
                    user='dialyscare_app',

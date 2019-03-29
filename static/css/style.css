@@ -274,6 +274,7 @@ main .container {
 
 .button {
 	display: inline-block;
+	color: color: rgb(42, 98, 172);;
 	border: 1px solid #d2d5de;
 	border-radius: .5rem;
 	background: #fff;
@@ -284,6 +285,7 @@ main .container {
 	background: rgb(66, 123, 197);
 	border: 1px solid rgb(66, 123, 197);
 	color: #fff;
+	cursor: pointer;
 }
 
 .sections .button {
@@ -306,6 +308,16 @@ main .container {
  border: 1px solid #DDD;
  text-align: center;
  padding: 8px;
+}
+
+.form-bts-footer {
+	padding: 1rem;
+	text-align: center;
+}
+
+.form-bts-footer .button {
+	color: rgb(42, 98, 172);
+	margin: 1rem;
 }
 
 .pagination a {

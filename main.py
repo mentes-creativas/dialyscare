@@ -153,6 +153,10 @@ def pacientes_agregar():
                     'tipos_de_accesos_vasculares': c.TIPOS_DE_ACCESOS_VASCULARES,
                     'tipos_de_puestos': c.TIPOS_DE_PUESTOS
                 }
+
+                form_data = dict(request.form.items());
+                context.update(form_data)
+
                 return render_template('pacientes-agregar.html', **context) # doble asterisco desempaqueta las variables en el template
             else:
                 flash('¡El paciente ha sido agregad con éxito!', 'ok')
