@@ -3,23 +3,23 @@
 Proyecto final de primer año del programa b_IT por Mentes Creativas
 
 
-# Requisitos
+## Requisitos
 
 1. Python 3.6^
 2. Pip (en Windows actualmente viene por defecto con Python, pero sino es el caso: https://pip.pypa.io/en/stable/installing)
 
 
-# Instalar dependencias
+## Instalar dependencias
 
 *pip install -r requirements.txt*
 
 
-# Ejecucar aplicación
+## Ejecucar aplicación
 
 *python main.py*
 
 
-# Solucionar problemas en Linux
+## Solucionar problemas en Linux
 
 ### Problema al intentar instalar flask-myslqdb en Ubuntu (y parientes)
 
