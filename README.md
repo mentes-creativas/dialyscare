@@ -20,9 +20,10 @@ Aún no valida datos de acceso, se accede ingresando cualquier usuario y contras
 
 
 ## Ejecucar aplicación
-
-` *python main.py* `
-
+	
+~~~~
+python main.py
+~~~~
 
 ## Solucionar problemas en Linux
 
