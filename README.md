@@ -6,7 +6,7 @@ Proyecto final de primer año del programa b_IT de Mentes Creativas
 
 http://app.dialyscare.com/
 
-Aún no valida datos de acceso, se accede ingresando cualquir usuario y contraseña
+Aún no valida datos de acceso, se accede ingresando cualquier usuario y contraseña
 
 ## Requisitos de instalación
 
