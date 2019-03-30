@@ -36,7 +36,7 @@ Si aparece un error que dice algo así como que no encuentra el driver de MySQL
 
 Lo que hay que hacer para solucionarlo es:
 
-(En caso de que se haya creado un entorno virtual, primero hay que salir de él y borrarlo. Una vez hecho eso ya se pueden ejecutar los siguientes comandos y luego volver a crear el entorno virtual. Tener cuidado de crear el entorno para la versión correcta de python)
+*Nota: En caso de que se haya creado un entorno virtual, primero hay que salir de él y borrarlo. Una vez hecho eso ya se pueden ejecutar los siguientes comandos y luego volver a crear el entorno virtual. Tener cuidado de crear el entorno para la versión correcta de python*
 
 ~~~~
 pip install --upgrade pip
