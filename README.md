@@ -46,9 +46,9 @@ pip install --upgrade setuptools
 sudo apt-get install python3-dev libmysqlclient-dev
 ~~~~
 
-Más info https://pypi.org/project/mysqlclient/
-
 *Nota: Si se está usando un entorno virtual, lo mejor es ejecutar los comandos fuera de él y luego volverlo a crear.*
+
+Más info sobre mysqlclient https://pypi.org/project/mysqlclient/
 
 ### Problema al ejecutar en modo DEBUG en Linux Mint
 
