@@ -13,13 +13,13 @@ TIPOS_DE_PACIENTES = {
     'estable': 'Estable',
     'transitorio': 'Transitorio',
     'trasplantado': 'Trasplantado',
-    'obito': 'Obito'
+    'obito': 'Óbito'
 }
 
 TIPOS_DE_ACCESOS_VASCULARES = {
-    'cateter_permanente': 'Cateter permanente',
-    'cateter_transitorio': 'Cateter transitorio',
-    'fistula_nativa': 'Fistula nativa',
+    'cateter_permanente': 'Catéter permanente',
+    'cateter_transitorio': 'Catéter transitorio',
+    'fistula_nativa': 'Fístula nativa',
     'protesis': 'Prótesis'
 }
 

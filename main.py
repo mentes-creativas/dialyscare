@@ -155,7 +155,7 @@ def pacientes_agregar():
                     'tipos_de_puestos': c.TIPOS_DE_PUESTOS
                 }
 
-                form_data = dict(request.form.items());
+                form_data = dict(request.form.items())#;
                 context.update(form_data)
 
                 return render_template('pacientes-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
@@ -251,7 +251,7 @@ def pacientes_editar( paciente_id ):
                         'id': paciente_id
                     }
 
-                    form_data = dict(request.form.items());
+                    form_data = dict(request.form.items())#;
                     context.update(form_data)
 
                     return render_template('pacientes-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
@@ -382,10 +382,148 @@ def usuarios_agregar():
         response = redirect(url_for('index'))
         return response
     else:
-        nombre = data.get('usuario')
-        context = {'titulo_de_la_pagina': 'Agregar usuario', 'nombre_de_usuario': nombre}
+        if( request.method == 'POST' ):
+            try:
+                ci = int(request.form.get('ci'))
+                email = request.form.get('email')
 
-        return render_template('usuarios-agregar.html', **context ) # doble asterisco desempaqueta las variables en el template
+                if( m.Usuarios.check_ci(ci) ):
+                    raise ValueError('La C.I. ' + str(ci) + ' ya se encuentra registrada')
+                elif( m.Usuarios.check_email(email) ):
+                    raise ValueError('El email ' + email + ' ya se encuentra registrado')
+                else:
+                    nombres = request.form.get('nombres')
+                    apellidos = request.form.get('apellidos')
+                    direccion = request.form.get('direccion')
+                    localidad = request.form.get('localidad')
+                    departamento = request.form.get('departamento')
+                    pais = request.form.get('pais')
+                    telefono1 = request.form.get('telefono1')
+                    telefono2 = request.form.get('telefono2')
+                    telefono3 = request.form.get('telefono3')
+                    fecha_de_nacimiento = datetime.datetime.strptime(request.form.get('fecha_de_nacimiento'), '%Y-%m-%d')
+                    sexo = request.form.get('sexo')
+                    observaciones = request.form.get('observaciones')
+                    estado = bool(request.form.get('estado'))
+                    usuario = request.form.get('usuario')
+                    tipo_de_usuario = request.form.get('tipo_de_usuario')
+   #         numero_profesional = int(request.form.get('numero_profesional'))
+   #                 super_user = bool(request.form.get('super_user'))
+                    clave = request.form.get('clave')
+
+                    m.Usuarios.create_usuario(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
+                        localidad, departamento, pais, fecha_de_nacimiento, sexo, estado, observaciones, usuario, clave, tipo_de_usuario)
+            except Exception as e:
+                #error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
+                error = str(e)
+                flash('Ocurrió un error: ' + error, 'error')
+
+                nombre = data.get('usuario')
+                context = {
+                    'titulo_de_la_pagina': 'Agregar usuario',
+                    'nombre_de_usuario': nombre,
+                    'tipos_de_usuarios': c.TIPOS_DE_USUARIOS
+                }
+
+                form_data = dict(request.form.items())#;
+                context.update(form_data)
+
+                return render_template('usuarios-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
+            else:
+                flash('¡El usuario ha sido agregado con éxito!', 'ok')
+                return redirect(url_for('usuarios'))
+
+        else:
+            nombre = data.get('usuario')
+            context = {
+                'titulo_de_la_pagina': 'Agregar usuario',
+                'nombre_de_usuario': nombre,
+                'tipos_de_usuarios': c.TIPOS_DE_USUARIOS
+            }
+            return render_template('usuarios-agregar-editar.html', **context)
+
+
+@app.route("/admin/usuarios/editar/<int:usuario_id>", methods = ['GET', 'POST'])
+def usuarios_editar( usuario_id ):
+    try:
+        data = json.loads(request.cookies.get('userdata'))
+    except TypeError:
+        response = redirect(url_for('index'))
+        return response
+    else:
+        try:
+            usuario = m.Usuarios.get_by_id(usuario_id)
+            persona = usuario.persona
+        except:
+            flash('Error al recuperar el usuario', 'error')
+            return redirect(url_for('usuarios'))
+        else:
+            if( request.method == 'POST' ):
+                try:
+                    ci = int(request.form.get('ci'))
+                    email = request.form.get('email')
+                    nombres = request.form.get('nombres')
+                    apellidos = request.form.get('apellidos')
+                    direccion = request.form.get('direccion')
+                    localidad = request.form.get('localidad')
+                    departamento = request.form.get('departamento')
+                    pais = request.form.get('pais')
+                    telefono1 = request.form.get('telefono1')
+                    telefono2 = request.form.get('telefono2')
+                    telefono3 = request.form.get('telefono3')
+                    fecha_de_nacimiento = datetime.datetime.strptime(request.form.get('fecha_de_nacimiento'), '%Y-%m-%d')
+                    sexo = request.form.get('sexo')
+                    observaciones = request.form.get('observaciones')
+                    estado = bool(request.form.get('estado'))
+                    tipo_de_usuario = request.form.get('tipo_de_usuario')
+                    usuario = request.form.get('usuario')
+ #                   numero_profesional = int(request.form.get('numero_profesional'))
+ #                   super_user = bool(request.form.get('super_user'))
+                    clave = request.form.get('clave')
+                    m.Usuarios.update_usuario(usuario_id, nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
+                        localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, usuario, tipo_de_usuario, clave)
+                except Exception as e:
+                    #error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
+                    error = str(e)
+                    flash('Ocurrió un error: ' + error, 'error')
+
+                    nombre = data.get('usuario')
+                    context = {
+                        'titulo_de_la_pagina': 'Editar usuario',
+                        'nombre_de_usuario': nombre,
+                        'tipos_de_usuarios': c.TIPOS_DE_USUARIOS,
+                        'id': usuario_id
+                    }
+
+                    form_data = dict(request.form.items())#;
+                    context.update(form_data)
+
+                    return render_template('usuarios-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
+                else:
+                    flash('¡El usuario ha sido editado con éxito!', 'ok')
+                    return redirect(url_for('usuarios'))
+            else:
+                nombre = data.get('usuario')
+                context = {
+                    'titulo_de_la_pagina': 'Editar usuario',
+                    'nombre_de_usuario': nombre,
+                    'tipos_de_usuarios': c.TIPOS_DE_USUARIOS,
+                    'id': usuario_id
+                }
+
+                persona_data = model_to_dict(persona, recurse=False)
+
+                usuario_data = model_to_dict(usuario, recurse=False)
+                usuario_data['usuario'] = usuario_data.pop('usuario')
+                usuario_data['rol'] = usuario_data.pop('rol')
+                usuario_data['clave'] = usuario_data.pop('clave')
+ #               usuario_data['numero_profesional'] = usuario_data.pop('numero_profesional')
+ #               usuario_data['super_user'] = usuario_data.pop('super_user')
+
+                context.update(persona_data)
+                context.update(usuario_data)
+
+                return render_template('usuarios-agregar-editar.html', **context)
 
 
 @app.route("/logout", methods = ['GET', 'POST'])

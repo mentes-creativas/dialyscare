@@ -130,7 +130,7 @@ class Usuarios(UserMixin, MyModel):
                 usuario = u_usuario,
                 clave = generate_password_hash(u_clave)
             )
-
+            print('Models crear usuario ', usuario)
             return usuario
 
         except IntegrityError:
@@ -157,8 +157,44 @@ class Usuarios(UserMixin, MyModel):
 
     @classmethod
     def list( cls ):
-        query = cls.select().join(Personas).order_by(Personas.nombres)
+        query = cls.select().join(Personas).order_by(Personas.apellidos)
         return query
+
+    @classmethod
+    def update_usuario(cls, id, p_nombres, p_apellidos, p_email, p_ci, p_telefono1,
+        p_telefono2, p_telefono3, p_direccion, p_localidad, p_departamento, p_pais,
+        p_fecha_de_nacimiento, p_sexo, p_observaciones, p_estado, u_rol, u_usuario, u_clave
+        ):
+
+        try:
+            usuario = cls.get_by_id(id)
+            usuario.clave = u_clave
+            usuario.rol = u_rol
+            print('dentro de update usuario', usuario)
+            usuario.save()
+
+            persona = Personas.get_by_id(usuario.persona.id)
+            persona.nombres = p_nombres
+            persona.apellidos = p_apellidos
+            persona.email = p_email
+            persona.ci = p_ci
+            persona.telefono1 = p_telefono1
+            persona.telefono2 = p_telefono2
+            persona.telefono3 = p_telefono3
+            persona.direccion = p_direccion
+            persona.localidad = p_localidad
+            persona.departamento = p_departamento
+            persona.pais = p_pais
+            persona.fecha_de_nacimiento = p_fecha_de_nacimiento
+            persona.sexo = p_sexo
+            persona.observaciones = p_observaciones
+            persona.estado = p_estado
+            persona.save()
+
+            return usuario
+
+        except IntegrityError as e:
+            raise ValueError('Error de integridad al intentar editar datos del paciente')
 
 
 class Doctores(MyModel):

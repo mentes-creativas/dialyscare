@@ -32,12 +32,12 @@
 			<tr>
 				<td>{{ usuario.persona.nombres }} {{ usuario.persona.apellidos }}</td>
 				<td class="md-none">{{ usuario.persona.ci }}</td>
-				<td>{{ usuario.rol[0]|upper}}{{usuario.rol[1:] }}</td>
+				<td class="md-none">{{ usuario.rol[0]|upper}}{{usuario.rol[1:] }}</td>
 				<td class="md-none">{{ usuario.persona.telefono1 }}</td>
 				<td class="lg-none">{{ usuario.persona.email }}</td>
 				<td class="nowrap">
 					<a href="" class="button" title="Ver más"><i class="fa fa-address-card"></i><span class="xl-none">&nbsp;&nbsp;Ver más</span></a>
-			   	<a href="" class="button" title="Editar"><i class="fa fa-user-edit"></i><span class="xl-none">&nbsp;&nbsp;Editar</span></a>
+			   	<a href="{{ url_for('usuarios_editar', usuario_id = usuario.id) }}" class="button" title="Editar"><i class="fa fa-user-edit"></i><span class="xl-none">&nbsp;&nbsp;Editar</span></a>
 			    <a href="{{ url_for('usuarios') }}" class="button" title="Deshabilitar"><i class="fa fa-user-times"></i><span class="xl-none">&nbsp;&nbsp;Deshabilitar</span></a>
 				</td>
 			</tr>

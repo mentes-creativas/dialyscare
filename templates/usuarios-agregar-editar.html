@@ -1,0 +1,126 @@
+{% extends '_base_layout_admin.html' %}
+
+{% block contenido_de_la_seccion %}
+<!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
+
+{% if id %}
+<h1>Editar usuario</h1>
+{% else %}
+<h1>Agregar usuario</h1>
+{% endif %}
+
+
+
+<div class="container">
+	<form action="{% if id %}{{ url_for('usuarios_editar', usuario_id = id) }}{% else %}{{ url_for('usuarios_agregar') }}{% endif %}" method="post" id="mainForm">
+    {% if id %}<input type="hidden" name="id" value="{{ id }}">{% endif %}
+		<fieldset>
+			<legend>Datos personales</legend>
+			<div>
+				<label for="nombres">Nombres</label>
+				<input type="text" name="nombres"{% if nombres %} value="{{ nombres }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="apellidos">Apellidos</label>
+				<input type="text" name="apellidos"{% if apellidos %} value="{{ apellidos }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="ci">C.I.</label>
+				<input type="text" name="ci"{% if ci %} value="{{ ci }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="email">E-mail</label>
+				<input type="email" name="email"{% if email %} value="{{ email }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="direccion">Dirección</label>
+				<input type="text" name="direccion"{% if direccion %} value="{{ direccion }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="localidad">Localidad</label>
+				<input type="text" name="localidad"{% if localidad %} value="{{ localidad }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="departamento">Departamento</label>
+				<input type="text" name="departamento"{% if departamento %} value="{{ departamento }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="pais">País</label>
+				<input type="text" name="pais"{% if pais %} value="{{ pais }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="telefono1">Teléfono 1</label>
+				<input type="text" name="telefono1"{% if telefono1 %} value="{{ telefono1 }}"{% endif %} required>
+			</div>
+			<div>
+				<label for="telefono2">Teléfono 2</label>
+				<input type="text" name="telefono2"{% if telefono2 %} value="{{ telefono2 }}"{% endif %}>
+			</div>
+			<div>
+				<label for="telefono3">Teléfono 3</label>
+				<input type="text" name="telefono3"{% if telefono3 %} value="{{ telefono3 }}"{% endif %}>
+			</div>
+			<div>
+				<label for="fecha_de_nacimiento">Fecha de nacimiento</label>
+				<input type="date" name="fecha_de_nacimiento"{% if fecha_de_nacimiento %} value="{{ fecha_de_nacimiento }}"{% endif %} required>
+			</div>
+			<div>
+				Sexo
+				<label><input type="radio" name="sexo" value="m"{% if sexo == 'm' %} checked{% endif %} required> Hombre</label>
+				<label><input type="radio" name="sexo" value="f"{% if sexo == 'f' %} checked{% endif %} required> Mujer</label>
+				<label><input type="radio" name="sexo" value="o"{% if sexo == 'o' %} checked{% endif %} required> Otro</label>
+			</div>
+			<div>
+				<label><input type="checkbox" name="estado" value="1"{% if estado and estado | int == 1 %} checked{% endif %}>Usuario vigente</label>
+			</div>
+			<div>
+				<label for="observaciones">Observaciones</label>
+				<textarea name="observaciones" rows="3">{% if observaciones %}{{ observaciones }}{% endif %}</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<form>
+				<legend>Datos de Usuario</legend>
+				<div>
+					<label for="usuario">Nombre de Usuario</label>
+					<input type="text" name="usuario" required />
+				</div>
+				<div>
+					<label for="clave">Contraseña</label>
+					<input type="password" name="clave" required>
+				</div>
+				<div>
+					<label for="tipo_de_usuario">Tipo de usuario</label>
+					<select name="tipo_de_usuario">
+						<option value="">Seleccionar...</option>
+            {% for key in tipos_de_usuarios %}
+						<option value="{{ key }}"{% if tipo_de_usuario and key == tipo_de_usuario %} selected{% endif %}>{{ tipos_de_usuarios[key] }}</option>
+            {% endfor %}
+					</select>
+				</div>
+				<div>
+					<label for="numero_profesional">Número CJPPU</label>
+					<input type="text" name="numero_profesional"{% if numero_profesional %} value="{{ numero_profesional }}"{% endif %}>
+				</div>
+				<div>
+					<label><input type="checkbox" name="super_user" value="1"{% if super_user and super_user | int == 1 %} checked{% endif %}>Super Usuario</label>
+				</div>
+		</fieldset>
+    <div class="form-bts-footer">
+		    <a href="javascript: document.getElementById('mainForm').submit(); " class="button"><i class="far fa-save"></i>&nbsp;&nbsp;&nbsp;Guardar</a>
+		    <a href="{{ url_for('usuarios') }}" class="button"><i class="far fa-window-close"></i>&nbsp;&nbsp;&nbsp;Cancelar</a>
+    </div>
+	</form>
+	{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</div>
+
+<!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->
+{% endblock %}
