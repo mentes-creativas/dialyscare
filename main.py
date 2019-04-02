@@ -39,7 +39,7 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    """Cerramos la conección a la base de datos"""
+    """Cierra la conección a la base de dato después de cada request"""
     g.db.close()
     return response
 
@@ -172,6 +172,7 @@ def pacientes_agregar():
                 'tipos_de_puestos': c.TIPOS_DE_PUESTOS
             }
             return render_template('pacientes-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
+
 
 @app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_editar( paciente_id ):
@@ -540,18 +541,13 @@ def login():
         if not form['usuario']:
             response = 'Debes ingresar un usuario! <a href="javascript:history.go(-1)">Volver a intentar</a>'
         elif not form['contrasena']:
-            response = 'Hola ' + form['usuario'] + ', no olvides ingresar tu contraseña! <a href="javascript:history.go(-1)">Volver a intentar</a>'
+            response = 'Hola {}, no olvides ingresar tu contraseña! <a href="javascript:history.go(-1)">Volver a intentar</a>'.format(form['usuario'])
         else:
             #response = 'Usuario: {}<br>Contraseña: {}<br><br>^_^'.format(form['usuario'], form['contrasena'])
             response = redirect(url_for('inicio'))
             response.set_cookie('userdata', json.dumps(dict(request.form.items())))
 
         return response
-
-        #tambien podia ser asi
-        #usuario = request.form["usuario"]
-        #contrasena = request.form["contrasena"]
-        #return 'El usuario ingresado es {} y la contraseña {}'.format(usuario, contrasena)
 
 
 if __name__ == '__main__':
