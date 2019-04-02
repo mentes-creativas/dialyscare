@@ -10,11 +10,7 @@ from playhouse.shortcuts import model_to_dict, dict_to_model
 
 import models as m
 import constants as c
-
-
-DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
-PORT = 5000  # 5000 para desarrollo | 80 es el puerto por defecto del protocolo http
-HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
+import config
 
 
 app = Flask(__name__)
@@ -560,4 +556,4 @@ def login():
 
 if __name__ == '__main__':
     m.initialize()
-    app.run(debug=DEBUG, host=HOST, port=PORT)
+    app.run(debug=config.DEBUG, host=config.HOST, port=config.PORT)

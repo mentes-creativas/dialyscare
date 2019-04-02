@@ -5,23 +5,20 @@ from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash, check_password_hash
 from peewee import *
 
+import config
+
 # Print all queries to stderr.
 # import logging
 # logger = logging.getLogger('peewee')
 # logger.addHandler(logging.StreamHandler())
 # logger.setLevel(logging.DEBUG)
 
-# db = MySQLDatabase('bevc2jessjfwwvi2ekjy', # nombre de la base de datos
-#                    host='bevc2jessjfwwvi2ekjy-mysql.services.clever-cloud.com',
-#                    user='unrdx4dncf6xxhtq',
-#                    password='5lYhw5xU96ki5H0p6lmY',
-#                    port=3306)
 
-db = MySQLDatabase('dialyscare_app', # nombre de la base de datos
-                   host='209.141.40.91',
-                   user='dialyscare_app',
-                   password='2JzfPS1Rlo',
-                   port=3306)
+db = MySQLDatabase(config.DB_NAME, # nombre de la base de datos
+                   host=config.DB_HOST,
+                   user=config.DB_USER,
+                   password=config.DB_PASSWORD,
+                   port=config.DB_PORT)
 
 
 class MyModel(Model):  # Con esta clase ya establezco la base de datos que van a usar todos los modelos
