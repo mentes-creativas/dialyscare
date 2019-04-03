@@ -130,12 +130,11 @@ class Usuarios(UserMixin, MyModel):
                 usuario = u_usuario,
                 clave = generate_password_hash(u_clave)
             )
-            print('Models crear usuario ', usuario)
             return usuario
 
         except IntegrityError:
             raise ValueError('El usuario ya existe')
-
+ 
     @classmethod
     def check_email(cls, email):
         try:
@@ -168,9 +167,9 @@ class Usuarios(UserMixin, MyModel):
 
         try:
             usuario = cls.get_by_id(id)
-            usuario.clave = u_clave
             usuario.rol = u_rol
-            print('dentro de update usuario', usuario)
+            usuario.clave = u_clave
+            usuario.usuario=u_usuario
             usuario.save()
 
             persona = Personas.get_by_id(usuario.persona.id)
@@ -225,7 +224,7 @@ class Doctores(MyModel):
 
             return doctor
         except IntegrityError:
-            raise ValueError('El doctor ya existe')
+            raise ValueError('El doctor ya existe o hay algun otro problema')
 
     @classmethod
     def list( cls ):
