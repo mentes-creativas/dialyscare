@@ -100,7 +100,7 @@
 				</div>
 				<div>
 					<label for="numero_profesional">Número CJPPU</label>
-					<input type="number" name="numero_profesional"{% if numero_profesional %} value="{{ numero_profesional }}"{% endif %}>
+					<input type="text" name="numero_profesional"{% if numero_profesional %} value="{{ numero_profesional }}"{% endif %}>
 				</div>
 				<div>
 					<label><input type="checkbox" name="super_user" value="1"{% if super_user and super_user | int == 1 %} checked{% endif %}>Super Usuario</label>

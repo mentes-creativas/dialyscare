@@ -280,7 +280,7 @@ class Enfermeros(MyModel):
                 u_clave)
 
             enfermero = cls.create(
-                usuario = usuario,
+                usuario = usuario
             )
 
             return enfermero
@@ -311,7 +311,7 @@ class Administrativos(MyModel):
                 u_clave)
 
             administrativo = cls.create(
-                usuario = usuario,
+                usuario = usuario
             )
 
             return administrativo

@@ -403,7 +403,6 @@ def usuarios_agregar():
                     estado = bool(request.form.get('estado'))
                     usuario = request.form.get('usuario')
                     tipo_de_usuario = request.form.get('tipo_de_usuario')
- #                   numero_profesional = request.form.get('numero_profesional')
                     super_user = bool(request.form.get('super_user'))
                     clave = request.form.get('clave')
                     if(tipo_de_usuario == 'administrativo'):
@@ -416,16 +415,13 @@ def usuarios_agregar():
                         m.Nurses.create_nurse(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
                         localidad, departamento, pais, fecha_de_nacimiento, sexo, estado, observaciones, usuario, clave, super_user)
                     elif( tipo_de_usuario == 'doctor'):
-                        numero_profesional = int(request.form.get('numero_profesional'))
+                        numero_profesional = request.form.get('numero_profesional')
                         m.Doctores.create_doctor(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
                         localidad, departamento, pais, fecha_de_nacimiento, sexo, estado, observaciones, usuario, clave, 
-                        numero_profesional, super_user)
+                        super_user, numero_profesional)
                     else:
                         print("usuario tiene rol: ", tipo_de_usuario)
                         pass
-
- #                   m.Usuarios.create_usuario(nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
- #                       localidad, departamento, pais, fecha_de_nacimiento, sexo, estado, observaciones, usuario, clave, tipo_de_usuario)
             except Exception as e:
                 #error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
                 error = str(e)
@@ -490,15 +486,15 @@ def usuarios_editar( usuario_id ):
                     estado = bool(request.form.get('estado'))
                     tipo_de_usuario = request.form.get('tipo_de_usuario')
                     usuario = request.form.get('usuario')
- #                   numero_profesional = int(request.form.get('numero_profesional'))
- #                   super_user = bool(request.form.get('super_user'))
+                    numero_profesional = int(request.form.get('numero_profesional'))
+                    super_user = bool(request.form.get('super_user'))
                     clave = request.form.get('clave')
                     m.Usuarios.update_usuario(usuario_id, nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
                         localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, usuario, tipo_de_usuario, clave)
                 except Exception as e:
                     #error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
                     error = str(e)
-                    flash('Ocurrió un error: ', tipo_de_usuario, ' error')
+                    flash('Ocurrió un error: ' + error, ' error')
 
                     nombre = data.get('usuario')
                     context = {
@@ -530,8 +526,6 @@ def usuarios_editar( usuario_id ):
                 usuario_data['rol'] = usuario_data.pop('rol')
                 usuario_data['usuario'] = usuario_data.pop('usuario')
                 usuario_data['clave'] = usuario_data.pop('clave')
- #               usuario_data['numero_profesional'] = usuario_data.pop('numero_profesional')
- #               usuario_data['super_user'] = usuario_data.pop('super_user')
 
                 context.update(persona_data)
                 context.update(usuario_data)
