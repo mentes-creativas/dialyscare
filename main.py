@@ -10,11 +10,7 @@ from playhouse.shortcuts import model_to_dict, dict_to_model
 
 import models as m
 import constants as c
-
-
-DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
-PORT = 5000  # 5000 para desarrollo | 80 es el puerto por defecto del protocolo http
-HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
+import config
 
 
 app = Flask(__name__)
@@ -43,7 +39,7 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    """Cerramos la conección a la base de datos"""
+    """Cierra la conección a la base de dato después de cada request"""
     g.db.close()
     return response
 
@@ -176,6 +172,7 @@ def pacientes_agregar():
                 'tipos_de_puestos': c.TIPOS_DE_PUESTOS
             }
             return render_template('pacientes-agregar-editar.html', **context) # doble asterisco desempaqueta las variables en el template
+
 
 @app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
 def pacientes_editar( paciente_id ):
@@ -560,7 +557,7 @@ def login():
         if not form['usuario']:
             response = 'Debes ingresar un usuario! <a href="javascript:history.go(-1)">Volver a intentar</a>'
         elif not form['contrasena']:
-            response = 'Hola ' + form['usuario'] + ', no olvides ingresar tu contraseña! <a href="javascript:history.go(-1)">Volver a intentar</a>'
+            response = 'Hola {}, no olvides ingresar tu contraseña! <a href="javascript:history.go(-1)">Volver a intentar</a>'.format(form['usuario'])
         else:
             #response = 'Usuario: {}<br>Contraseña: {}<br><br>^_^'.format(form['usuario'], form['contrasena'])
             response = redirect(url_for('inicio'))
@@ -568,12 +565,7 @@ def login():
 
         return response
 
-        #tambien podia ser asi
-        #usuario = request.form["usuario"]
-        #contrasena = request.form["contrasena"]
-        #return 'El usuario ingresado es {} y la contraseña {}'.format(usuario, contrasena)
-
 
 if __name__ == '__main__':
     m.initialize()
-    app.run(debug=DEBUG, host=HOST, port=PORT)
+    app.run(debug=config.DEBUG, host=config.HOST, port=config.PORT)
