@@ -49,7 +49,7 @@ sudo apt-get install python3-dev libmysqlclient-dev
 ### Mismo problema en CentOS (Red Hat y parientes)
 
 ~~~~
-sudo yum install mysql-devel libmysqlclient16-devel
+sudo yum install python36u-devel libmysqlclient16-devel mysql-devel
 ~~~~
 
 *Nota: Si se está usando un entorno virtual, lo mejor es ejecutar los comandos fuera de él y luego volverlo a crear.*
