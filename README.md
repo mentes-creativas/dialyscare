@@ -46,6 +46,12 @@ pip install --upgrade setuptools
 sudo apt-get install python3-dev libmysqlclient-dev
 ~~~~
 
+### Mismo problema en CentOS (Red Hat y parientes)
+
+~~~~
+sudo yum install mysql-devel libmysqlclient16-devel
+~~~~
+
 *Nota: Si se está usando un entorno virtual, lo mejor es ejecutar los comandos fuera de él y luego volverlo a crear.*
 
 Más info sobre mysqlclient https://pypi.org/project/mysqlclient/
