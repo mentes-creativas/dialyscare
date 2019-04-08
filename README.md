@@ -8,8 +8,6 @@ https://app.dialyscare.com/
 
 Aún no valida datos de acceso, se accede ingresando cualquier usuario y contraseña.
 
-**Solucionado:** *En ocasiones da error de conexión, hay que actualizar varias veces para que cargue.*
-
 ## Requisitos de instalación
 
 1. Python 3.6 o superior
