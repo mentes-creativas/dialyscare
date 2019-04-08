@@ -4,11 +4,11 @@ Proyecto final de primer año del programa b_IT de Mentes Creativas
 
 ## Demo online
 
-http://app.dialyscare.com/
+https://app.dialyscare.com/
 
 Aún no valida datos de acceso, se accede ingresando cualquier usuario y contraseña.
 
-En ocasiones da error de conexión, hay que actualizar varias veces para que cargue.
+**Solucionado:** *En ocasiones da error de conexión, hay que actualizar varias veces para que cargue.*
 
 ## Requisitos de instalación
 
