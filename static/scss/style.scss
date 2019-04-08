@@ -13,6 +13,65 @@
 	zoom: 1.0;
 }
 
+@font-face {
+    font-family: 'PT Sans';
+    src: url('pt_sans-web-bold-webfont.eot');
+    src: local('PT Sans Bold'), local('PTSans-Bold'),
+			url('pt_sans-web-bold-webfont.eot?#iefix') format('embedded-opentype'),
+			url('pt_sans-web-bold-webfont.woff2') format('woff2'),
+			url('pt_sans-web-bold-webfont.woff') format('woff'),
+			url('pt_sans-web-bold-webfont.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PT Sans';
+    src: url('pt_sans-web-bolditalic-webfont.eot');
+    src: local('PT Sans Italic'), local('PTSans-Italic'),
+			url('pt_sans-web-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+			url('pt_sans-web-bolditalic-webfont.woff2') format('woff2'),
+			url('pt_sans-web-bolditalic-webfont.woff') format('woff'),
+			url('pt_sans-web-bolditalic-webfont.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PT Sans';
+    src: url('pt_sans-web-italic-webfont.eot');
+    src: url('pt_sans-web-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('pt_sans-web-italic-webfont.woff2') format('woff2'),
+         url('pt_sans-web-italic-webfont.woff') format('woff'),
+         url('pt_sans-web-italic-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PT Sans';
+    src: url('pt_sans-web-regular-webfont.eot');
+    src: local('PT Sans'), local('PTSans-Regular'),
+			url('pt_sans-web-regular-webfont.eot?#iefix') format('embedded-opentype'),
+			url('pt_sans-web-regular-webfont.woff2') format('woff2'),
+			url('pt_sans-web-regular-webfont.woff') format('woff'),
+			url('pt_sans-web-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PT Sans Narrow';
+    src: url('../fonts/pt-sans-narrow-webfont.eot');
+    src: local('PT Sans Narrow'), local('PTSans-Narrow'),url(),url(),
+			url('../fonts/pt-sans-narrow-webfont.eot?#iefix') format('embedded-opentype'),
+			url('../fonts/pt-sans-narrow-webfont.woff2') format('woff2'),
+			url('../fonts/pt-sans-narrow-webfont.woff') format('woff'),
+			url('../fonts/pt-sans-narrow-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Seteos iniciales */
 body,h1,h2,h3,h4,h5,h6,img,ul,ol,li,p,form,span,a,main,header,nav,section {
 	border: 0;
@@ -26,7 +85,7 @@ html {
 }
 
 body {
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Pt Sans', sans-serif;
  	font-size: 1.4rem;
 	line-height: 180%;
 	background: #FFF;
@@ -310,6 +369,50 @@ main {
 	}
 }
 
+#mainForm {
+	>fieldset {
+		display: flex;
+		flex-direction: row;
+		box-sizing: border-box;
+		width: 100%;
+
+		>div {
+			display: inline-block;
+			flex: 0 1 0;
+			margin: 0;
+			width: 40%;
+		}
+	}
+	h2 {
+		flex: 1;
+		font-size: 2.3rem;
+		font-weight: normal;
+		border-bottom: 1px solid #f4f4f4;
+		padding: 1rem 0 .5rem;
+		margin-bottom: 1rem;
+		width: 100%;
+	}
+	label {
+		display: inline-block;
+		font-weight: bold;
+		margin: .5rem 0 0 0;
+	}
+	input,
+	select,
+	textarea {
+		display: block;
+		box-sizing: border-box;
+		font-size: 1.5rem;
+		color: #666;
+		width: 100%;
+	}
+	input[type='checkbox'],
+	input[type='radio'] {
+		display: inline-block;
+		width: inherit;
+	}
+}
+
 /* #endregion Admin comin */
 
 @media (max-width: 768px) {
@@ -319,7 +422,7 @@ main {
 	.login-container {
 		flex-direction: row;
 	}
-	header {}
+	header {
 		.logo {
 			min-width: auto;
 			width: 6rem;
