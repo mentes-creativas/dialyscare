@@ -2,7 +2,7 @@ import datetime
 
 from flask import Flask
 from flask_login import UserMixin
-from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_bcrypt import generate_password_hash
 from peewee import *
 
 import config
@@ -131,7 +131,7 @@ class Usuarios(UserMixin, MyModel):
 
         except IntegrityError:
             raise ValueError('El usuario ya existe')
- 
+
     @classmethod
     def check_email(cls, email):
         try:

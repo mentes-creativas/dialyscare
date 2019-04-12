@@ -13,7 +13,7 @@
 	zoom: 1.0;
 }
 
-@font-face {
+/* @font-face {
     font-family: 'PT Sans';
     src: url('pt_sans-web-bold-webfont.eot');
     src: local('PT Sans Bold'), local('PTSans-Bold'),
@@ -70,7 +70,7 @@
 			url('../fonts/pt-sans-narrow-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-}
+} */
 
 /* Seteos iniciales */
 body,h1,h2,h3,h4,h5,h6,img,ul,ol,li,p,form,span,a,main,header,nav,section {
@@ -85,7 +85,7 @@ html {
 }
 
 body {
-	font-family: 'Pt Sans', sans-serif;
+	font-family: 'Source Sans Pro', sans-serif;
  	font-size: 1.4rem;
 	line-height: 180%;
 	background: #FFF;
@@ -193,6 +193,22 @@ fieldset {
 		padding: .7rem 2rem .8rem;
 		width: 17rem;
 		cursor: pointer;
+	}
+}
+
+.login-messages {
+	margin: 3rem 0;
+	font-size: 2rem;
+	font-weight: bold;
+	text-align: center;
+
+	.success {
+		color: rgb(24,102,42);
+	}
+
+	.error,
+	.message {
+		color: rgb(126,19,19);
 	}
 }
 

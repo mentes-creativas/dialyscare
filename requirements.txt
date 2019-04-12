@@ -3,4 +3,5 @@ flask
 flask-mysqldb
 flask-peewee
 flask-bcrypt
+flask-wtf
 flask-login

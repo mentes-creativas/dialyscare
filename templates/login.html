@@ -15,16 +15,43 @@
 	<div class="form">
 		<h1>Iniciar sesión</h1>
 		<form action="{{ url_for('login') }}" method="POST">
+			{{ form.hidden_tag() }}
 			<section>
-				<input type="text" placeholder="Usuario" name="usuario" id="">
+				{{ form.usuario }}
+
+				{% if form.usuario.errors %}
+				<ul class="errors">
+					{% for error in form.usuario.errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
 			</section>
 			<section>
-				<input type="password" placeholder="Contraseña" name="contrasena" id="">
+				{{ form.clave }}
+
+				{% if form.clave.errors %}
+				<ul class="errors">
+					{% for error in form.clave.errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
 			</section>
-			<input type="submit" value="Ingresar al sistema">
+			{{ form.submit }}
 		</form>
 		<p>¿Problemas para ingresar?<br><a href="#">Contactar al administrador</a></p>
 	</div>
 </div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="login-messages">
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
 {% endblock %}

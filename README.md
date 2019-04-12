@@ -6,7 +6,8 @@ Proyecto final de primer año del programa b_IT de Mentes Creativas
 
 https://app.dialyscare.com/
 
-Aún no valida datos de acceso, se accede ingresando cualquier usuario y contraseña.
+Usuario: horaciososa
+Clave: 123458
 
 ## Requisitos de instalación
 
@@ -20,15 +21,15 @@ Aún no valida datos de acceso, se accede ingresando cualquier usuario y contras
 pip install -r requirements.txt
 ~~~~
 
-## Ejecucar aplicación
-	
+## Ejecutar aplicación
+
 ~~~~
 python main.py
 ~~~~
 
 ## Solucionar problemas en Linux
 
-### Problema al instalar dependecias en Ubuntu (y parientes)
+### Problema al instalar dependencias en Ubuntu (y parientes)
 
 Si aparece un error que dice algo así como que no encuentra el driver de MySQL, hay que ejecutar lo siguiente:
 
@@ -52,7 +53,7 @@ sudo yum install python36u-devel libmysqlclient16-devel mysql-devel
 
 *Nota: Si se está usando un entorno virtual, lo mejor es ejecutar los comandos fuera de él y luego volverlo a crear.*
 
-Más info sobre mysqlclient https://pypi.org/project/mysqlclient/
+Más infoción sobre mysqlclient https://pypi.org/project/mysqlclient/
 
 ### Problema al ejecutar en modo DEBUG en Linux Mint
 
