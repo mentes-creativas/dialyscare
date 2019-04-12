@@ -1,19 +1,20 @@
-import models
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField, DateField, IntegerField, BooleanField
-from wtforms.validators import (DataRequired, ValidationError, Email, EqualTo, Length, Regexp)
+from wtforms import StringField, PasswordField, TextAreaField, DateField, IntegerField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, Regexp
+
+import models as m
 
 def user_exists(form, field):
-    if models.Usuarios.select().where(models.Usuarios.usuario == field.data).exists():
+    if m.Usuarios.select().where(m.Usuarios.usuario == field.data).exists():
         raise ValidationError('Ese nombre de usuario ya existe')
 
 def email_exists(form, field):
-        if models.Personas.select().where(models.Personas.email == field.data).exists():
-            raise ValidationError('Ese mail ya fue registrado')
+    if m.Personas.select().where(m.Personas.email == field.data).exists():
+        raise ValidationError('Ese mail ya fue registrado')
 
 def ci_exists(form, field):
-        if models.Personas.select().where(models.Personas.ci == field.data).exists():
-            raise ValidationError('Esa cédula ya está registrada')
+    if m.Personas.select().where(m.Personas.ci == field.data).exists():
+        raise ValidationError('Esa cédula ya está registrada')
 
 class registro_usuario(FlaskForm):
     usuario = StringField(
@@ -25,15 +26,15 @@ class registro_usuario(FlaskForm):
             ),
             #user_exists
             ])
-        
-    email = StringField( 
+
+    email = StringField(
         'Email',
         validators=[
             DataRequired(),
             Email(),
             #email_exists
             ])
-    
+
     clave = StringField(
         'Contraseña',
         validators = [
@@ -41,18 +42,18 @@ class registro_usuario(FlaskForm):
             Length(min=4),
            # EqualTo('clave2', message ='Ambas contraseñas deben coinicidir')
         ])
-    
+
    # clave2 = PasswordField(
-      #  'Repita la contraseña', 
+      #  'Repita la contraseña',
       #  validators = [DataRequired()])
-    
+
     nombres = StringField('Nombres',
         validators=[
             DataRequired(),
             Regexp(r'^[a-zA-Z]+$'),
             Length(max=45)
             ])
-    
+
     apellidos = StringField('Apellidos',
         validators=[
             DataRequired(),
@@ -75,21 +76,21 @@ class registro_usuario(FlaskForm):
             Length(max=20),
             Regexp(r'^[0-9]+$')
             ])
-        
+
     telefono2 = StringField(
         'Otro Telefono',
         validators= [
             Length(max=20),
             Regexp(r'^[0-9]+$')
             ])
-    
+
     telefono3 = StringField(
         'Otro Telefono',
         validators= [
             Length(max=20),
             Regexp(r'^[0-9]+$')
             ])
-    
+
     direccion = StringField('Dirección',
         validators=[
             DataRequired(),
@@ -102,33 +103,33 @@ class registro_usuario(FlaskForm):
             Regexp(r'^[a-zA-Z0-9]+$'),
             Length(max=40)
             ])
-    
+
     departamento = StringField('Departamento',
         validators=[
             DataRequired(),
             Regexp(r'^[a-zA-Z]+$'),
             Length(max=40)
             ])
-    
+
     pais = StringField('País',
         validators=[
             DataRequired(),
             Regexp(r'^[a-zA-Z]+$'),
             Length(max=40)
             ])
-    
+
     fecha_nacimiento = DateField(
         'Fecha de Nacimiento',
         validators = [DataRequired()]
         )
-    
+
     sexo = StringField('Sexo',
         validators=[
             DataRequired(),
             Regexp(r'^[a-zA-Z]+$'),
             Length(max=1)
             ])
-    
+
     observaciones = TextAreaField('Observaciones')
 
     estado = BooleanField('Vigente?',
@@ -148,6 +149,16 @@ class registro_usuario(FlaskForm):
             Regexp(r'^[0-9]+$'),
             Length(max=6)
             ])
-    
 
 
+class pacientes_agregar_editar(FlaskForm):
+    nombres = StringField('Nombres', validators=[DataRequired("Debes ingresar al menos un nombre")])
+    apellidos = StringField('Apellidos', validators=[DataRequired("Debes ingresar al menos un apellido")])
+    ci = IntegerField('C.I.', validators=[DataRequired("Debes ingresar la cédula"), Length(min=8, max=8, message="Solamente números, sin puntos ni guión"), ValidationError("Solamente números, sin puntos ni guión")])
+    email = StringField('E-mail', validators=[DataRequired("Debes ingresar un e-mail"), Email("Debes ingresar un e-mail válido")])
+
+
+class login(FlaskForm):
+    usuario = StringField('Usuario', validators=[DataRequired("Debes ingresar un usuario")], render_kw={"placeholder": "Usuario"})
+    clave = PasswordField('Contraseña', validators=[DataRequired("Debes ingresar una contraseña")], render_kw={"placeholder": "Contraseña"})
+    submit = SubmitField('Ingresar al Sistema')

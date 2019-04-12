@@ -22,162 +22,161 @@
 <div class="container">
 	<form action="{% if id %}{{ url_for('pacientes_editar', paciente_id = id) }}{% else %}{{ url_for('pacientes_agregar') }}{% endif %}" method="post" id="mainForm">
     {% if id %}<input type="hidden" name="id" value="{{ id }}">{% endif %}
-		<fieldset>
-			<legend>Datos personales</legend>
-			<div>
-				<label for="nombres">Nombres</label>
-				<input type="text" name="nombres"{% if nombres %} value="{{ nombres }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="apellidos">Apellidos</label>
-				<input type="text" name="apellidos"{% if apellidos %} value="{{ apellidos }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="ci">C.I.</label>
-				<input type="text" name="ci"{% if ci %} value="{{ ci }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="email">E-mail</label>
-				<input type="email" name="email"{% if email %} value="{{ email }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="direccion">Dirección</label>
-				<input type="text" name="direccion"{% if direccion %} value="{{ direccion }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="localidad">Localidad</label>
-				<input type="text" name="localidad"{% if localidad %} value="{{ localidad }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="departamento">Departamento</label>
-				<input type="text" name="departamento"{% if departamento %} value="{{ departamento }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="pais">País</label>
-				<input type="text" name="pais"{% if pais %} value="{{ pais }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="telefono1">Teléfono 1</label>
-				<input type="text" name="telefono1"{% if telefono1 %} value="{{ telefono1 }}"{% endif %} required>
-			</div>
-			<div>
-				<label for="telefono2">Teléfono 2</label>
-				<input type="text" name="telefono2"{% if telefono2 %} value="{{ telefono2 }}"{% endif %}>
-			</div>
-			<div>
-				<label for="telefono3">Teléfono 3</label>
-				<input type="text" name="telefono3"{% if telefono3 %} value="{{ telefono3 }}"{% endif %}>
-			</div>
-			<div>
-				<label for="fecha_de_nacimiento">Fecha de nacimiento</label>
-				<input type="date" name="fecha_de_nacimiento"{% if fecha_de_nacimiento %} value="{{ fecha_de_nacimiento }}"{% endif %} required>
-			</div>
-			<div>
-				Sexo
-				<label><input type="radio" name="sexo" value="m"{% if sexo == 'm' %} checked{% endif %} required> Hombre</label>
-				<label><input type="radio" name="sexo" value="f"{% if sexo == 'f' %} checked{% endif %} required> Mujer</label>
-				<label><input type="radio" name="sexo" value="o"{% if sexo == 'o' %} checked{% endif %} required> Otro</label>
-			</div>
-			<div>
-				<label for="observaciones">Observaciones</label>
-				<textarea name="observaciones" rows="3">{% if observaciones %}{{ observaciones }}{% endif %}</textarea>
-			</div>
-		</fieldset>
-		<fieldset>
-			<form>
-				<legend>Datos Clínicos</legend>
-				<div>
-					<label for="doctor_id">Médico Tratante</label>
-					<select name="doctor_id" required>
-						<option value="">Seleccionar...</option>
-						{% for doctor in doctores %}
-						<option value="{{ doctor.id }}"{% if doctor_id and doctor.id == doctor_id | int %} selected{% endif %}>{{ doctor.usuario.persona.nombres }} {{ doctor.usuario.persona.apellidos }}</option>
-						{% endfor %}
-					</select>
-				</div>
-				<div>
-					<label for="enfermero_id">Enfermero Responsable</label>
-					<select name="enfermero_id" required>
-						<option value="">Seleccionar...</option>
-						{% for enfermero in enfermeros %}
-						<option value="{{ enfermero.id }}"{% if enfermero_id and enfermero.id == enfermero_id | int %} selected{% endif %}>{{ enfermero.usuario.persona.nombres }} {{ enfermero.usuario.persona.apellidos }}</option>
-						{% endfor %}
-					</select>
-				</div>
-				<div>
-					<label for="mutualista_id">Mutualista</label>
-					<select name="mutualista_id" required>
-						<option value="">Seleccionar...</option>
-						{% for mutualista in mutualistas %}
-						<option value="{{ mutualista.id }}"{% if mutualista_id and mutualista.id == mutualista_id | int %} selected{% endif %}>{{ mutualista.nombre }}</option>
-						{% endfor %}
-					</select>
-				</div>
-				<div>
-					<label for="tipo_de_paciente">Tipo de paciente</label>
-					<select name="tipo_de_paciente">
-						<option value="">Seleccionar...</option>
-            {% for key in tipos_de_pacientes %}
-						<option value="{{ key }}"{% if tipo_de_paciente and key == tipo_de_paciente %} selected{% endif %}>{{ tipos_de_pacientes[key] }}</option>
-            {% endfor %}
-					</select>
-				</div>
-        <div>
-					<label for="tipo_de_acceso_vascular">Tipo de accedo vascular</label>
-					<select name="tipo_de_acceso_vascular" required>
-						<option value="">Seleccionar...</option>
-            {% for key in tipos_de_accesos_vasculares %}
-						<option value="{{ key }}"{% if tipo_de_acceso_vascular and key == tipo_de_acceso_vascular %} selected{% endif %}>{{ tipos_de_accesos_vasculares[key] }}</option>
-            {% endfor %}
-					</select>
-				</div>
-				<div>
-					<label for="numero_fnr">Número FNR</label>
-					<input type="text" name="numero_fnr"{% if numero_fnr %} value="{{ numero_fnr }}"{% endif %}>
-				</div>
-				<div>
-					<label><input type="checkbox" name="estado" value="1"{% if estado and estado | int == 1 %} checked{% endif %}>Paciente vigente</label>
-				</div>
-				<div>
-					<label for="primer_dialisis">Primer diálisis</label>
-					<input type="date" name="primer_dialisis"{% if primer_dialisis %} value="{{ primer_dialisis }}"{% endif %}>
-				</div>
-				<div>
-					<fieldset>
-						<legend>Grupo sanguineo</legend>
-						<fieldset>
-							<legend>Tipo</legend>
-							<label><input type="radio" name="grupo_sanguineo" value="a"{% if grupo_sanguineo == 'a' %} checked{% endif %}>A</label>
-							<label><input type="radio" name="grupo_sanguineo" value="b"{% if grupo_sanguineo == 'b' %} checked{% endif %}>B</label>
-							<label><input type="radio" name="grupo_sanguineo" value="ab"{% if grupo_sanguineo == 'ab' %} checked{% endif %}>AB</label>
-							<label><input type="radio" name="grupo_sanguineo" value="o"{% if grupo_sanguineo == 'o' %} checked{% endif %}>O</label>
-						</fieldset>
-						<fieldset>
-							<legend>Rh</legend>
-							<label><input type="radio" name="rh" value="+"{% if rh == '+' %} checked{% endif %}>+</label>
-							<label><input type="radio" name="rh" value="-"{% if rh == '-' %} checked{% endif %}>-</label>
-						</fieldset>
-				</div>
-				<div>
-					<label for="altura">Altura (cm)</label>
-					<input type="number" name="altura" min="100" max="250"{% if altura %} value="{{ altura }}"{% endif %}>
-				</div>
-				<div>
-					<label> <input type="checkbox" name="hta" value="1"{% if hta and hta | int == 1 %} checked{% endif %}>HTA</label>
-					<label> <input type="checkbox" name="alergico" value="1"{% if alergico and alergico | int == 1 %} checked{% endif %}>Alérgico</label>
-					<label> <input type="checkbox" name="diabetico" value="1"{% if diabetico and diabetico | int == 1 %} checked{% endif %}>Diabético</label>
-					<label> <input type="checkbox" name="habilitar_lavado_capilar" value="1"{% if habilitar_lavado_capilar and habilitar_lavado_capilar | int == 1 %} checked{% endif %}>Habilitar lavado de capilar</label>
-				</div>
-				<div>
-					<label for="tipo_de_puesto">Tipo de Puesto</label>
-					<select name="tipo_de_puesto">
-						<option value="">Seleccionar...</option>
-            {% for key in tipos_de_puestos %}
-						<option value="{{ key }}"{% if tipo_de_puesto and key == tipo_de_puesto %} selected{% endif %}>{{ tipos_de_puestos[key] }}</option>
-            {% endfor %}
-					</select>
-				</div>
-		</fieldset>
+    <h2>Datos personales</h2>
+		<div>
+			<label for="nombres">Nombres</label>
+			<input type="text" name="nombres"{% if nombres %} value="{{ nombres }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="apellidos">Apellidos</label>
+			<input type="text" name="apellidos"{% if apellidos %} value="{{ apellidos }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="ci">C.I.</label>
+			<input type="text" name="ci"{% if ci %} value="{{ ci }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="email">E-mail</label>
+			<input type="email" name="email"{% if email %} value="{{ email }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="direccion">Dirección</label>
+			<input type="text" name="direccion"{% if direccion %} value="{{ direccion }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="localidad">Localidad</label>
+			<input type="text" name="localidad"{% if localidad %} value="{{ localidad }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="departamento">Departamento</label>
+			<input type="text" name="departamento"{% if departamento %} value="{{ departamento }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="pais">País</label>
+			<input type="text" name="pais"{% if pais %} value="{{ pais }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="telefono1">Teléfono 1</label>
+			<input type="text" name="telefono1"{% if telefono1 %} value="{{ telefono1 }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="telefono2">Teléfono 2</label>
+			<input type="text" name="telefono2"{% if telefono2 %} value="{{ telefono2 }}"{% endif %}>
+		</div>
+		<div>
+			<label for="telefono3">Teléfono 3</label>
+			<input type="text" name="telefono3"{% if telefono3 %} value="{{ telefono3 }}"{% endif %}>
+		</div>
+		<div>
+			<label for="fecha_de_nacimiento">Fecha de nacimiento</label>
+			<input type="date" name="fecha_de_nacimiento"{% if fecha_de_nacimiento %} value="{{ fecha_de_nacimiento }}"{% endif %} required>
+		</div>
+		<div>
+			<label for="sexo">Sexo</label>
+      <select name="sexo" required>
+        <option value="">Seleccionar...</option>
+			  <option value="f"{% if sexo == 'f' %} selected{% endif %}>Femenino</option>
+			  <option value="m"{% if sexo == 'm' %} selected{% endif %}>Masculino</option>
+        <option value="o"{% if sexo == 'o' %} selected{% endif %}>Otro</option>
+      </select>
+		</div>
+		<div>
+			<label for="observaciones">Observaciones</label>
+			<textarea name="observaciones" rows="3">{% if observaciones %}{{ observaciones }}{% endif %}</textarea>
+		</div>
+		
+		<h2>Datos Clínicos</h2>
+		<div>
+			<label for="doctor_id">Médico Tratante</label>
+			<select name="doctor_id" required>
+				<option value="">Seleccionar...</option>
+				{% for doctor in doctores %}
+				<option value="{{ doctor.id }}"{% if doctor_id and doctor.id == doctor_id | int %} selected{% endif %}>{{ doctor.usuario.persona.nombres }} {{ doctor.usuario.persona.apellidos }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div>
+			<label for="enfermero_id">Enfermero Responsable</label>
+			<select name="enfermero_id" required>
+				<option value="">Seleccionar...</option>
+				{% for enfermero in enfermeros %}
+				<option value="{{ enfermero.id }}"{% if enfermero_id and enfermero.id == enfermero_id | int %} selected{% endif %}>{{ enfermero.usuario.persona.nombres }} {{ enfermero.usuario.persona.apellidos }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div>
+			<label for="mutualista_id">Mutualista</label>
+			<select name="mutualista_id" required>
+				<option value="">Seleccionar...</option>
+				{% for mutualista in mutualistas %}
+				<option value="{{ mutualista.id }}"{% if mutualista_id and mutualista.id == mutualista_id | int %} selected{% endif %}>{{ mutualista.nombre }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div>
+			<label for="tipo_de_paciente">Tipo de paciente</label>
+			<select name="tipo_de_paciente">
+				<option value="">Seleccionar...</option>
+        {% for key in tipos_de_pacientes %}
+				<option value="{{ key }}"{% if tipo_de_paciente and key == tipo_de_paciente %} selected{% endif %}>{{ tipos_de_pacientes[key] }}</option>
+        {% endfor %}
+			</select>
+		</div>
+    <div>
+			<label for="tipo_de_acceso_vascular">Tipo de accedo vascular</label>
+			<select name="tipo_de_acceso_vascular" required>
+				<option value="">Seleccionar...</option>
+        {% for key in tipos_de_accesos_vasculares %}
+				<option value="{{ key }}"{% if tipo_de_acceso_vascular and key == tipo_de_acceso_vascular %} selected{% endif %}>{{ tipos_de_accesos_vasculares[key] }}</option>
+        {% endfor %}
+			</select>
+		</div>
+    <div>
+      <label for="primer_dialisis">Primer diálisis</label>
+      <input type="date" name="primer_dialisis"{% if primer_dialisis %} value="{{ primer_dialisis }}"{% endif %}>
+    </div>
+		<div>
+			<label for="numero_fnr">Número FNR</label>
+			<input type="text" name="numero_fnr"{% if numero_fnr %} value="{{ numero_fnr }}"{% endif %}>
+		</div>
+    <div>
+			<label for="altura">Altura (cm)</label>
+			<input type="number" name="altura" min="100" max="250"{% if altura %} value="{{ altura }}"{% endif %}>
+		</div>
+		<div>
+			<label> <input type="checkbox" name="hta" value="1"{% if hta and hta | int == 1 %} checked{% endif %}>HTA</label>
+			<label> <input type="checkbox" name="alergico" value="1"{% if alergico and alergico | int == 1 %} checked{% endif %}>Alérgico</label>
+			<label> <input type="checkbox" name="diabetico" value="1"{% if diabetico and diabetico | int == 1 %} checked{% endif %}>Diabético</label>
+			<label> <input type="checkbox" name="habilitar_lavado_capilar" value="1"{% if habilitar_lavado_capilar and habilitar_lavado_capilar | int == 1 %} checked{% endif %}>Habilitar lavado de capilar</label>
+		</div>
+		<div>
+			<fieldset>
+				<legend>Grupo sanguineo</legend>
+				<fieldset>
+					<legend>Tipo</legend>
+					<label><input type="radio" name="grupo_sanguineo" value="a"{% if grupo_sanguineo == 'a' %} checked{% endif %}>A</label>
+					<label><input type="radio" name="grupo_sanguineo" value="b"{% if grupo_sanguineo == 'b' %} checked{% endif %}>B</label>
+					<label><input type="radio" name="grupo_sanguineo" value="ab"{% if grupo_sanguineo == 'ab' %} checked{% endif %}>AB</label>
+					<label><input type="radio" name="grupo_sanguineo" value="o"{% if grupo_sanguineo == 'o' %} checked{% endif %}>O</label>
+				</fieldset>
+				<fieldset>
+					<legend>Rh</legend>
+					<label><input type="radio" name="rh" value="+"{% if rh == '+' %} checked{% endif %}>+</label>
+					<label><input type="radio" name="rh" value="-"{% if rh == '-' %} checked{% endif %}>-</label>
+				</fieldset>
+		</div>
+		<div>
+			<label for="tipo_de_puesto">Tipo de Puesto</label>
+			<select name="tipo_de_puesto">
+				<option value="">Seleccionar...</option>
+        {% for key in tipos_de_puestos %}
+				<option value="{{ key }}"{% if tipo_de_puesto and key == tipo_de_puesto %} selected{% endif %}>{{ tipos_de_puestos[key] }}</option>
+        {% endfor %}
+			</select>
+		</div>
+    <div>
+			<label><input type="checkbox" name="estado" value="1"{% if estado and estado | int == 1 %} checked{% endif %}>Paciente vigente</label>
+		</div>
     <div class="form-bts-footer">
 		    <a href="javascript: document.getElementById('mainForm').submit(); " class="button"><i class="far fa-save"></i>&nbsp;&nbsp;&nbsp;Guardar</a>
 		    <a href="{{ url_for('pacientes') }}" class="button"><i class="far fa-window-close"></i>&nbsp;&nbsp;&nbsp;Cancelar</a>

@@ -1,6 +1,13 @@
+# DESARROLLO
 DEBUG = True # con debug=True no tenemos que reiniciar el servidor para ver los cambios
 PORT = 5000  # 5000 para desarrollo | 80 es el puerto por defecto del protocolo http
 HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
+
+# PRODUCCIÓN
+# DEBUG = False # con debug=True no tenemos que reiniciar el servidor para ver los cambios
+# PORT = 5000  # 5000 para desarrollo | 80 es el puerto por defecto del protocolo http
+# HOST = '0.0.0.0' # con host='0.0.0.0' permite acceder desde otra máquina al servidor de flask
+
 
 # DB en Clever Cloud
 # DB_NAME = bevc2jessjfwwvi2ekjy'
