@@ -486,7 +486,7 @@ def login():
                 if check_password_hash(usuario.clave, form.clave.data):
                     login_user(usuario)
                     response = redirect(url_for('inicio'))
-                    response.set_cookie('userdata', json.dumps({'usuario': usuario.persona.nombres}))
+                    response.set_cookie('userdata', json.dumps({'usuario': usuario.persona.nombres + ' ' + usuario.persona.apellidos}))
                     return response
                 else:
                     flash("El usuario o la contraseña no son correctos", 'error')
