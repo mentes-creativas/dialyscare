@@ -50,7 +50,7 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    """Cierra la conección a la base de dato después de cada request"""
+    """Cierra la conexión a la base de dato después de cada request"""
     g.db.close()
     return response
 

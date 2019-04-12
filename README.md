@@ -6,8 +6,8 @@ Proyecto final de primer año del programa b_IT de Mentes Creativas
 
 https://app.dialyscare.com/
 
-- Usuario: horaciososa
-- Clave: 123458
+* Usuario: horaciososa
+* Clave: 123458
 
 ## Requisitos de instalación
 
