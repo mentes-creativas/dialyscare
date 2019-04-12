@@ -17,7 +17,7 @@
 		<form action="{{ url_for('login') }}" method="POST">
 			{{ form.hidden_tag() }}
 			<section>
-				{{ form.usuario }}
+				{{ form.usuario(oninvalid="this.setCustomValidity('Debes ingresar un usuario')", oninput="this.setCustomValidity('')") }}
 
 				{% if form.usuario.errors %}
 				<ul class="errors">
@@ -28,7 +28,7 @@
 				{% endif %}
 			</section>
 			<section>
-				{{ form.clave }}
+				{{ form.clave(oninvalid="this.setCustomValidity('Debes ingresar una contraseña')", oninput="this.setCustomValidity('')") }}
 
 				{% if form.clave.errors %}
 				<ul class="errors">
