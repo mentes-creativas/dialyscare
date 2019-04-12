@@ -477,6 +477,194 @@ class Pacientes(MyModel):
         query = cls.select().join(Personas).order_by(Personas.nombres)
         return query
 
+
+class Indicaciones(MyModel):
+    id = PrimaryKeyField()
+    paciente = ForeignKeyField(Pacientes, backref='paciente', unique=True)
+    doctor = ForeignKeyField(Doctores, backref='doctor')
+    anio = DateField('%Y')
+    mes = DateField('%m')
+    horas = TimeField('%H,%M')
+    peso_seco = IntegerField()
+    flujo_de_bomba = IntegerField()
+    flujo_de_banio = IntegerField()
+    bicarbonato = IntegerField()
+    heparina_hbpm = IntegerField()
+    lavados = CharField(max_length=45)
+    tipo_de_capilar = CharField(max_length=20)
+    epo_semanal = IntegerField()
+    epo_sesion1 = IntegerField()
+    epo_sesion2 = IntegerField()
+    epo_sesion3 = IntegerField()
+    hierro = CharField(max_length=45)
+    sodio = IntegerField()
+    medicacion_post_hd = TextField()
+    vacunas = TextField()
+    examenes_de_laboratorio = TextField()
+    observaciones = TextField()
+
+    class Meta:
+        table_name = 'indicaciones'
+
+
+class Coordinacion_De_Estudios(MyModel):
+    id = PrimaryKeyField()
+    paciente = ForeignKeyField(Pacientes, backref= 'paciente')
+    usuario = ForeignKeyField(Usuarios, backref= 'usuario')
+    estudios = TextField()
+    estado = BooleanField()
+
+    class Meta:
+        table_name = 'coordinacion_de_estudios'
+
+
+class Pedidos_De_Cambios(MyModel):
+    id = PrimaryKeyField()
+    paciente = ForeignKeyField(Pacientes, backref= 'paciente')
+    usuario = ForeignKeyField(Usuarios, backref= 'usuario')
+    pedido = TextField()
+    estado = BooleanField()
+
+    class Meta:
+        table_name = 'pedidos_de_cambios'
+
+
+class Salas(MyModel):
+    id = PrimaryKeyField()
+    nombre = CharField(max_length=45)
+
+    class Meta:
+        table_name = 'salas'
+
+
+class Puestos(MyModel):
+    id = PrimaryKeyField()
+    sala = ForeignKeyField(Salas, backref= 'sala')
+    puesto_especial = BooleanField()
+    tipo_de_puesto = CharField(max_length=20)
+
+    class Meta:
+        table_name = 'puestos'
+
+
+class Agenda(MyModel):
+    fecha = DateField('%d,%m,%Y')
+    turno = BooleanField()
+    paciente = ForeignKeyField(Pacientes, backref= 'paciente')
+    puesto = ForeignKeyField(Puestos, backref= 'puesto')
+    peso_de_ingreso = IntegerField()
+    peso_de_salida = IntegerField()
+    falta = BooleanField()
+
+    class Meta:
+        table_name = 'agenda'
+
+
+class Sesiones(MyModel):
+    id = PrimaryKeyField()
+    paciente = ForeignKeyField(Pacientes, backref='paciente', unique=True)
+    puesto = ForeignKeyField(Puestos, backref='puesto')
+    enfermero = ForeignKeyField(Enfermeros, backref='enfermero')
+    doctor = ForeignKeyField(Doctores, backref='doctor')
+    nurse = ForeignKeyField(Nurses, backref='nurse')
+    fecha = DateField('%d,%m,%Y')
+    dosis_de_anticoagulante = IntegerField()
+    peso = IntegerField()
+    peso_seco = IntegerField()
+    ufc = IntegerField()
+    tipo_de_acceso_vascular = CharField(max_length=20)
+    dializado = CharField(max_length=20)
+    minutos = IntegerField()
+    medicacion = TextField()
+    epo = BooleanField()
+    hierro = BooleanField()
+    hora_de_desconexión = TimeField()
+    ktv = FloatField()
+    presion_pre_a = IntegerField()
+    presion_pre_b = IntegerField()
+    presion_post_a = IntegerField()
+    presion_post_b = IntegerField()
+    temperatura = FloatField()
+    flujo_de_banio = CharField(max_length=45)
+    pre_conexion_paciente = BooleanField()
+    pre_conexion_puesto = BooleanField()
+    pre_conexion_capilar = BooleanField()
+    post_conexion_lineas = BooleanField()
+    post_conexion_bomba = BooleanField()
+    post_conexion_uf = BooleanField()
+    post_conexion_capilar = BooleanField()
+    post_conexion_heparina = BooleanField()
+    post_conexion_aire = BooleanField()
+    equipo = IntegerField()
+    hierrodesinfeccionialisis_extra = BooleanField()
+    dialisis_extra_motivo = TextField()
+    paraclinica_intradialisis = TextField()
+    enviada_a_fnr = BooleanField()
+
+    class Meta:
+        table_name = 'sesiones'
+
+
+class Recirculacion(MyModel):
+    id = PrimaryKeyField()
+    enfermero = ForeignKeyField(Enfermeros, backref= 'enfermero')
+    sesion = ForeignKeyField(Sesiones, backref= 'sesion')
+    cualitest = BooleanField()
+    cuantitest = BooleanField()
+
+    class Meta:
+        table_name = 'recirculacion'
+
+
+class Controles(MyModel):
+    id = PrimaryKeyField()
+    enfermero = ForeignKeyField(Enfermeros, backref= 'enfermero')
+    sesion = ForeignKeyField(Sesiones, backref= 'sesion')
+    hora = TimeField()
+    flujo_de_bomba = IntegerField()
+    pv = IntegerField()
+    tmp = IntegerField()
+    flujo_de banio = IntegerField()
+    conductividad = IntegerField()
+    presion_arterial_a = IntegerField()
+    presion_arterial_b = IntegerField()
+    frecuencia_cardiaca = IntegerField()
+
+    class Meta:
+        table_name = 'controles'
+
+
+class Capilares(MyModel):
+    id = PrimaryKeyField()
+    paciente = ForeignKeyField(Pacientes, backref= 'paciente')
+    tipo_de_capilar = CharField(max_length=45)
+    estado = BooleanField()
+
+    class Meta:
+        table_name = 'capilares'
+
+
+class Capilares_Acciones(MyModel):
+    id = PrimaryKeyField()
+    capilar = ForeignKeyField(Capilares, backref= 'capilar')
+    enfermero = ForeignKeyField(Enfermeros, backref= 'enfermero')
+    accion = CharField(max_length=45)
+    fecha_hora = DateTimeField()
+    volumen_min = IntegerField()
+    volumen_residual = IntegerField()
+
+    class Meta:
+        table_name = 'capilares_acciones'
+
+
+class Capilares_Recirculaciones(MyModel):
+    capilar = ForeignKeyField(Capilares, backref= 'capilar')
+    recirculacion = ForeignKeyField(Recirculacion, backref= 'recirculacion')
+
+    class Meta:
+        table_name = 'capilares_recirculaciones'
+
+
 def initialize():
     db.connect()
     db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses,
