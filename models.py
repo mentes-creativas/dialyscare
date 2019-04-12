@@ -624,7 +624,7 @@ class Controles(MyModel):
     flujo_de_bomba = IntegerField()
     pv = IntegerField()
     tmp = IntegerField()
-    flujo_de banio = IntegerField()
+    flujo_de_banio = IntegerField()
     conductividad = IntegerField()
     presion_arterial_a = IntegerField()
     presion_arterial_b = IntegerField()
