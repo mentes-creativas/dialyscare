@@ -549,7 +549,7 @@ class Puestos(MyModel):
 
 class Agenda(MyModel):
     fecha = DateField('%d,%m,%Y')
-    turno = CharField(max_length=1)
+    turno = FixedCharField(max_length=1)
     paciente = ForeignKeyField(Pacientes, backref= 'agenda')
     puesto = ForeignKeyField(Puestos, backref= 'agenda')
     peso_de_ingreso = IntegerField()
@@ -569,7 +569,7 @@ class Sesiones(MyModel):
     doctor = ForeignKeyField(Doctores, backref='sesiones')
     nurse = ForeignKeyField(Nurses, backref='sesiones')
     fecha = DateField('%d,%m,%Y')
-    turno = CharField(max_length=1)
+    turno = FixedCharField(max_length=1)
     dosis_de_anticoagulante = IntegerField()
     peso = IntegerField()
     peso_seco = IntegerField()

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 13-04-2019 a las 00:22:27
+-- Tiempo de generación: 13-04-2019 a las 01:03:16
 -- Versión del servidor: 5.7.25-0ubuntu0.18.04.2
 -- Versión de PHP: 7.2.15-0ubuntu0.18.04.2
 
@@ -39,7 +39,7 @@ CREATE TABLE `administrativos` (
 
 CREATE TABLE `agenda` (
   `fecha` date NOT NULL,
-  `turno` varchar(1) NOT NULL,
+  `turno` char(1) NOT NULL,
   `paciente_id` int(11) NOT NULL,
   `puesto_id` int(11) NOT NULL,
   `peso_de_ingreso` int(11) NOT NULL,
