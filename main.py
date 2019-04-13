@@ -24,6 +24,7 @@ login_manager.login_message = 'Debes iniciar sesión'
 login_manager.refresh_view = 'login'
 login_manager.needs_refresh_message = 'Debes comprobar tus datos de acceso para acceder a la sección solicitada'
 login_manager.needs_refresh_message_category = "info"
+login_manager.session_protection = "strong"
 
 
 @login_manager.user_loader
