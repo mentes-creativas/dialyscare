@@ -4,9 +4,9 @@ import json
 import datetime
 import sys
 
-from flask import Flask, g, flash, render_template, flash, url_for, redirect, request
+from flask import Flask, g, flash, render_template, flash, url_for, redirect, request, session
 from flask_bcrypt import check_password_hash
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, fresh_login_required, current_user
 from playhouse.shortcuts import model_to_dict, dict_to_model
 
 import config
@@ -21,6 +21,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message = 'Debes iniciar sesión'
+login_manager.refresh_view = 'login'
+login_manager.needs_refresh_message = 'Debes comprobar tus datos de acceso para acceder a la sección solicitada'
+login_manager.needs_refresh_message_category = "info"
 
 
 @login_manager.user_loader
@@ -55,12 +58,15 @@ def after_request(response):
     return response
 
 
-@app.route("/", methods = ['GET', 'POST'])
+@app.route("/")
 def index():
-    return redirect(url_for('login'))
+    if current_user.is_authenticated:
+         return redirect(url_for('inicio'))
+    else:
+         return redirect(url_for('login'))
 
 
-@app.route("/admin", methods = ['GET', 'POST'])
+@app.route("/admin")
 @login_required
 def inicio():
     context = {'titulo_de_la_pagina': 'Inicio', 'nombre_de_usuario': g.username}
@@ -167,7 +173,7 @@ def pacientes_agregar():
 
 
 @app.route("/admin/pacientes/editar/<int:paciente_id>", methods = ['GET', 'POST'])
-@login_required
+@fresh_login_required
 def pacientes_editar( paciente_id ):
     try:
         paciente = m.Pacientes.get_by_id(paciente_id)
@@ -266,7 +272,7 @@ def pacientes_editar( paciente_id ):
             return render_template('pacientes-agregar-editar.html', **context)
 
 
-@app.route("/admin/pacientes/ver/<int:paciente_id>", methods = ['GET'])
+@app.route("/admin/pacientes/ver/<int:paciente_id>")
 @login_required
 def pacientes_ver( paciente_id ):
     context = {'titulo_de_la_pagina': 'Ver paciente', 'nombre_de_usuario': g.username}
@@ -281,9 +287,9 @@ def pacientes_evolucion( paciente_id = 0 ):
     return render_template('pacientes-evolucion.html', **context)
 
 
-@app.route("/admin/pacientes/indicaciones", methods = ['GET'])
-@app.route("/admin/pacientes/indicaciones/<int:paciente_id>", methods = ['GET'])
-@login_required
+@app.route("/admin/pacientes/indicaciones")
+@app.route("/admin/pacientes/indicaciones/<int:paciente_id>")
+@fresh_login_required
 def pacientes_indicaciones( paciente_id = 0 ):
     context = {'titulo_de_la_pagina': 'Agregar paciente', 'nombre_de_usuario': g.username}
     return render_template('pacientes-indicaciones.html', **context)
@@ -389,7 +395,7 @@ def usuarios_agregar():
 
 
 @app.route("/admin/usuarios/editar/<int:usuario_id>", methods = ['GET', 'POST'])
-@login_required
+@fresh_login_required
 def usuarios_editar( usuario_id ):
     try:
         usuario = m.Usuarios.get_by_id(usuario_id)
@@ -485,11 +491,22 @@ def login():
             else:
                 if check_password_hash(usuario.clave, form.clave.data):
                     login_user(usuario)
-                    response = redirect(url_for('inicio'))
+
+                    try:
+                        next = session['next']
+                    except:
+                        response = redirect(url_for('inicio'))
+                    else:
+                        response = redirect(next)
+                        del session['next']
+
                     response.set_cookie('userdata', json.dumps({'usuario': usuario.persona.nombres}))
                     return response
                 else:
                     flash("El usuario o la contraseña no son correctos", 'error')
+
+    elif request.args.get('next') is not None:
+        session['next'] = request.args.get('next')
 
     return render_template('login.html', form = form)
 
