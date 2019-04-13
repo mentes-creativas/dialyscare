@@ -71,7 +71,7 @@
 				<label><input type="radio" name="sexo" value="o"{% if sexo == 'o' %} checked{% endif %} required> Otro</label>
 			</div>
 			<div>
-				<label><input type="checkbox" name="estado" value="1"{% if estado and estado | int == 1 %} checked{% endif %} required>Usuario vigente</label>
+				<label><input type="checkbox" name="estado" value="1"{% if estado and estado | int == 1 %} checked{% endif %}>Usuario vigente</label>
 			</div>
 			<div>
 				<label for="observaciones">Observaciones</label>

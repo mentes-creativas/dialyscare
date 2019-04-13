@@ -480,8 +480,8 @@ class Pacientes(MyModel):
 
 class Indicaciones(MyModel):
     id = PrimaryKeyField()
-    paciente = ForeignKeyField(Pacientes, backref='paciente', unique=True)
-    doctor = ForeignKeyField(Doctores, backref='doctor')
+    paciente = ForeignKeyField(Pacientes, backref='indicaciones')
+    doctor = ForeignKeyField(Doctores, backref='indicaciones')
     anio = DateField('%Y')
     mes = DateField('%m')
     horas = TimeField('%H,%M')
@@ -507,10 +507,10 @@ class Indicaciones(MyModel):
         table_name = 'indicaciones'
 
 
-class Coordinacion_De_Estudios(MyModel):
+class CoordinacionDeEstudios(MyModel):
     id = PrimaryKeyField()
-    paciente = ForeignKeyField(Pacientes, backref= 'paciente')
-    usuario = ForeignKeyField(Usuarios, backref= 'usuario')
+    paciente = ForeignKeyField(Pacientes, backref= 'coordinacion_de_estudios')
+    usuario = ForeignKeyField(Usuarios, backref= 'coordinacion_de_estudios')
     estudios = TextField()
     estado = BooleanField()
 
@@ -518,10 +518,10 @@ class Coordinacion_De_Estudios(MyModel):
         table_name = 'coordinacion_de_estudios'
 
 
-class Pedidos_De_Cambios(MyModel):
+class PedidosDeCambios(MyModel):
     id = PrimaryKeyField()
-    paciente = ForeignKeyField(Pacientes, backref= 'paciente')
-    usuario = ForeignKeyField(Usuarios, backref= 'usuario')
+    paciente = ForeignKeyField(Pacientes, backref= 'pedidos_de_cambios')
+    usuario = ForeignKeyField(Usuarios, backref= 'pedidos_de_cambios')
     pedido = TextField()
     estado = BooleanField()
 
@@ -539,7 +539,7 @@ class Salas(MyModel):
 
 class Puestos(MyModel):
     id = PrimaryKeyField()
-    sala = ForeignKeyField(Salas, backref= 'sala')
+    sala = ForeignKeyField(Salas, backref= 'puestos')
     puesto_especial = BooleanField()
     tipo_de_puesto = CharField(max_length=20)
 
@@ -550,23 +550,24 @@ class Puestos(MyModel):
 class Agenda(MyModel):
     fecha = DateField('%d,%m,%Y')
     turno = BooleanField()
-    paciente = ForeignKeyField(Pacientes, backref= 'paciente')
-    puesto = ForeignKeyField(Puestos, backref= 'puesto')
+    paciente = ForeignKeyField(Pacientes, backref= 'agenda')
+    puesto = ForeignKeyField(Puestos, backref= 'agenda')
     peso_de_ingreso = IntegerField()
     peso_de_salida = IntegerField()
     falta = BooleanField()
 
     class Meta:
+        primary_key = CompositeKey('fecha', 'turno', 'paciente')
         table_name = 'agenda'
 
 
 class Sesiones(MyModel):
     id = PrimaryKeyField()
-    paciente = ForeignKeyField(Pacientes, backref='paciente', unique=True)
-    puesto = ForeignKeyField(Puestos, backref='puesto')
-    enfermero = ForeignKeyField(Enfermeros, backref='enfermero')
-    doctor = ForeignKeyField(Doctores, backref='doctor')
-    nurse = ForeignKeyField(Nurses, backref='nurse')
+    paciente = ForeignKeyField(Pacientes, backref='sesiones')
+    puesto = ForeignKeyField(Puestos, backref='sesiones')
+    enfermero = ForeignKeyField(Enfermeros, backref='sesiones')
+    doctor = ForeignKeyField(Doctores, backref='sesiones')
+    nurse = ForeignKeyField(Nurses, backref='sesiones')
     fecha = DateField('%d,%m,%Y')
     dosis_de_anticoagulante = IntegerField()
     peso = IntegerField()
@@ -607,8 +608,8 @@ class Sesiones(MyModel):
 
 class Recirculacion(MyModel):
     id = PrimaryKeyField()
-    enfermero = ForeignKeyField(Enfermeros, backref= 'enfermero')
-    sesion = ForeignKeyField(Sesiones, backref= 'sesion')
+    enfermero = ForeignKeyField(Enfermeros, backref= 'recirculacion')
+    sesion = ForeignKeyField(Sesiones, backref= 'recirculacion')
     cualitest = BooleanField()
     cuantitest = BooleanField()
 
@@ -618,8 +619,8 @@ class Recirculacion(MyModel):
 
 class Controles(MyModel):
     id = PrimaryKeyField()
-    enfermero = ForeignKeyField(Enfermeros, backref= 'enfermero')
-    sesion = ForeignKeyField(Sesiones, backref= 'sesion')
+    enfermero = ForeignKeyField(Enfermeros, backref= 'controles')
+    sesion = ForeignKeyField(Sesiones, backref= 'controles')
     hora = TimeField()
     flujo_de_bomba = IntegerField()
     pv = IntegerField()
@@ -636,7 +637,7 @@ class Controles(MyModel):
 
 class Capilares(MyModel):
     id = PrimaryKeyField()
-    paciente = ForeignKeyField(Pacientes, backref= 'paciente')
+    paciente = ForeignKeyField(Pacientes, backref= 'capilares')
     tipo_de_capilar = CharField(max_length=45)
     estado = BooleanField()
 
@@ -644,10 +645,10 @@ class Capilares(MyModel):
         table_name = 'capilares'
 
 
-class Capilares_Acciones(MyModel):
+class CapilaresAcciones(MyModel):
     id = PrimaryKeyField()
-    capilar = ForeignKeyField(Capilares, backref= 'capilar')
-    enfermero = ForeignKeyField(Enfermeros, backref= 'enfermero')
+    capilar = ForeignKeyField(Capilares, backref= 'capilares_acciones')
+    enfermero = ForeignKeyField(Enfermeros, backref= 'capilares_acciones')
     accion = CharField(max_length=45)
     fecha_hora = DateTimeField()
     volumen_min = IntegerField()
@@ -657,18 +658,21 @@ class Capilares_Acciones(MyModel):
         table_name = 'capilares_acciones'
 
 
-class Capilares_Recirculaciones(MyModel):
-    capilar = ForeignKeyField(Capilares, backref= 'capilar')
-    recirculacion = ForeignKeyField(Recirculacion, backref= 'recirculacion')
+class CapilaresRecirculaciones(MyModel):
+    capilar = ForeignKeyField(Capilares, backref= 'capilares_recirculaciones')
+    recirculacion = ForeignKeyField(Recirculacion, backref= 'capilares_recirculaciones')
 
     class Meta:
+        primary_key = CompositeKey('capilar', 'recirculacion')
         table_name = 'capilares_recirculaciones'
 
 
 def initialize():
     db.connect()
     db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses,
-        Enfermeros, Administrativos, Pacientes], safe=True)
+        Enfermeros, Administrativos, Pacientes, Indicaciones, CoordinacionDeEstudios,
+        PedidosDeCambios, Salas, Puestos, Agenda, Sesiones, Recirculacion, Controles,
+        Capilares, CapilaresAcciones, CapilaresRecirculaciones], safe=True)
     db.close()
 
 
@@ -676,7 +680,9 @@ def initialize():
 if __name__ == '__main__':
     db.connect()
     db.create_tables([General, Personas, Usuarios, Mutualistas, Doctores, Nurses,
-        Enfermeros, Administrativos, Pacientes], safe=True)
+        Enfermeros, Administrativos, Pacientes, Indicaciones, CoordinacionDeEstudios,
+        PedidosDeCambios, Salas, Puestos, Agenda, Sesiones, Recirculacion, Controles,
+        Capilares, CapilaresAcciones, CapilaresRecirculaciones], safe=True)
     # con safe=True no tira error si la tabla ya fue creada
 
     #Si no existe configuracion general, agregamos la por defecto
