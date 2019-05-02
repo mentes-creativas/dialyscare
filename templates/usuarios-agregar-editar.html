@@ -3,13 +3,21 @@
 {% block contenido_de_la_seccion %}
 <!-- ACA EMPIEZA EL CONTENIDO DE LA SECCION -->
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul class=flashes>
+	{% for category, message in messages %}
+	<li class="{{ category }}">{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
 {% if id %}
 <h1>Editar usuario</h1>
 {% else %}
 <h1>Agregar usuario</h1>
 {% endif %}
-
-
 
 <div class="container">
 	<form action="{% if id %}{{ url_for('usuarios_editar', usuario_id = id) }}{% else %}{{ url_for('usuarios_agregar') }}{% endif %}" method="post" id="mainForm">
@@ -114,15 +122,6 @@
 			<a href="{{ url_for('usuarios') }}" class="button"><i class="far fa-window-close"></i>&nbsp;&nbsp;&nbsp;Cancelar</a>
 		</div>
 	</form>
-	{% with messages = get_flashed_messages(with_categories=true) %}
-	{% if messages %}
-	<ul class=flashes>
-		{% for category, message in messages %}
-		<li class="{{ category }}">{{ message }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-	{% endwith %}
 </div>
 
 <!-- ACA TERMINA EL CONTENIDO DE LA SECCION-->

@@ -424,14 +424,17 @@ def usuarios_editar( usuario_id ):
                 estado = bool(request.form.get('estado'))
                 tipo_de_usuario = request.form.get('tipo_de_usuario')
                 usuario = request.form.get('usuario')
-                numero_profesional = int(request.form.get('numero_profesional'))
+
+                if tipo_de_usuario == 'doctor':
+                    numero_profesional = int(request.form.get('numero_profesional'))
+
                 super_user = bool(request.form.get('super_user'))
                 clave = request.form.get('clave')
                 m.Usuarios.update_usuario(usuario_id, nombres, apellidos, email, ci, telefono1, telefono2, telefono3, direccion,
-                    localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, usuario, tipo_de_usuario, clave)
+                    localidad, departamento, pais, fecha_de_nacimiento, sexo, observaciones, estado, tipo_de_usuario, usuario, clave)
             except Exception as e:
-                #error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
-                error = str(e)
+                error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + ' ' + str(type(e).__name__) + ' ' + str(e)
+                #error = str(e)
                 flash('Ocurrió un error: ' + error, ' error')
 
                 context = {
