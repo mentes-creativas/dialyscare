@@ -462,7 +462,7 @@ def usuarios_editar( usuario_id ):
             persona_data = model_to_dict(persona, recurse=False)
 
             usuario_data = model_to_dict(usuario, recurse=False)
-            usuario_data['rol'] = usuario_data.pop('rol')
+            usuario_data['tipo_de_usuario'] = usuario_data.pop('rol')
             usuario_data['usuario'] = usuario_data.pop('usuario')
             usuario_data['clave'] = usuario_data.pop('clave')
 
