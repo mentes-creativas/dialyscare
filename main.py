@@ -66,6 +66,14 @@ def index():
     else:
          return redirect(url_for('login'))
 
+@app.route("/balanza")
+def balanza():
+    context = {
+            'titulo_de_la_pagina': 'Agenda de pesaje',
+            'nombre_de_usuario': g.username,
+            'pacientes': m.Pacientes.list()
+        }
+    return render_template('balanza.html', **context)
 
 @app.route("/admin")
 @login_required

@@ -1,0 +1,78 @@
+{% extends '_base_layout.html' %}
+
+{% block titulo %}{{ titulo_de_la_pagina }}{% endblock %}
+
+{% block contenido %}
+
+<header>
+	<div class="logo">
+		<img src="{{ url_for('static', filename='images/logo-mini-blanco.png') }}" alt="dialyscare" class="mini">
+		<img src="{{ url_for('static', filename='images/logo-texto-blanco.png') }}" alt="dialyscare" class="md-none">
+	</div>
+	<div class="user-data">
+		<i class="fas fa-user"></i>&nbsp;&nbsp;<span class="md-none">&nbsp;</span><strong>{{ nombre_de_usuario }}</strong>
+		{% if nombre_de_usuario == 'Desconocido' %}
+			<button onclick="window.location='{{ url_for('login') }}'"><i class="fas fa-sign-in-alt fa-lg"></i>&nbsp;&nbsp;<span class="md-none">Ingresar al sistema</span></button>
+		{% else %}
+			<button onclick="window.location='{{ url_for('inicio') }}'"><i class="fas fa-table fa-lg"></i>&nbsp;&nbsp;<span class="md-none">Admin</span></button>
+			<button onclick="window.location='{{ url_for('logout') }}'"><i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;&nbsp;<span class="md-none">Salir del sistema</span></button>
+		{% endif %}
+	</div>
+</header>
+
+<main style=" background: #FFF;">
+	<h1>Agenda de Pesaje</h1>
+
+	<ul class="nav nav-tabs" style=" float: right; ">
+		<li class="nav-item">
+			<a class="nav-link active" href="#">Matutino</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Tarde</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Vespertino</a>
+		</li>
+	</ul>
+
+	<h2>1 de abril &nbsp;<a href="#" class="button"><i class="fas fa-calendar-alt fa-lg"></i></a> &nbsp;<a href="#" class="button"><i class="fas fa-sync-alt fa-xs"></i></a></h2>
+
+	<table class="data-table">
+		<thead>
+			<tr>
+				<th>Sala</th>
+				<th class="md-none">Puesto</th>
+				<th class="md-none">Nombre</th>
+				<th class="md-none">Enfermera</th>
+				<th class="lg-none">Peso seco</th>
+				<th>Peso Ing.</th>
+				<th class="lg-none">Ganancia</th>
+				<th>Peso Sal.</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Sala A</td>
+				<td class="md-none">Puesto 1</td>
+				<td class="md-none">Pedro Gonzáles</td>
+				<td class="md-none">Bettina Rey</td>
+				<td class="lg-none">86,5 Kgs</td>
+				<td><a href="#" class="button" title="Ingresar peso"><i class="fa fa-upload"></i><span class="xl-none">&nbsp;&nbsp;Ingresar</span></a></td>
+				<td>--</td>
+				<td>--</td>
+			</tr>
+			<tr>
+				<td>Sala A</td>
+				<td class="md-none">Puesto 2</td>
+				<td class="md-none">María Pérez</td>
+				<td class="md-none">Bettina Rey</td>
+				<td class="lg-none">64,3 Kgs</td>
+				<td>66,1 Kgs</td>
+				<td>1,8 Kgs</td>
+				<td><a href="#" class="button" title="Ingresar peso"><i class="fa fa-upload"></i><span class="xl-none">&nbsp;&nbsp;Ingresar</span></a></td>
+			</tr>
+		</tbody>
+	</table>
+</main>
+
+{% endblock %}
